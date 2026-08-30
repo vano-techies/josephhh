@@ -1,0 +1,8 @@
+[build]
+  command = "mkdir -p dist && cp -r assets index.html dist/ && cp -R public/. dist/"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
