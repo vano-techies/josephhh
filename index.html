@@ -60,9 +60,34 @@
     />
     <script type="module" crossorigin src="/assets/index-BIZlWqQ7.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-C8QovHjD.css">
-  </head>
+  
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="preload" as="image" href="/logo.png" />
+    <link rel="preload" href="/assets/index-C8QovHjD.css" as="style" />
+    <link rel="modulepreload" href="/assets/index-BIZlWqQ7.js" />
+</head>
   <body>
-    <div id="root"></div>
-  </body>
+    <div id="root">
+      <style>
+        .initial-loader {
+          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+          background: #0a0a0a;
+          display: flex; align-items: center; justify-content: center;
+          z-index: 99999;
+        }
+        .initial-loader-spinner {
+          width: 40px; height: 40px;
+          border: 3px solid rgba(255, 255, 255, 0.1);
+          border-top-color: rgba(255, 255, 255, 0.8);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+      </style>
+      <div class="initial-loader">
+        <div class="initial-loader-spinner"></div>
+      </div>
+    </div>
+  <style>body.scroll-down header.fixed.top-0 { transform: translateY(-100%) !important; }</style><script>let lastScrollY=window.scrollY,ticking=!1;window.addEventListener("scroll",()=>{if(!ticking){window.requestAnimationFrame(()=>{if(window.scrollY>lastScrollY&&window.scrollY>100){document.body.classList.add("scroll-down")}else{document.body.classList.remove("scroll-down")}lastScrollY=window.scrollY;ticking=!1});ticking=!0}})</script></body>
 </html>
 
