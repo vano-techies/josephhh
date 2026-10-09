@@ -513,9 +513,9 @@ body {
   --color-slate: #4b5563 !important;
 }
 
-html, body, #root, main, footer, section {
-  background-color: #ffffff !important;
-  color: #111111 !important;
+html, body, #root, main:not(.admin-main-panel), footer, section {
+  background-color: #ffffff;
+  color: #111111;
 }
 
 .bg-\[var\(--color-obsidian\)\],
@@ -551,54 +551,8 @@ html, body, #root, main, footer, section {
   border-top-color: #C59B51 !important;
 }
 </style>
-<style id="footer-deep-black-styles">
 
-/* Deep Black Styling for Footer */
-footer,
-footer * {
-  color: #000000 !important;
-}
-footer a,
-footer button {
-  color: #000000 !important;
-  transition: opacity 0.15s ease;
-}
-footer a:hover,
-footer button:hover {
-  opacity: 0.7 !important;
-}
-footer svg {
-  color: #000000 !important;
-  fill: currentColor !important;
-}
-footer .border-t {
-  border-color: #e5e7eb !important;
-}
 
-</style>
-<style id="social-tone-styles">
-
-/* Reduced black tone on social media platform icons */
-.footer-social-icon,
-.footer-social-icon svg,
-a[title="Facebook"] svg,
-a[title="Instagram"] svg,
-a[title="TikTok"] svg {
-  color: #555555 !important;
-  fill: #555555 !important;
-  transition: all 0.2s ease !important;
-}
-.footer-social-icon:hover,
-.footer-social-icon:hover svg,
-a[title="Facebook"]:hover svg,
-a[title="Instagram"]:hover svg,
-a[title="TikTok"]:hover svg {
-  color: #000000 !important;
-  fill: #000000 !important;
-  opacity: 1 !important;
-}
-
-</style>
 <style id="four-cards-grid-style">
 
 .four-cards-grid {
@@ -617,6 +571,198 @@ a[title="TikTok"]:hover svg {
     grid-template-columns: 1fr;
     gap: 14px;
   }
+}
+
+</style>
+<style id="dark-financing-styles">
+
+/* EXACT DARK EDITORIAL FINANCING PAGE STYLING */
+.financing-dark-page {
+  background-color: #0D0D12 !important;
+  color: #FFFFFF !important;
+  min-height: 100vh;
+  width: 100%;
+}
+.financing-dark-page * {
+  box-sizing: border-box;
+}
+.financing-dark-card {
+  background-color: #16161D !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6) !important;
+}
+.financing-dark-input {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #FFFFFF !important;
+  border-radius: 8px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+}
+.financing-dark-input:focus {
+  border-color: #C59B51 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(197, 155, 81, 0.25) !important;
+}
+.financing-commitment-box {
+  background-color: #FAF8F5 !important;
+  border-radius: 12px !important;
+}
+.financing-gold-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #252530;
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+}
+.financing-gold-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #C59B51;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(197, 155, 81, 0.5);
+  border: 2px solid #E2B86E;
+  transition: transform 0.1s ease;
+}
+.financing-gold-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+.financing-gold-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #C59B51;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(197, 155, 81, 0.5);
+  border: 2px solid #E2B86E;
+}
+
+</style>
+
+<style id="luxury-color-footer-styles">
+/* LUXURY COLORIZED FOOTER */
+.luxury-footer {
+  background-color: #FAF8F5 !important;
+  border-top: 2px solid #C59B51 !important;
+  color: #1A1A1A !important;
+}
+
+/* AUTHENTIC INTERNET SOCIAL MEDIA ICONS */
+.social-icon-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.social-icon-btn:hover {
+  transform: translateY(-3px) scale(1.08) !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12) !important;
+}
+
+.social-fb-svg {
+  width: 20px !important;
+  height: 20px !important;
+  fill: #1877F2 !important;
+  color: #1877F2 !important;
+}
+
+.social-ig-svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.social-tt-svg {
+  width: 20px !important;
+  height: 20px !important;
+  fill: #000000 !important;
+  color: #000000 !important;
+}
+</style>
+
+<style id="contact-moonstone-styles">
+
+/* MOONSTONE MIST CONTACT PAGE */
+.contact-moonstone-page {
+  background-color: #e6e5e4 !important;
+  min-height: 100vh;
+  width: 100%;
+}
+
+</style>
+<style id="admin-black-styles">
+
+/* PURE BLACK ADMIN DASHBOARD - METRICS & VEHICLES */
+.admin-black-portal,
+.admin-black-portal * {
+  --color-obsidian: #0A0A0F !important;
+  --color-base: #FFFFFF !important;
+  --color-chrome: #161622 !important;
+  --color-slate: #9CA3AF !important;
+}
+.admin-black-portal {
+  background-color: #0A0A0F !important;
+  color: #FFFFFF !important;
+  min-height: 100vh !important;
+  width: 100% !important;
+}
+.admin-black-portal .admin-main-panel {
+  background-color: #121218 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.admin-black-portal aside {
+  background-color: #0E0E14 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 1rem !important;
+}
+/* METRICS CARDS SOLID DEEP BLACK */
+.admin-black-portal .bg-black\/40,
+.admin-black-portal .bg-black\/20,
+.admin-black-portal .bg-black\/50,
+.admin-black-portal .bg-black\/60,
+.admin-black-portal .bg-white\/5 {
+  background-color: #181822 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+}
+/* HEADINGS & LABELS IN ADMIN */
+.admin-black-portal h1,
+.admin-black-portal h2,
+.admin-black-portal h3,
+.admin-black-portal h4 {
+  color: #FFFFFF !important;
+}
+.admin-black-portal .text-white {
+  color: #FFFFFF !important;
+}
+.admin-black-portal .text-white\/50 {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.admin-black-portal .text-white\/60 {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.admin-black-portal .text-white\/70 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.admin-black-portal input,
+.admin-black-portal select,
+.admin-black-portal textarea {
+  background-color: #0B0B10 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 </style>
