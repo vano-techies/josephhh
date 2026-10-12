@@ -438,7 +438,7 @@ body {
   background-color: #A37B35;
 }
 
-.logo-lockup-wrap { transform: translateY(-6px); }
+
 
 
 /* GLOBAL PURE WHITE THEME OVERRIDES */
@@ -1027,7 +1027,7 @@ body {
 /* LUXURY COLORIZED FOOTER */
 .luxury-footer {
   background-color: #FAF8F5 !important;
-  border-top: 2px solid #C59B51 !important;
+  border-top: none !important;
   color: #1A1A1A !important;
 }
 

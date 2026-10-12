@@ -181,7 +181,7 @@ Error generating stack: `+c.message+`
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const uw=[["path",{d:"M18 6 6 18",key:"1bl5f8"}],["path",{d:"m6 6 12 12",key:"d8bk6v"}]],Dg=Rn("x",uw);function cw({currentView:s,setView:e}){const[t,n]=Fe.useState(!1),[i,o]=Fe.useState(!1),[u,h]=Fe.useState("");const d=[{label:"Home",value:"home"},{label:"Our Cars",value:"our-cars"},{label:"New Arrivals",value:"new-arrivals"},{label:"Financing",value:"financing"},{label:"About Us",value:"about"},{label:"Contact",value:"contact"}];return T.jsxs("header",{className:"header-container",children:[T.jsx("div",{className:"header-inner",children:T.jsxs("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",width:"100%"},children:[T.jsxs("button",{onClick:()=>e("home"),className:"logo-lockup-wrap",style:{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",background:"none",border:"none",padding:0,cursor:"pointer",textDecoration:"none"},children:[T.jsx("img",{src:"/logo.png",alt:"Mr. Joseph",style:{height:52,width:"auto",objectFit:"contain",display:"block"}}),T.jsx("span",{style:{fontFamily:"'Inter', sans-serif",fontWeight:800,fontSize:11,letterSpacing:"0.32em",color:"#000000",textTransform:"uppercase",marginTop:5,lineHeight:1.2,display:"block"},children:"PREMIUM CARS"})]}),T.jsx("nav",{className:"nav-menu",children:d.map(m=>{const _=s===m.value||s==="home"&&m.value==="home";return T.jsx("button",{key:m.value,onClick:()=>{m.value==="about"?e("about"):m.value==="our-cars"?e("our-cars"):m.value==="new-arrivals"?e("new-arrivals"):e(m.value)},className:`nav-link ${_?"active":""}`,children:m.label})})}),T.jsxs("div",{className:"header-actions",children:[T.jsx("button",{onClick:()=>n(!t),className:"header-icon-btn","aria-label":"Search",children:T.jsx("svg",{style:{width:20,height:20},viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2.2,strokeLinecap:"round",strokeLinejoin:"round",children:[T.jsx("circle",{cx:11,cy:11,r:8}),T.jsx("line",{x1:21,y1:21,x2:16.65,y2:16.65})]})}),T.jsx("button",{onClick:()=>o(!i),className:"header-icon-btn","aria-label":"Toggle menu",children:i?T.jsx(Dg,{size:24,style:{color:"#111111"}}):T.jsx("svg",{style:{width:24,height:24},viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2.2,strokeLinecap:"round",strokeLinejoin:"round",children:[T.jsx("line",{x1:4,y1:6,x2:20,y2:6}),T.jsx("line",{x1:4,y1:12,x2:20,y2:12}),T.jsx("line",{x1:4,y1:18,x2:20,y2:18})]})})]})]})}),t&&T.jsx("div",{style:{borderTop:"1px solid #e5e7eb",backgroundColor:"#f9fafb",padding:"16px 24px"},children:T.jsxs("div",{style:{maxWidth:600,margin:"0 auto",display:"flex",gap:12},children:[T.jsx("input",{type:"text",value:u,onChange:m=>h(m.target.value),onKeyDown:m=>{m.key==="Enter"&&u.trim()&&(e("inventory"),n(!1))},placeholder:"Search vehicles...",style:{flex:1,padding:"10px 16px",backgroundColor:"#ffffff",border:"1px solid #d1d5db",borderRadius:6,fontSize:14,outline:"none"},autoFocus:!0}),T.jsx("button",{onClick:()=>{e("inventory"),n(!1)},style:{padding:"10px 20px",backgroundColor:"#C59B51",color:"#000000",fontWeight:700,fontSize:12,borderRadius:6,textTransform:"uppercase",letterSpacing:"0.1em",border:"none",cursor:"pointer"},children:"Search"})]})}),i&&T.jsxs("div",{style:{borderTop:"1px solid #e5e7eb",backgroundColor:"#ffffff",padding:24,display:"flex",flexDirection:"column",gap:16},children:[d.map(m=>T.jsx("button",{key:m.value,onClick:()=>{e(m.value),o(!1)},style:{textAlign:"left",fontSize:16,fontWeight:600,color:"#1f2937",background:"none",border:"none",cursor:"pointer"},children:m.label})),T.jsx("button",{onClick:()=>{e("contact"),o(!1)},style:{width:"100%",marginTop:16,padding:"12px 16px",backgroundColor:"#B88E44",color:"#ffffff",fontWeight:700,fontSize:12,textTransform:"uppercase",letterSpacing:"0.1em",borderRadius:6,border:"none",cursor:"pointer"},children:"Schedule Viewing"})]})]});}function hw({setView:s}){const[e,t]=Fe.useState(null);return T.jsxs("footer",{className:"luxury-footer pt-14 pb-12 px-6 mt-12 relative",children:[T.jsxs("div",{className:"max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 pb-8",children:[T.jsxs("div",{className:"md:col-span-1 space-y-5",children:[T.jsx("div",{className:"flex flex-col items-start mb-2",children:T.jsx("img",{src:"/logo.png",alt:"Mr Joseph",className:"h-20 object-contain pb-1 pr-2 ml-[-8px]"})}),T.jsx("p",{className:"text-sm font-medium leading-relaxed max-w-sm text-gray-700",children:"Prestige vehicles. A highly curated selection of the world's most luxurious vehicles, tailored for the discerning few."})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Explore"]}),T.jsxs("ul",{className:"space-y-3.5 text-sm font-semibold",children:[T.jsx("li",{children:T.jsx("button",{onClick:()=>s("our-cars"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Our Cars Collection"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>s("financing"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Valuation & Finance"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>s("contact"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Private Concierge"})})]})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Contact"]}),T.jsxs("ul",{className:"space-y-4 text-sm font-semibold",children:[T.jsx("li",{children:T.jsxs("a",{href:"tel:0713583829",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsx(Ey,{className:"w-4 h-4",style:{color:"#C59B51"}}),"0713583829"]})}),T.jsx("li",{children:T.jsxs("a",{href:"https://wa.me/254713583829",target:"_blank",rel:"noopener noreferrer",className:"text-gray-800 hover:text-[#25D366] transition-colors flex items-center gap-2.5",children:[T.jsx("svg",{viewBox:"0 0 24 24",style:{width:18,height:18,fill:"#25D366"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})}),T.jsx("span",{style:{color:"#25D366"},children:"WhatsApp"})]})}),T.jsx("li",{children:T.jsxs("a",{href:"mailto:mrjoseph@afzet.co.ke",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsx(yy,{className:"w-4 h-4",style:{color:"#C59B51"}}),"mrjoseph@afzet.co.ke"]})}),T.jsx("li",{children:T.jsxs("a",{href:"https://maps.app.goo.gl/SpauXr9qh66Ws8v3A",target:"_blank",rel:"noopener noreferrer",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsxs("svg",{viewBox:"0 0 24 24",className:"w-4 h-4 shrink-0",style:{color:"#C59B51"},fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("path",{d:"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"}),T.jsx("circle",{cx:12,cy:10,r:3})]}),"Kiambu Road Ridgeways"]})})]})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Legal"]}),T.jsxs("ul",{className:"space-y-3.5 text-sm font-semibold",children:[T.jsx("li",{children:T.jsx("button",{onClick:()=>t("privacy"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Privacy Policy"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>t("terms"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Terms of Service"})})]})]})]}),T.jsxs("div",{className:"max-w-7xl mx-auto flex flex-col mt-4 pt-6 border-t border-[#C59B51]/30 text-xs font-mono gap-4",children:[T.jsxs("div",{className:"flex flex-col md:flex-row justify-between items-center w-full",children:[T.jsxs("p",{className:"text-center md:text-left font-semibold text-gray-700",children:["© ",new Date().getFullYear()," Mr Joseph all rights reserved"]}),T.jsxs("div",{className:"flex gap-4 mt-4 md:mt-0 items-center",children:[T.jsx("a",{href:"https://www.facebook.com/MrJosephPremiumCars/",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"Facebook","aria-label":"Facebook",children:T.jsx("svg",{viewBox:"0 0 24 24",className:"social-fb-svg",style:{fill:"#1877F2"},children:T.jsx("path",{d:"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"})})}),T.jsxs("a",{href:"https://www.instagram.com/mrjoseph_premiumcars/",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"Instagram","aria-label":"Instagram",children:[T.jsx("svg",{style:{width:0,height:0,position:"absolute"},children:T.jsx("defs",{children:T.jsxs("linearGradient",{id:"ig-gradient-fill",x1:"0%",y1:"100%",x2:"100%",y2:"0%",children:[T.jsx("stop",{offset:"0%",stopColor:"#FFD600"}),T.jsx("stop",{offset:"50%",stopColor:"#FF0069"}),T.jsx("stop",{offset:"100%",stopColor:"#7638FA"})]})})}),T.jsx("svg",{viewBox:"0 0 24 24",className:"social-ig-svg",children:T.jsx("path",{fill:"url(#ig-gradient-fill)",d:"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"})})]}),T.jsx("a",{href:"https://www.tiktok.com/tag/mrjosephpremiumcars",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"TikTok","aria-label":"TikTok",children:T.jsx("svg",{viewBox:"0 0 24 24",className:"social-tt-svg",children:T.jsx("path",{d:"M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 15.68a6.34 6.34 0 0 0 6.35 6.32 6.32 6.32 0 0 0 6.22-6.22v-5.6a8.27 8.27 0 0 0 4.74 1.53v-3.45a5.06 5.06 0 0 1-2.72-.57z"})})})]})]}),T.jsxs("p",{className:"w-full text-center mt-6 text-xs font-semibold text-gray-600 flex items-center justify-center gap-2",children:[T.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-[#C59B51]"}),"site created by Vano-Techies",T.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-[#C59B51]"})]})]}),e&&T.jsx("div",{className:"fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm",children:T.jsxs("div",{className:"relative w-full max-w-2xl bg-white border border-gray-200 p-8 rounded-xl shadow-2xl max-h-[85vh] overflow-y-auto text-black",children:[T.jsx("button",{onClick:()=>t(null),className:"absolute top-6 right-6 text-black hover:opacity-70 transition-opacity cursor-pointer",children:T.jsx(Dg,{size:24})}),e==="privacy"?T.jsxs("div",{className:"space-y-6 text-black",children:[T.jsx("h2",{className:"font-serif italic text-3xl text-black mb-2",children:"Privacy Policy"}),T.jsx("p",{className:"text-xs text-[#C59B51] uppercase tracking-widest font-mono font-bold",children:"Effective Date: July 17, 2026"}),T.jsxs("div",{className:"space-y-4 text-sm text-black leading-relaxed font-normal",children:[T.jsx("p",{children:"At Mr Joseph Premium Cars, accessible from mrjoseph.co.ke, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Mr Joseph and how we use it."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"1. Information We Collect"}),T.jsx("p",{children:"We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about us or our products, such as your name, phone number, email address, and vehicle preferences."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"2. How We Use Your Information"}),T.jsx("p",{children:"We use the information we collect to:"}),T.jsxs("ul",{className:"list-disc list-inside space-y-2 pl-2",children:[T.jsx("li",{children:"Provide, operate, and maintain our premium auto services."}),T.jsx("li",{children:"Process vehicle valuation, finance estimations, and private inquiries."}),T.jsx("li",{children:"Communicate with you directly to schedule viewing appointments."}),T.jsx("li",{children:"Ensure optimal system integrity and prevent unauthorized activity."})]}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"3. Log Files"}),T.jsx("p",{children:"Mr Joseph Premium Cars follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"4. Cookies and Tracking"}),T.jsx("p",{children:"Like any other professional website, Mr Joseph uses 'cookies' to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"5. Personal Consent"}),T.jsx("p",{children:"By using our website, you hereby consent to our Privacy Policy and agree to all of its terms and conditions."})]})]}):T.jsxs("div",{className:"space-y-6 text-black",children:[T.jsx("h2",{className:"font-serif italic text-3xl text-black mb-2",children:"Terms of Service"}),T.jsx("p",{className:"text-xs text-[#C59B51] uppercase tracking-widest font-mono font-bold",children:"Effective Date: July 17, 2026"}),T.jsxs("div",{className:"space-y-4 text-sm text-black leading-relaxed font-normal",children:[T.jsx("p",{children:"Welcome to Mr Joseph Premium Cars. These Terms of Service govern your use of our premium website and related consultative services."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"1. Acceptance of Terms"}),T.jsx("p",{children:"By accessing or using our website, you agree to be bound by these Terms of Service. If you do not agree to all terms, you must immediately cease accessing or using this site."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"2. Vehicle Inventory and Pricing"}),T.jsx("p",{children:"We strive to provide highly accurate information regarding our luxury vehicle inventory, technical specifications, and current valuations. However, all vehicles are subject to prior sale. Prices and availability are subject to change without notice. Please contact Mr Joseph directly for real-time validation."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"3. Finance and Valuation Estimations"}),T.jsx("p",{children:"Any calculation, estimation, or valuation provided by our on-site calculators is for illustrative, hypothetical, and private planning purposes only. It does not constitute a binding financial offer, direct loan commitment, or guaranteed trade-in value."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"4. Intellectual Property"}),T.jsx("p",{children:"All content on this website, including but not limited to logos, branding, typography, customized layouts, technical data, designs, and images, is the exclusive intellectual property of Mr Joseph or its partners and is protected by international copyright laws."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"5. Limitation of Liability"}),T.jsx("p",{children:"In no event shall Mr Joseph Premium Cars, its associates, or Vano-Techies be liable for any direct, indirect, incidental, special, or consequential damages arising out of the use or inability to use our digital web services."})]})]}),T.jsx("div",{className:"mt-8 pt-6 border-t border-gray-200 flex justify-end",children:T.jsx("button",{onClick:()=>t(null),className:"px-6 py-2 bg-black text-white text-xs uppercase tracking-widest font-bold hover:bg-[#C59B51] hover:text-black transition-colors cursor-pointer",children:"Close"})})]})})]});}function Ha(s){if(s===void 0)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return s}function xy(s,e){s.prototype=Object.create(e.prototype),s.prototype.constructor=s,s.__proto__=e}/*!
+ */const uw=[["path",{d:"M18 6 6 18",key:"1bl5f8"}],["path",{d:"m6 6 12 12",key:"d8bk6v"}]],Dg=Rn("x",uw);function cw({currentView:s,setView:e}){const[t,n]=Fe.useState(!1),[i,o]=Fe.useState(!1),[u,h]=Fe.useState("");const d=[{label:"Home",value:"home"},{label:"Our Cars",value:"our-cars"},{label:"New Arrivals",value:"new-arrivals"},{label:"Financing",value:"financing"},{label:"About Us",value:"about"},{label:"Contact",value:"contact"}];return T.jsxs("header",{className:"header-container",children:[T.jsx("div",{className:"header-inner",children:T.jsxs("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",width:"100%"},children:[T.jsxs("button",{onClick:()=>e("home"),className:"logo-lockup-wrap",style:{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",background:"none",border:"none",padding:0,cursor:"pointer",textDecoration:"none"},children:[T.jsx("img",{src:"/logo.png",alt:"Mr. Joseph",style:{height:52,width:"auto",objectFit:"contain",display:"block"}}),T.jsx("span",{style:{fontFamily:"'Inter', sans-serif",fontWeight:800,fontSize:11,letterSpacing:"0.32em",color:"#000000",textTransform:"uppercase",marginTop:5,lineHeight:1.2,display:"block"},children:"PREMIUM CARS"})]}),T.jsx("nav",{className:"nav-menu",children:d.map(m=>{const _=s===m.value||s==="home"&&m.value==="home";return T.jsx("button",{key:m.value,onClick:()=>{m.value==="about"?e("about"):m.value==="our-cars"?e("our-cars"):m.value==="new-arrivals"?e("new-arrivals"):e(m.value)},className:`nav-link ${_?"active":""}`,children:m.label})})}),T.jsxs("div",{className:"header-actions",children:[T.jsx("button",{onClick:()=>n(!t),className:"header-icon-btn","aria-label":"Search",children:T.jsx("svg",{style:{width:20,height:20},viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2.2,strokeLinecap:"round",strokeLinejoin:"round",children:[T.jsx("circle",{cx:11,cy:11,r:8}),T.jsx("line",{x1:21,y1:21,x2:16.65,y2:16.65})]})}),T.jsx("button",{onClick:()=>o(!i),className:"header-icon-btn","aria-label":"Toggle menu",children:i?T.jsx(Dg,{size:24,style:{color:"#111111"}}):T.jsx("svg",{style:{width:24,height:24},viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2.2,strokeLinecap:"round",strokeLinejoin:"round",children:[T.jsx("line",{x1:4,y1:6,x2:20,y2:6}),T.jsx("line",{x1:4,y1:12,x2:20,y2:12}),T.jsx("line",{x1:4,y1:18,x2:20,y2:18})]})})]})]})}),t&&T.jsx("div",{style:{borderTop:"1px solid #e5e7eb",backgroundColor:"#f9fafb",padding:"16px 24px"},children:T.jsxs("div",{style:{maxWidth:600,margin:"0 auto",display:"flex",gap:12},children:[T.jsx("input",{type:"text",value:u,onChange:m=>h(m.target.value),onKeyDown:m=>{m.key==="Enter"&&u.trim()&&(e("inventory"),n(!1))},placeholder:"Search vehicles...",style:{flex:1,padding:"10px 16px",backgroundColor:"#ffffff",border:"1px solid #d1d5db",borderRadius:6,fontSize:14,outline:"none"},autoFocus:!0}),T.jsx("button",{onClick:()=>{e("inventory"),n(!1)},style:{padding:"10px 20px",backgroundColor:"#C59B51",color:"#000000",fontWeight:700,fontSize:12,borderRadius:6,textTransform:"uppercase",letterSpacing:"0.1em",border:"none",cursor:"pointer"},children:"Search"})]})}),i&&T.jsxs("div",{style:{borderTop:"1px solid #e5e7eb",backgroundColor:"#ffffff",padding:24,display:"flex",flexDirection:"column",gap:16},children:[d.map(m=>T.jsx("button",{key:m.value,onClick:()=>{e(m.value),o(!1)},style:{textAlign:"left",fontSize:16,fontWeight:600,color:"#1f2937",background:"none",border:"none",cursor:"pointer"},children:m.label})),T.jsx("button",{onClick:()=>{e("contact"),o(!1)},style:{width:"100%",marginTop:16,padding:"12px 16px",backgroundColor:"#B88E44",color:"#ffffff",fontWeight:700,fontSize:12,textTransform:"uppercase",letterSpacing:"0.1em",borderRadius:6,border:"none",cursor:"pointer"},children:"Schedule Viewing"})]})]});}function hw({setView:s}){const[e,t]=Fe.useState(null);return T.jsxs("footer",{className:"luxury-footer pt-14 pb-12 px-6 mt-12 relative border-t-0",style:{borderTop:"none"},children:[T.jsxs("div",{className:"max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 pb-8",children:[T.jsxs("div",{className:"md:col-span-1 space-y-5",children:[T.jsx("div",{className:"flex flex-col items-start mb-2",children:T.jsx("img",{src:"/logo.png",alt:"Mr Joseph",className:"h-20 object-contain pb-1 pr-2 ml-[-8px]"})}),T.jsx("p",{className:"text-sm font-medium leading-relaxed max-w-sm text-gray-700",children:"Prestige vehicles. A highly curated selection of the world's most luxurious vehicles, tailored for the discerning few."})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2 mb-6",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Explore"]}),T.jsxs("ul",{className:"space-y-6 text-sm font-semibold",children:[T.jsx("li",{children:T.jsx("button",{onClick:()=>s("our-cars"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Our Cars Collection"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>s("financing"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Valuation & Finance"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>s("contact"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Private Concierge"})})]})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2 mb-6",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Contact"]}),T.jsxs("ul",{className:"space-y-4 text-sm font-semibold",children:[T.jsx("li",{children:T.jsxs("a",{href:"tel:0713583829",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsx(Ey,{className:"w-4 h-4",style:{color:"#C59B51"}}),"0713583829"]})}),T.jsx("li",{children:T.jsxs("a",{href:"https://wa.me/254713583829",target:"_blank",rel:"noopener noreferrer",className:"text-gray-800 hover:text-[#25D366] transition-colors flex items-center gap-2.5",children:[T.jsx("svg",{viewBox:"0 0 24 24",style:{width:18,height:18,fill:"#25D366"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})}),T.jsx("span",{style:{color:"#25D366"},children:"WhatsApp"})]})}),T.jsx("li",{children:T.jsxs("a",{href:"mailto:mrjoseph@afzet.co.ke",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsx(yy,{className:"w-4 h-4",style:{color:"#C59B51"}}),"mrjoseph@afzet.co.ke"]})}),T.jsx("li",{children:T.jsxs("a",{href:"https://maps.app.goo.gl/SpauXr9qh66Ws8v3A",target:"_blank",rel:"noopener noreferrer",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsxs("svg",{viewBox:"0 0 24 24",className:"w-4 h-4 shrink-0",style:{color:"#C59B51"},fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("path",{d:"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"}),T.jsx("circle",{cx:12,cy:10,r:3})]}),"Kiambu Road Ridgeways"]})})]})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2 mb-6",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Legal"]}),T.jsxs("ul",{className:"space-y-6 text-sm font-semibold",children:[T.jsx("li",{children:T.jsx("button",{onClick:()=>t("privacy"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Privacy Policy"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>t("terms"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Terms of Service"})})]})]})]}),T.jsxs("div",{className:"max-w-7xl mx-auto flex flex-col mt-4 pt-6 border-t border-[#C59B51]/30 text-xs font-mono gap-4",children:[T.jsxs("div",{className:"flex flex-col md:flex-row justify-between items-center w-full",children:[T.jsxs("p",{className:"text-center md:text-left font-semibold text-gray-700",children:["© ",new Date().getFullYear()," Mr Joseph all rights reserved"]}),T.jsxs("div",{className:"flex gap-4 mt-4 md:mt-0 items-center",children:[T.jsx("a",{href:"https://www.facebook.com/MrJosephPremiumCars/",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"Facebook","aria-label":"Facebook",children:T.jsx("svg",{viewBox:"0 0 24 24",className:"social-fb-svg",style:{fill:"#1877F2"},children:T.jsx("path",{d:"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"})})}),T.jsxs("a",{href:"https://www.instagram.com/mrjoseph_premiumcars/",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"Instagram","aria-label":"Instagram",children:[T.jsx("svg",{style:{width:0,height:0,position:"absolute"},children:T.jsx("defs",{children:T.jsxs("linearGradient",{id:"ig-gradient-fill",x1:"0%",y1:"100%",x2:"100%",y2:"0%",children:[T.jsx("stop",{offset:"0%",stopColor:"#FFD600"}),T.jsx("stop",{offset:"50%",stopColor:"#FF0069"}),T.jsx("stop",{offset:"100%",stopColor:"#7638FA"})]})})}),T.jsx("svg",{viewBox:"0 0 24 24",className:"social-ig-svg",children:T.jsx("path",{fill:"url(#ig-gradient-fill)",d:"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"})})]}),T.jsx("a",{href:"https://www.tiktok.com/tag/mrjosephpremiumcars",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"TikTok","aria-label":"TikTok",children:T.jsx("svg",{viewBox:"0 0 24 24",className:"social-tt-svg",children:T.jsx("path",{d:"M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 15.68a6.34 6.34 0 0 0 6.35 6.32 6.32 6.32 0 0 0 6.22-6.22v-5.6a8.27 8.27 0 0 0 4.74 1.53v-3.45a5.06 5.06 0 0 1-2.72-.57z"})})})]})]}),T.jsxs("p",{className:"w-full text-center mt-6 text-xs font-semibold text-gray-600 flex items-center justify-center gap-2",children:[T.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-[#C59B51]"}),"site created by Vano-Techies",T.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-[#C59B51]"})]})]}),e&&T.jsx("div",{className:"fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm",children:T.jsxs("div",{className:"relative w-full max-w-2xl bg-white border border-gray-200 p-8 rounded-xl shadow-2xl max-h-[85vh] overflow-y-auto text-black",children:[T.jsx("button",{onClick:()=>t(null),className:"absolute top-6 right-6 text-black hover:opacity-70 transition-opacity cursor-pointer",children:T.jsx(Dg,{size:24})}),e==="privacy"?T.jsxs("div",{className:"space-y-6 text-black",children:[T.jsx("h2",{className:"font-serif italic text-3xl text-black mb-2",children:"Privacy Policy"}),T.jsx("p",{className:"text-xs text-[#C59B51] uppercase tracking-widest font-mono font-bold",children:"Effective Date: July 17, 2026"}),T.jsxs("div",{className:"space-y-4 text-sm text-black leading-relaxed font-normal",children:[T.jsx("p",{children:"At Mr Joseph Premium Cars, accessible from mrjoseph.co.ke, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Mr Joseph and how we use it."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"1. Information We Collect"}),T.jsx("p",{children:"We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about us or our products, such as your name, phone number, email address, and vehicle preferences."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"2. How We Use Your Information"}),T.jsx("p",{children:"We use the information we collect to:"}),T.jsxs("ul",{className:"list-disc list-inside space-y-2 pl-2",children:[T.jsx("li",{children:"Provide, operate, and maintain our premium auto services."}),T.jsx("li",{children:"Process vehicle valuation, finance estimations, and private inquiries."}),T.jsx("li",{children:"Communicate with you directly to schedule viewing appointments."}),T.jsx("li",{children:"Ensure optimal system integrity and prevent unauthorized activity."})]}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"3. Log Files"}),T.jsx("p",{children:"Mr Joseph Premium Cars follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"4. Cookies and Tracking"}),T.jsx("p",{children:"Like any other professional website, Mr Joseph uses 'cookies' to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"5. Personal Consent"}),T.jsx("p",{children:"By using our website, you hereby consent to our Privacy Policy and agree to all of its terms and conditions."})]})]}):T.jsxs("div",{className:"space-y-6 text-black",children:[T.jsx("h2",{className:"font-serif italic text-3xl text-black mb-2",children:"Terms of Service"}),T.jsx("p",{className:"text-xs text-[#C59B51] uppercase tracking-widest font-mono font-bold",children:"Effective Date: July 17, 2026"}),T.jsxs("div",{className:"space-y-4 text-sm text-black leading-relaxed font-normal",children:[T.jsx("p",{children:"Welcome to Mr Joseph Premium Cars. These Terms of Service govern your use of our premium website and related consultative services."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"1. Acceptance of Terms"}),T.jsx("p",{children:"By accessing or using our website, you agree to be bound by these Terms of Service. If you do not agree to all terms, you must immediately cease accessing or using this site."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"2. Vehicle Inventory and Pricing"}),T.jsx("p",{children:"We strive to provide highly accurate information regarding our luxury vehicle inventory, technical specifications, and current valuations. However, all vehicles are subject to prior sale. Prices and availability are subject to change without notice. Please contact Mr Joseph directly for real-time validation."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"3. Finance and Valuation Estimations"}),T.jsx("p",{children:"Any calculation, estimation, or valuation provided by our on-site calculators is for illustrative, hypothetical, and private planning purposes only. It does not constitute a binding financial offer, direct loan commitment, or guaranteed trade-in value."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"4. Intellectual Property"}),T.jsx("p",{children:"All content on this website, including but not limited to logos, branding, typography, customized layouts, technical data, designs, and images, is the exclusive intellectual property of Mr Joseph or its partners and is protected by international copyright laws."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"5. Limitation of Liability"}),T.jsx("p",{children:"In no event shall Mr Joseph Premium Cars, its associates, or Vano-Techies be liable for any direct, indirect, incidental, special, or consequential damages arising out of the use or inability to use our digital web services."})]})]}),T.jsx("div",{className:"mt-8 pt-6 border-t border-gray-200 flex justify-end",children:T.jsx("button",{onClick:()=>t(null),className:"px-6 py-2 bg-black text-white text-xs uppercase tracking-widest font-bold hover:bg-[#C59B51] hover:text-black transition-colors cursor-pointer",children:"Close"})})]})})]});}function Ha(s){if(s===void 0)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return s}function xy(s,e){s.prototype=Object.create(e.prototype),s.prototype.constructor=s,s.__proto__=e}/*!
  * GSAP 3.15.0
  * https://gsap.com
  *
@@ -3655,7 +3655,457 @@ const SIX_SCREENSHOT_CARS = [
     description: "2021 Volvo XC90 Inscription AWD. Onyx Black, Bowers & Wilkins audio, 7-seater executive configuration."
   }
 ];
-function c7(){const[s,e]=Fe.useState(DEFAULT_PREVIOUS_CARS);return Fe.useEffect(()=>{const t=kM(vg(wh,"cars")),n=FM(t,async i=>{const o=i.docs.map(m=>({id:m.id,...m.data()}));if(o.length>0){e(o.filter(m=>!m.isDecorative))}else{e(DEFAULT_PREVIOUS_CARS)}},i=>{console.error("Firestore error:",i);e(DEFAULT_PREVIOUS_CARS)});return()=>n()},[]),s}function Mx({car:s,onClick:e}){var f;const t=(f=s.images)!=null&&f.length?s.images:s.image?[s.image]:["/images/hero_showroom.jpg"],n=s.mileage||(s.year>=2022?"38,000 km":s.year>=2021?"42,000 km":"48,000 km"),i=s.fuel||(s.model&&(s.model.toLowerCase().includes("d")||s.model.toLowerCase().includes("diesel"))?"Diesel":s.model&&s.model.toLowerCase().includes("hybrid")?"Hybrid":"Petrol"),o=s.transmission||"Automatic",u=s.make&&s.model&&s.model.toLowerCase().startsWith(s.make.toLowerCase())?s.model:`${s.make||""} ${s.model||""}`.trim();return T.jsxs("div",{className:"compact-car-card",onClick:()=>e(s.id),children:[T.jsx("div",{className:"compact-card-image-wrap",children:T.jsx("img",{src:t[0],alt:u,className:"compact-card-img",loading:"lazy"})}),T.jsxs("div",{className:"compact-card-body",children:[T.jsx("h3",{className:"compact-card-title",title:u,children:u}),T.jsxs("div",{className:"compact-specs-2x2",children:[T.jsxs("div",{className:"compact-spec-item",children:[T.jsxs("svg",{className:"compact-spec-icon",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("rect",{x:3,y:4,width:18,height:18,rx:2,ry:2}),T.jsx("line",{x1:16,y1:2,x2:16,y2:6}),T.jsx("line",{x1:8,y1:2,x2:8,y2:6}),T.jsx("line",{x1:3,y1:10,x2:21,y2:10})]}),T.jsx("span",{children:s.year||2021})]}),T.jsxs("div",{className:"compact-spec-item",children:[T.jsxs("svg",{className:"compact-spec-icon",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("circle",{cx:12,cy:12,r:9}),T.jsx("polyline",{points:"12 7 12 12 15 15"})]}),T.jsx("span",{children:n})]}),T.jsxs("div",{className:"compact-spec-item",children:[T.jsxs("svg",{className:"compact-spec-icon",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("path",{d:"M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"}),T.jsx("path",{d:"M15 10h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2v4"}),T.jsx("path",{d:"M3 12h10"})]}),T.jsx("span",{children:i})]}),T.jsxs("div",{className:"compact-spec-item",children:[T.jsxs("svg",{className:"compact-spec-icon",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("circle",{cx:6,cy:6,r:2}),T.jsx("circle",{cx:18,cy:6,r:2}),T.jsx("circle",{cx:6,cy:18,r:2}),T.jsx("circle",{cx:18,cy:18,r:2}),T.jsx("path",{d:"M6 8v8"}),T.jsx("path",{d:"M18 8v8"}),T.jsx("path",{d:"M6 12h12"})]}),T.jsx("span",{children:o})]})]}),T.jsx("div",{className:"compact-card-price",children:s.price?`KSh ${s.price.toLocaleString()}`:"Price on Application"}),T.jsxs("button",{type:"button",className:"compact-card-cta-btn",onClick:h=>{h.stopPropagation(),e(s.id)},children:["View Details",T.jsx("span",{style:{fontSize:11,lineHeight:1},children:"→"})]})]})]})}const Jl=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];function nk({setView:s,setSelectedCar:e}){const[t,n]=Fe.useState(0),i=c7(),o=SIX_SCREENSHOT_CARS,u=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];return T.jsxs("div",{style:{backgroundColor:"#ffffff",width:"100%"},children:[T.jsxs("section",{className:"hero-section-box",children:[T.jsx("img",{src:u[t%u.length],alt:"Mr Joseph Premium Showroom",className:"hero-bg-cover"}),T.jsx("div",{className:"hero-dark-vignette"}),T.jsxs("div",{style:{position:"absolute",top:16,left:32,zIndex:15,display:"flex",alignItems:"center",gap:8},className:"hidden sm:flex",children:[T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}}),T.jsx("span",{style:{color:"rgba(255,255,255,0.92)",fontFamily:"'Inter', sans-serif",fontSize:10,fontWeight:700,letterSpacing:"0.22em",textTransform:"uppercase"},children:"home of luxury and class"}),T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}})]}),T.jsx("div",{className:"hero-inner-content",children:T.jsxs("div",{className:"hero-text-wrapper",children:[T.jsx("p",{className:"hero-welcome-badge",children:"WELCOME TO"}),T.jsx("h1",{className:"hero-h1-white",children:"MR JOSEPH"}),T.jsx("h2",{className:"hero-h2-gold",children:"PREMIUM CARS"}),T.jsxs("p",{className:"hero-p-sub",children:["Luxury Vehicles. Exceptional Service.",T.jsx("br",{}),"Your Next Drive Starts Here."]}),T.jsxs("button",{onClick:()=>{const h=document.getElementById("our-cars-section");h?h.scrollIntoView({behavior:"smooth"}):s("inventory")},className:"hero-btn-cta",children:["BROWSE OUR CARS",T.jsx("span",{style:{fontSize:13,fontWeight:"bold"},children:"→"})]})]})}),T.jsxs("div",{className:"hero-arrow-controls",children:[T.jsx("button",{onClick:()=>n(h=>(h-1+u.length)%u.length),className:"hero-arrow-btn","aria-label":"Previous slide",children:T.jsx("span",{children:"‹"})}),T.jsx("button",{onClick:()=>n(h=>(h+1)%u.length),className:"hero-arrow-btn","aria-label":"Next slide",children:T.jsx("span",{children:"›"})})]})]}),T.jsxs("section",{id:"featured-vehicles",className:"featured-section-box",children:[T.jsxs("div",{className:"featured-header-row",children:[T.jsxs("div",{className:"featured-title-flex",children:[T.jsx("span",{className:"featured-gold-bar"}),T.jsx("h2",{className:"featured-title-text",children:"FEATURED VEHICLES"}),T.jsx("span",{className:"featured-gold-bar"})]}),T.jsx("p",{className:"featured-sub-text",children:"Handpicked premium vehicles, ready for your next adventure."})]}),T.jsx("div",{className:"six-cards-grid",children:o.map(h=>T.jsx(Mx,{car:h,onClick:d=>{e(d),s("vehicle")}},h.id))})]}),T.jsxs("section",{id:"our-cars-section",className:"py-14 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-[1680px] mx-auto bg-white border-t border-gray-100",children:[T.jsxs("div",{className:"text-center mb-10",children:[T.jsxs("div",{className:"flex items-center justify-center gap-4 mb-2",children:[T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"}),T.jsx("h2",{className:"text-2xl sm:text-3xl font-extrabold tracking-wider text-black uppercase",children:"OUR CARS"}),T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"})]}),T.jsx("p",{className:"text-gray-500 text-sm sm:text-base",children:"Explore our complete showroom collection of prestige vehicles available in Kenya."})]}),T.jsx("div",{className:"four-cards-grid",children:i.map(h=>T.jsx(Mx,{car:h,onClick:d=>{e(d),s("vehicle")}},h.id))})]}),T.jsx("a",{href:"https://wa.me/254713583829?text=Hello%20Mr%20Joseph%2C%20I%20am%20interested%20in%20inquiring%20about%20your%20premium%20cars.",target:"_blank",rel:"noopener noreferrer",style:{position:"fixed",bottom:20,right:20,zIndex:40,display:"flex",alignItems:"center",justifyContent:"center",width:50,height:50,backgroundColor:"#25D366",color:"#ffffff",borderRadius:"50%",boxShadow:"0 4px 16px rgba(37,211,102,0.4)",textDecoration:"none"},"aria-label":"Contact on WhatsApp",children:T.jsx("svg",{viewBox:"0 0 24 24",style:{width:26,height:26,fill:"currentColor"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})})})]});}function rk({setView:s,setSelectedCar:e,initialFilter:t="All"}){const n=c7(),[i,o]=Fe.useState(t),[u,h]=Fe.useState("newest"),[srch,setSrch]=Fe.useState("");Fe.useEffect(()=>{o(t)},[t]),Fe.useEffect(()=>{window.scrollTo(0,0);const _=jn.context(()=>{jn.fromTo(".inv-header",{y:30,opacity:0},{y:0,opacity:1,duration:.8,ease:"power3.out"}),jn.fromTo(".inv-card",{y:40,opacity:0},{y:0,opacity:1,duration:.6,stagger:.1,ease:"power2.out",delay:.2})});return()=>_.revert()},[]);const d=["All","Our Cars","New Arrivals","Sedan","SUV","Coupe","GT"];let m=n.filter(_=>i==="All"||_.type===i?!0:(i==="Our Cars"||i==="Kenya")?(_.location==="Our Cars"||_.location==="Cars in Kenya"||_.status==="Kenya"||_.status==="Our Cars"):(i==="New Arrivals"||i==="Incoming")?(_.location==="New Arrivals"||_.location==="Incoming Cars"||_.status==="Incoming"||_.status==="New Arrivals"):!1).filter(_=>srch===""||_.make.toLowerCase().includes(srch.toLowerCase())||_.model.toLowerCase().includes(srch.toLowerCase())||(_.price&&_.price.toString().includes(srch)));return u==="price-low"&&m.sort((_,v)=>_.price-v.price),u==="price-high"&&m.sort((_,v)=>v.price-_.price),u==="newest"&&m.sort((_,v)=>v.year-_.year),T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full",children:[T.jsxs("div",{className:"inv-header flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6",children:[T.jsxs("div",{children:[T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-[var(--color-base)] mb-3",children:i==="Our Cars"?"Our Cars":i==="New Arrivals"?"New Arrivals":"The Collection"}),T.jsx("p",{className:"font-medium text-[var(--color-slate)]/70 max-w-md text-sm sm:text-base",children:i==="Our Cars"?"Explore our complete showroom collection of prestige vehicles available in Kenya.":i==="New Arrivals"?"Incoming luxury motorcars and newly arrived stock.":"Our current inventory of exceptional motorcars, available for immediate acquisition."})]}),T.jsxs("div",{className:"flex flex-col xl:flex-row gap-4 w-full md:w-auto",children:[T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-[var(--color-obsidian)] px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-64",children:[T.jsx("input",{type:"text",placeholder:"Search brand, model or price...",className:"bg-transparent text-sm font-medium outline-none text-[var(--color-base)] w-full placeholder:text-[var(--color-slate)]/50",value:srch,onChange:_=>setSrch(_.target.value)})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsxs("div",{className:"flex items-center gap-2",children:[T.jsx(Ty,{size:18,className:"text-[var(--color-champagne)]"}),T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Filter:"})]}),T.jsx("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:i,onChange:_=>o(_.target.value),children:d.map(_=>T.jsxs("option",{value:_,children:[_," Models"]},_))})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Sort by:"}),T.jsxs("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:u,onChange:_=>h(_.target.value),children:[T.jsx("option",{value:"newest",children:"Newest Arrivals"}),T.jsx("option",{value:"price-low",children:"Price: Low to High"}),T.jsx("option",{value:"price-high",children:"Price: High to Low"})]})]})]})]}),T.jsx("div",{className:"four-cards-grid",children:m.map(_=>T.jsx("div",{className:"inv-card",children:T.jsx(Mx,{car:_,onClick:v=>{e(v),s("vehicle")}})},_.id))}),m.length===0&&T.jsxs("div",{className:"text-center py-24",children:[T.jsx("p",{className:"text-lg text-[var(--color-slate)]/60 font-medium",children:"No vehicles found matching your criteria."}),T.jsx("button",{onClick:()=>o("All"),className:"mt-4 text-[var(--color-champagne)] font-medium hover:underline",children:"Clear Filters"})]})]})}function ik({id:s,setView:e}){var A;const n=c7().find(S=>S.id===s),[i,o]=Fe.useState(null),u=(A=n==null?void 0:n.images)!=null&&A.length?n.images:n!=null&&n.image?[n.image]:[],[h,d]=Fe.useState(0),m=S=>{S.stopPropagation(),d(R=>(R+1)%u.length)},_=S=>{S.stopPropagation(),d(R=>(R-1+u.length)%u.length)},v=S=>{if(S.stopPropagation(),!i)return;const k=(u.indexOf(i)+1)%u.length;o(u[k])},x=S=>{if(S.stopPropagation(),!i)return;const k=(u.indexOf(i)-1+u.length)%u.length;o(u[k])};return Fe.useEffect(()=>{window.scrollTo(0,0);const S=jn.context(()=>{jn.fromTo(".vd-img",{scale:.95,opacity:0},{scale:1,opacity:1,duration:1,ease:"power3.out"}),jn.fromTo(".vd-text",{y:20,opacity:0},{y:0,opacity:1,duration:.8,stagger:.1,ease:"power2.out",delay:.3})});return()=>S.revert()},[s]),Fe.useEffect(()=>(i?document.body.style.overflow="hidden":document.body.style.overflow="unset",()=>{document.body.style.overflow="unset"}),[i]),Fe.useEffect(()=>{const K=E=>{if(E.key==="Escape"||E.keyCode===27){i?o(null):e("inventory")}};return window.addEventListener("keydown",K),()=>window.removeEventListener("keydown",K)},[i,e]),n?T.jsxs(T.Fragment,{children:[T.jsxs("div",{className:"pt-28 md:pt-32 px-6 pb-4 max-w-7xl mx-auto w-full",children:[T.jsxs("button",{onClick:()=>e("inventory"),className:"flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-[var(--color-slate)]/70 hover:text-[var(--color-obsidian)] transition-colors mb-10",children:[T.jsx(_y,{size:16})," Back to Collection",T.jsx("span",{className:"ml-2 px-1.5 py-0.5 bg-gray-100 border border-gray-200 text-gray-700 text-[10px] rounded font-mono font-semibold",children:"ESC"})]}),T.jsxs("div",{className:"grid grid-cols-1 lg:grid-cols-2 gap-16",children:[T.jsxs("div",{className:"vd-img",children:[T.jsxs("div",{className:"aspect-[4/3] bg-[var(--color-chrome)] border border-[var(--color-base)]/10 group relative overflow-hidden",children:[T.jsx("div",{className:"flex transition-transform duration-500 ease-in-out h-full",style:{transform:`translateX(-${h*100}%)`},children:u.map((S,R)=>T.jsx("img",{src:S,alt:n.model,className:"w-full h-full object-cover shrink-0 cursor-zoom-in",onClick:()=>o(S)},R))}),u.length>1&&T.jsxs(T.Fragment,{children:[T.jsx("button",{onClick:_,className:"absolute left-0 top-0 bottom-0 px-4 flex items-center justify-center bg-black/10 hover:bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-all z-10",children:T.jsx(Y0,{size:32})}),T.jsx("button",{onClick:m,className:"absolute right-0 top-0 bottom-0 px-4 flex items-center justify-center bg-black/10 hover:bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-all z-10",children:T.jsx(X0,{size:32})})]})]}),u.length>1&&T.jsxs("div",{className:"grid grid-cols-4 gap-4 mt-4",children:[u.slice(0,4).map((S,R)=>T.jsx("button",{className:`aspect-video bg-[var(--color-chrome)] transition-all border border-[var(--color-base)]/10 ${R===h?"opacity-100 ring-1 ring-[var(--color-champagne)]":"opacity-50 hover:opacity-100"}`,onClick:()=>d(R),children:T.jsx("img",{src:S,alt:n.model,className:"w-full h-full object-cover"})},R)),u.length>4&&T.jsx("button",{className:"aspect-video bg-[var(--color-obsidian)] border border-[var(--color-base)]/10 flex items-center justify-center hover:bg-[var(--color-chrome)] transition-colors",onClick:()=>{d(4),o(u[4])},children:T.jsxs("span",{className:"font-mono text-xs text-[var(--color-slate)] uppercase tracking-widest",children:["+ ",u.length-4]})})]})]}),T.jsxs("div",{className:"flex flex-col justify-center",children:[T.jsxs("p",{className:"vd-text font-mono text-xs text-[var(--color-slate)]/60 uppercase tracking-widest mb-4",children:["Stock #MJ-",n.id.toString().substring(0,6)]}),T.jsxs("h1",{className:"vd-text font-serif text-4xl md:text-5xl lg:text-6xl text-[var(--color-base)] italic font-light mb-2",children:[n.year," ",n.make]}),T.jsx("h2",{className:"vd-text font-sans text-2xl md:text-3xl text-[var(--color-slate)] font-light mb-4",children:n.model}),n.spec&&T.jsx("p",{className:"vd-text text-[var(--color-champagne)] font-medium text-lg mb-4 whitespace-pre-wrap",children:n.spec}),T.jsx("div",{className:"vd-text flex items-end gap-6 mb-12",children:n.price?T.jsxs(T.Fragment,{children:[T.jsxs("p",{className:"text-4xl text-[var(--color-champagne)] font-serif italic",children:["Ksh ",n.price.toLocaleString()]}),T.jsxs("p",{className:"text-lg text-[var(--color-slate)] font-medium mb-1 line-through",children:["Ksh ",(n.price*1.05).toLocaleString()]})]}):T.jsx("p",{className:"text-4xl text-[var(--color-champagne)] font-serif italic",children:"Price on Application"})}),T.jsxs("div",{className:"vd-text grid grid-cols-2 gap-6 mb-12 border-y border-[var(--color-base)]/10 py-8",children:[T.jsxs("div",{className:"flex flex-col items-center justify-center text-center",children:[T.jsx(Nb,{className:"text-[var(--color-champagne)] mb-3",size:24}),T.jsx("p",{className:"font-mono text-xs text-[var(--color-slate)]/60 uppercase tracking-widest mb-1",children:"Year"}),T.jsx("p",{className:"font-medium text-[var(--color-base)]",children:n.year})]}),T.jsx("div",{className:"flex flex-col items-center justify-center text-center border-l border-[var(--color-base)]/10 px-2",children:n.location?T.jsxs(T.Fragment,{children:[T.jsx(vy,{className:"text-[var(--color-champagne)] mb-3",size:24}),T.jsx("p",{className:"font-mono text-xs text-[var(--color-slate)]/60 uppercase tracking-widest mb-1",children:"Location"}),T.jsx("p",{className:"font-medium text-[var(--color-base)]",children:n.location})]}):T.jsxs(T.Fragment,{children:[T.jsx(sw,{className:"text-[var(--color-champagne)] mb-3",size:24}),T.jsx("p",{className:"font-mono text-xs text-[var(--color-slate)]/60 uppercase tracking-widest mb-1",children:"Condition"}),T.jsx("p",{className:"font-medium text-[var(--color-base)]",children:"Pristine"})]})})]}),T.jsx("p",{className:"vd-text text-[var(--color-slate)] leading-relaxed font-medium mb-10",children:n.description}),T.jsxs("div",{className:"vd-text mb-12",children:[T.jsx("h3",{className:"font-serif text-2xl mb-6",children:"Premium Features"}),T.jsx("ul",{className:"grid grid-cols-1 md:grid-cols-2 gap-4",children:n.features.map(S=>T.jsxs("li",{className:"flex items-center gap-3 text-[var(--color-slate)] font-medium",children:[T.jsx("div",{className:"w-5 h-5 rounded-full bg-[var(--color-champagne)]/20 flex items-center justify-center",children:T.jsx(Mb,{size:12,className:"text-[var(--color-champagne)]"})}),S]},S))})]}),T.jsx("div",{className:"vd-text flex flex-col sm:flex-row gap-4 mt-8",children:n.status==="Sold"||n.status==="Reserved"?T.jsxs("div",{className:"flex-1 px-8 py-4 border border-[var(--color-base)]/10 text-white/50 text-[11px] font-bold uppercase tracking-[0.2em] text-center bg-black/20 cursor-not-allowed",children:["Vehicle ",n.status]}):T.jsxs(T.Fragment,{children:[T.jsx("button",{onClick:()=>e("contact"),className:"flex-1 px-5 py-2.5 bg-[var(--color-champagne)] border border-[var(--color-champagne)] text-[var(--color-obsidian)] text-[10px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-transparent hover:text-[var(--color-champagne)] text-center",children:"Schedule Viewing"}),T.jsx("button",{onClick:()=>e("financing"),className:"flex-1 px-8 py-4 border border-[var(--color-base)]/30 text-[var(--color-base)] text-[11px] font-bold uppercase tracking-[0.2em] transition-colors hover:border-[var(--color-champagne)] hover:text-[var(--color-champagne)] text-center",children:"Calculate Finance"})]})})]})]})]}),i&&T.jsxs("div",{className:"fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-obsidian)]/90 backdrop-blur-xl p-4 md:p-12 cursor-zoom-out",onClick:()=>o(null),children:[T.jsx("button",{className:"absolute top-6 right-6 text-[var(--color-base)]/70 hover:text-[var(--color-champagne)] transition-colors p-2",onClick:S=>{S.stopPropagation(),o(null)},children:T.jsx(Dg,{size:32})}),T.jsxs("div",{className:"relative max-w-7xl max-h-full w-full h-full flex items-center justify-center group/modal",onClick:S=>S.stopPropagation(),children:[T.jsx("img",{src:i,alt:n.model,className:"max-w-full max-h-full object-contain cursor-default select-none shadow-2xl"}),n.images&&n.images.length>1&&T.jsxs(T.Fragment,{children:[T.jsx("button",{onClick:x,className:"absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/80 text-white rounded-full opacity-60 hover:opacity-100 transition-all z-10",children:T.jsx(Y0,{size:32})}),T.jsx("button",{onClick:v,className:"absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/80 text-white rounded-full opacity-60 hover:opacity-100 transition-all z-10",children:T.jsx(X0,{size:32})})]}),n.images&&n.images.length>1&&T.jsx("div",{className:"absolute bottom-[-1rem] md:bottom-2 left-0 right-0 flex justify-center gap-2 overflow-x-auto pb-4 px-4 snap-x",children:n.images.map((S,R)=>T.jsx("button",{onClick:k=>{k.stopPropagation(),o(S)},className:`shrink-0 w-16 h-12 md:w-20 md:h-16 border transition-all snap-center ${i===S?"border-[var(--color-champagne)] opacity-100 scale-105":"border-[var(--color-base)]/20 opacity-50 hover:opacity-100"}`,children:T.jsx("img",{src:S,alt:`Thumbnail ${R}`,className:"w-full h-full object-cover"})},R))})]})]})]}):T.jsx("div",{className:"pt-40 text-center",children:"Vehicle not found."})}function sk({setView:pw}={}){
+function c7(){const[s,e]=Fe.useState(DEFAULT_PREVIOUS_CARS);return Fe.useEffect(()=>{const t=kM(vg(wh,"cars")),n=FM(t,async i=>{const o=i.docs.map(m=>({id:m.id,...m.data()}));if(o.length>0){e(o.filter(m=>!m.isDecorative))}else{e(DEFAULT_PREVIOUS_CARS)}},i=>{console.error("Firestore error:",i);e(DEFAULT_PREVIOUS_CARS)});return()=>n()},[]),s}function Mx({car:s,onClick:e}){
+  var f;
+  const t=(f=s.images)!=null&&f.length?s.images:s.image?[s.image]:["/images/hero_showroom.jpg"],
+        n=s.mileage||(s.year>=2022?"38,000 km":s.year>=2021?"42,000 km":"48,000 km"),
+        i=s.fuel||(s.model&&(s.model.toLowerCase().includes("d")||s.model.toLowerCase().includes("diesel"))?"Diesel":s.model&&s.model.toLowerCase().includes("hybrid")?"Hybrid":"Petrol"),
+        o=s.transmission||"Automatic",
+        u=s.make&&s.model&&s.model.toLowerCase().startsWith(s.make.toLowerCase())?s.model:`${s.make||""} ${s.model||""}`.trim();
+
+  const formattedPrice = s.price ? `KSh ${s.price.toLocaleString()}` : "Price on Application";
+  const whatsappUrl = `https://wa.me/254713583829?text=${encodeURIComponent(
+    `Hello Mr. Joseph, I am inquiring about the ${s.year || ""} ${u} priced at ${formattedPrice}. Please share availability and viewing details.`
+  )}`;
+
+  return T.jsxs("div",{className:"compact-car-card",onClick:()=>e(s.id),children:[
+    T.jsx("div",{className:"compact-card-image-wrap",children:T.jsx("img",{src:t[0],alt:u,className:"compact-card-img",loading:"lazy"})}),
+    T.jsxs("div",{className:"compact-card-body",children:[
+      T.jsx("h3",{className:"compact-card-title",title:u,children:u}),
+      T.jsxs("div",{className:"compact-specs-2x2",children:[
+        T.jsxs("div",{className:"compact-spec-item",children:[T.jsxs("svg",{className:"compact-spec-icon",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("rect",{x:3,y:4,width:18,height:18,rx:2,ry:2}),T.jsx("line",{x1:16,y1:2,x2:16,y2:6}),T.jsx("line",{x1:8,y1:2,x2:8,y2:6}),T.jsx("line",{x1:3,y1:10,x2:21,y2:10})]}),T.jsx("span",{children:s.year||2021})]}),
+        T.jsxs("div",{className:"compact-spec-item",children:[T.jsxs("svg",{className:"compact-spec-icon",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("circle",{cx:12,cy:12,r:9}),T.jsx("polyline",{points:"12 7 12 12 15 15"})]}),T.jsx("span",{children:n})]}),
+        T.jsxs("div",{className:"compact-spec-item",children:[T.jsxs("svg",{className:"compact-spec-icon",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("path",{d:"M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"}),T.jsx("path",{d:"M15 10h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2v4"}),T.jsx("path",{d:"M3 12h10"})]}),T.jsx("span",{children:i})]}),
+        T.jsxs("div",{className:"compact-spec-item",children:[T.jsxs("svg",{className:"compact-spec-icon",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("circle",{cx:6,cy:6,r:2}),T.jsx("circle",{cx:18,cy:6,r:2}),T.jsx("circle",{cx:6,cy:18,r:2}),T.jsx("circle",{cx:18,cy:18,r:2}),T.jsx("path",{d:"M6 8v8"}),T.jsx("path",{d:"M18 8v8"}),T.jsx("path",{d:"M6 12h12"})]}),T.jsx("span",{children:o})]})
+      ]}),
+      /* Price row with WhatsApp inquiry button on the far right */
+      T.jsxs("div",{
+        className:"flex items-center justify-between mb-3 w-full",
+        style:{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"12px",width:"100%"},
+        children:[
+          T.jsx("div",{className:"compact-card-price",style:{marginBottom:0},children:formattedPrice}),
+          T.jsx("a",{
+            href:whatsappUrl,
+            target:"_blank",
+            rel:"noopener noreferrer",
+            onClick:h=>h.stopPropagation(),
+            className:"w-8 h-8 rounded-full bg-[#25D366]/15 hover:bg-[#25D366] text-[#25D366] hover:text-white flex items-center justify-center transition-all duration-200 shadow-sm shrink-0 cursor-pointer ml-2",
+            style:{width:"32px",height:"32px",borderRadius:"50%",backgroundColor:"rgba(37,211,102,0.15)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,textDecoration:"none"},
+            title:`Inquire about ${u} on WhatsApp`,
+            "aria-label":`Inquire about ${u} on WhatsApp`,
+            children:T.jsx("svg",{
+              viewBox:"0 0 24 24",
+              width:18,
+              height:18,
+              style:{width:"18px",height:"18px",fill:"#25D366"},
+              children:T.jsx("path",{d:"M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.79 14.11c-.24.68-1.4 1.25-1.92 1.33-.49.07-1.12.1-3.23-.77-2.69-1.12-4.41-3.86-4.54-4.04-.13-.18-1.08-1.44-1.08-2.75 0-1.31.69-1.96.93-2.22.24-.26.53-.33.71-.33.18 0 .36 0 .51.01.16.01.38-.06.6.46.22.53.77 1.87.84 2.01.07.14.11.31.02.49-.09.18-.13.29-.27.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.16.27.69 1.14 1.48 1.84 1.02.9 1.88 1.18 2.14 1.31.27.13.42.11.58-.07.16-.18.67-.78.85-1.05.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.27.13.44.2.51.31.06.12.06.7-.18 1.38z"})
+            })
+          })
+        ]
+      }),
+      T.jsxs("button",{
+        type:"button",
+        className:"compact-card-cta-btn",
+        onClick:h=>{h.stopPropagation(),e(s.id)},
+        children:["View Details",T.jsx("span",{style:{fontSize:11,lineHeight:1},children:"→"})]
+      })
+    ]})
+  ]})
+}const Jl=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];function nk({setView:s,setSelectedCar:e}){const[t,n]=Fe.useState(0),i=c7(),o=SIX_SCREENSHOT_CARS,u=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];return T.jsxs("div",{style:{backgroundColor:"#ffffff",width:"100%"},children:[T.jsxs("section",{className:"hero-section-box",children:[T.jsx("img",{src:u[t%u.length],alt:"Mr Joseph Premium Showroom",className:"hero-bg-cover"}),T.jsx("div",{className:"hero-dark-vignette"}),T.jsxs("div",{style:{position:"absolute",top:16,left:32,zIndex:15,display:"flex",alignItems:"center",gap:8},className:"hidden sm:flex",children:[T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}}),T.jsx("span",{style:{color:"rgba(255,255,255,0.92)",fontFamily:"'Inter', sans-serif",fontSize:10,fontWeight:700,letterSpacing:"0.22em",textTransform:"uppercase"},children:"home of luxury and class"}),T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}})]}),T.jsx("div",{className:"hero-inner-content",children:T.jsxs("div",{className:"hero-text-wrapper",children:[T.jsx("p",{className:"hero-welcome-badge",children:"WELCOME TO"}),T.jsx("h1",{className:"hero-h1-white",children:"MR JOSEPH"}),T.jsx("h2",{className:"hero-h2-gold",children:"PREMIUM CARS"}),T.jsxs("p",{className:"hero-p-sub",children:["Luxury Vehicles. Exceptional Service.",T.jsx("br",{}),"Your Next Drive Starts Here."]}),T.jsxs("button",{onClick:()=>{const h=document.getElementById("our-cars-section");h?h.scrollIntoView({behavior:"smooth"}):s("inventory")},className:"hero-btn-cta",children:["BROWSE OUR CARS",T.jsx("span",{style:{fontSize:13,fontWeight:"bold"},children:"→"})]})]})}),T.jsxs("div",{className:"hero-arrow-controls",children:[T.jsx("button",{onClick:()=>n(h=>(h-1+u.length)%u.length),className:"hero-arrow-btn","aria-label":"Previous slide",children:T.jsx("span",{children:"‹"})}),T.jsx("button",{onClick:()=>n(h=>(h+1)%u.length),className:"hero-arrow-btn","aria-label":"Next slide",children:T.jsx("span",{children:"›"})})]})]}),T.jsxs("section",{id:"featured-vehicles",className:"featured-section-box",children:[T.jsxs("div",{className:"featured-header-row",children:[T.jsxs("div",{className:"featured-title-flex",children:[T.jsx("span",{className:"featured-gold-bar"}),T.jsx("h2",{className:"featured-title-text",children:"FEATURED VEHICLES"}),T.jsx("span",{className:"featured-gold-bar"})]})]}),T.jsx("div",{className:"six-cards-grid",children:o.map(h=>T.jsx(Mx,{car:h,onClick:d=>{e(d),s("vehicle")}},h.id))})]}),T.jsxs("section",{id:"our-cars-section",className:"py-14 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-[1680px] mx-auto bg-white border-t border-gray-100",children:[T.jsxs("div",{className:"text-center mb-10",children:[T.jsxs("div",{className:"flex items-center justify-center gap-4 mb-2",children:[T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"}),T.jsx("h2",{className:"text-2xl sm:text-3xl font-extrabold tracking-wider text-black uppercase",children:"OUR CARS"}),T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"})]}),T.jsx("p",{className:"text-gray-500 text-sm sm:text-base",children:"Explore our complete showroom collection of prestige vehicles available in Kenya."})]}),T.jsx("div",{className:"four-cards-grid",children:i.map(h=>T.jsx(Mx,{car:h,onClick:d=>{e(d),s("vehicle")}},h.id))})]}),T.jsx("a",{href:"https://wa.me/254713583829?text=Hello%20Mr%20Joseph%2C%20I%20am%20interested%20in%20inquiring%20about%20your%20premium%20cars.",target:"_blank",rel:"noopener noreferrer",style:{position:"fixed",bottom:20,right:20,zIndex:40,display:"flex",alignItems:"center",justifyContent:"center",width:50,height:50,backgroundColor:"#25D366",color:"#ffffff",borderRadius:"50%",boxShadow:"0 4px 16px rgba(37,211,102,0.4)",textDecoration:"none"},"aria-label":"Contact on WhatsApp",children:T.jsx("svg",{viewBox:"0 0 24 24",style:{width:26,height:26,fill:"currentColor"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})})})]});}function rk({setView:s,setSelectedCar:e,initialFilter:t="All"}){const n=c7(),[i,o]=Fe.useState(t),[u,h]=Fe.useState("newest"),[srch,setSrch]=Fe.useState("");Fe.useEffect(()=>{o(t)},[t]),Fe.useEffect(()=>{window.scrollTo(0,0);const _=jn.context(()=>{jn.fromTo(".inv-header",{y:30,opacity:0},{y:0,opacity:1,duration:.8,ease:"power3.out"}),jn.fromTo(".inv-card",{y:40,opacity:0},{y:0,opacity:1,duration:.6,stagger:.1,ease:"power2.out",delay:.2})});return()=>_.revert()},[]);const d=["All","Our Cars","New Arrivals","Sedan","SUV","Coupe","GT"];let m=n.filter(_=>i==="All"||_.type===i?!0:(i==="Our Cars"||i==="Kenya")?(_.location==="Our Cars"||_.location==="Cars in Kenya"||_.status==="Kenya"||_.status==="Our Cars"):(i==="New Arrivals"||i==="Incoming")?(_.location==="New Arrivals"||_.location==="Incoming Cars"||_.status==="Incoming"||_.status==="New Arrivals"):!1).filter(_=>srch===""||_.make.toLowerCase().includes(srch.toLowerCase())||_.model.toLowerCase().includes(srch.toLowerCase())||(_.price&&_.price.toString().includes(srch)));return u==="price-low"&&m.sort((_,v)=>_.price-v.price),u==="price-high"&&m.sort((_,v)=>v.price-_.price),u==="newest"&&m.sort((_,v)=>v.year-_.year),T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full",children:[T.jsxs("div",{className:"inv-header flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6",children:[T.jsxs("div",{children:[T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-[var(--color-base)] mb-3",children:i==="Our Cars"?"Our Cars":i==="New Arrivals"?"New Arrivals":"The Collection"}),T.jsx("p",{className:"font-medium text-[var(--color-slate)]/70 max-w-md text-sm sm:text-base",children:i==="Our Cars"?"Explore our complete showroom collection of prestige vehicles available in Kenya.":i==="New Arrivals"?"Incoming luxury motorcars and newly arrived stock.":"Our current inventory of exceptional motorcars, available for immediate acquisition."})]}),T.jsxs("div",{className:"flex flex-col xl:flex-row gap-4 w-full md:w-auto",children:[T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-[var(--color-obsidian)] px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-64",children:[T.jsx("input",{type:"text",placeholder:"Search brand, model or price...",className:"bg-transparent text-sm font-medium outline-none text-[var(--color-base)] w-full placeholder:text-[var(--color-slate)]/50",value:srch,onChange:_=>setSrch(_.target.value)})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsxs("div",{className:"flex items-center gap-2",children:[T.jsx(Ty,{size:18,className:"text-[var(--color-champagne)]"}),T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Filter:"})]}),T.jsx("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:i,onChange:_=>o(_.target.value),children:d.map(_=>T.jsxs("option",{value:_,children:[_," Models"]},_))})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Sort by:"}),T.jsxs("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:u,onChange:_=>h(_.target.value),children:[T.jsx("option",{value:"newest",children:"Newest Arrivals"}),T.jsx("option",{value:"price-low",children:"Price: Low to High"}),T.jsx("option",{value:"price-high",children:"Price: High to Low"})]})]})]})]}),T.jsx("div",{className:"four-cards-grid",children:m.map(_=>T.jsx("div",{className:"inv-card",children:T.jsx(Mx,{car:_,onClick:v=>{e(v),s("vehicle")}})},_.id))}),m.length===0&&T.jsxs("div",{className:"text-center py-24",children:[T.jsx("p",{className:"text-lg text-[var(--color-slate)]/60 font-medium",children:"No vehicles found matching your criteria."}),T.jsx("button",{onClick:()=>o("All"),className:"mt-4 text-[var(--color-champagne)] font-medium hover:underline",children:"Clear Filters"})]})]})}function ik({ id: s, setView: e }) {
+  const allCars = c7();
+  const n = allCars.find(S => S.id === s) || (typeof SIX_SCREENSHOT_CARS !== "undefined" ? SIX_SCREENSHOT_CARS.find(S => S.id === s) : null);
+  
+  const rawImages = (n && n.images && n.images.length) ? n.images : (n && n.image ? [n.image] : ["/images/hero_showroom.jpg"]);
+  const [activeImg, setActiveImg] = Fe.useState(0);
+  const [lightboxImg, setLightboxImg] = Fe.useState(null);
+
+  Fe.useEffect(() => {
+    window.scrollTo(0, 0);
+    setActiveImg(0);
+    const S = jn.context(() => {
+      jn.fromTo(".vd-img", { scale: 0.96, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" });
+      jn.fromTo(".vd-text", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: "power2.out", delay: 0.2 });
+    });
+    return () => S.revert();
+  }, [s]);
+
+  Fe.useEffect(() => {
+    lightboxImg ? (document.body.style.overflow = "hidden") : (document.body.style.overflow = "unset");
+    return () => { document.body.style.overflow = "unset"; };
+  }, [lightboxImg]);
+
+  Fe.useEffect(() => {
+    const onKey = (ev) => {
+      if (ev.key === "Escape" || ev.keyCode === 27) {
+        lightboxImg ? setLightboxImg(null) : e("our-cars");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxImg, e]);
+
+  if (!n) {
+    return T.jsxs("div", {
+      className: "min-h-screen bg-white text-gray-900 pt-32 pb-24 px-6 text-center max-w-4xl mx-auto",
+      children: [
+        T.jsx("h2", { className: "text-2xl font-bold mb-4", children: "Vehicle not found." }),
+        T.jsx("button", { onClick: () => e("home"), className: "px-6 py-2.5 bg-black text-white text-xs font-bold uppercase tracking-wider rounded-lg cursor-pointer", children: "Back to Home" })
+      ]
+    });
+  }
+
+  const titleText = (n.year ? n.year + " " : "") + (n.make || "") + " " + (n.model || "");
+  const formattedPrice = "Ksh " + Number(n.price || 0).toLocaleString();
+  const mileageText = n.mileage || (n.year >= 2022 ? "38,000 km" : n.year >= 2021 ? "42,000 km" : "48,000 km");
+  const fuelText = n.fuel || (n.model && n.model.toLowerCase().includes("d") ? "Diesel" : "Petrol");
+  const transmissionText = n.transmission || "Automatic";
+  const bodyType = n.type || "Prestige Vehicle";
+
+  const prevImage = (ev) => {
+    if (ev) ev.stopPropagation();
+    setActiveImg(prev => (prev - 1 + rawImages.length) % rawImages.length);
+  };
+
+  const nextImage = (ev) => {
+    if (ev) ev.stopPropagation();
+    setActiveImg(prev => (prev + 1) % rawImages.length);
+  };
+
+  const whatsappInquiryUrl = "https://wa.me/254713583829?text=" + encodeURIComponent(
+    "Hello Mr. Joseph, I am interested in inquiring about the " + titleText + " (" + formattedPrice + "). Please provide availability and private viewing details."
+  );
+
+  return T.jsxs("div", {
+    className: "bg-white text-gray-900 font-sans min-h-screen pb-24 w-full",
+    children: [
+      /* Top Navigation Bar */
+      T.jsx("div", {
+        className: "pt-24 sm:pt-28 px-4 sm:px-6 pb-6 max-w-7xl mx-auto w-full",
+        children: T.jsxs("div", {
+          className: "flex items-center justify-between border-b border-gray-100 pb-4",
+          children: [
+            T.jsxs("button", {
+              onClick: () => e("our-cars"),
+              className: "inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-gray-600 hover:text-black transition-colors cursor-pointer font-bold",
+              children: [
+                T.jsx(_y, { size: 14 }),
+                "Back to Collection"
+              ]
+            }),
+            T.jsxs("span", {
+              className: "text-xs font-mono text-gray-400 uppercase tracking-wider",
+              children: ["REF / ", n.id.toUpperCase()]
+            })
+          ]
+        })
+      }),
+
+      /* Main Vehicle Section: Gallery (Left) + Details Card (Right) */
+      T.jsx("div", {
+        className: "max-w-7xl mx-auto px-4 sm:px-6 pb-14",
+        children: T.jsxs("div", {
+          className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start",
+          children: [
+            /* LEFT: PHOTO GALLERY (7 Cols) */
+            T.jsxs("div", {
+              className: "lg:col-span-7 space-y-4 vd-img",
+              children: [
+                /* Big Image Preview with Next/Prev Arrows */
+                T.jsxs("div", {
+                  className: "relative aspect-[4/3] sm:aspect-[16/11] bg-neutral-900 rounded-2xl overflow-hidden shadow-lg group cursor-pointer w-full border border-gray-100",
+                  onClick: () => setLightboxImg(rawImages[activeImg]),
+                  children: [
+                    T.jsx("img", {
+                      src: rawImages[activeImg],
+                      alt: titleText,
+                      className: "w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
+                    }),
+                    /* Left Carousel Arrow */
+                    rawImages.length > 1 && T.jsx("button", {
+                      type: "button",
+                      onClick: prevImage,
+                      className: "absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 hover:bg-black/90 text-white rounded-full flex items-center justify-center transition-all cursor-pointer z-10",
+                      children: T.jsx("svg", { viewBox: "0 0 24 24", width: 22, height: 22, fill: "none", stroke: "currentColor", strokeWidth: 2.5, children: T.jsx("polyline", { points: "15 18 9 12 15 6" }) })
+                    }),
+                    /* Right Carousel Arrow */
+                    rawImages.length > 1 && T.jsx("button", {
+                      type: "button",
+                      onClick: nextImage,
+                      className: "absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 hover:bg-black/90 text-white rounded-full flex items-center justify-center transition-all cursor-pointer z-10",
+                      children: T.jsx("svg", { viewBox: "0 0 24 24", width: 22, height: 22, fill: "none", stroke: "currentColor", strokeWidth: 2.5, children: T.jsx("polyline", { points: "9 18 15 12 9 6" }) })
+                    }),
+                    /* Badge counter */
+                    T.jsxs("div", {
+                      className: "absolute bottom-4 left-4 px-3 py-1 bg-black/70 backdrop-blur-sm text-white font-mono text-xs rounded-full",
+                      children: [activeImg + 1, " / ", rawImages.length]
+                    }),
+                    /* Fullscreen Icon */
+                    T.jsx("div", {
+                      className: "absolute bottom-4 right-4 w-9 h-9 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white",
+                      children: T.jsx("svg", { viewBox: "0 0 24 24", width: 16, height: 16, fill: "none", stroke: "currentColor", strokeWidth: 2, children: [T.jsx("path", { d: "M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" })] })
+                    })
+                  ]
+                }),
+
+                /* Thumbnails Strip */
+                rawImages.length > 1 && T.jsx("div", {
+                  className: "flex gap-2.5 overflow-x-auto pb-2 scrollbar-thin",
+                  children: rawImages.map((imgUrl, idx) => T.jsx("button", {
+                    key: idx,
+                    type: "button",
+                    onClick: () => setActiveImg(idx),
+                    className: "w-20 h-16 sm:w-24 sm:h-18 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer " + (activeImg === idx ? "border-[#C59B51] ring-2 ring-[#C59B51]/30" : "border-gray-200 opacity-70 hover:opacity-100"),
+                    children: T.jsx("img", { src: imgUrl, alt: "thumbnail", className: "w-full h-full object-cover" })
+                  }, idx))
+                })
+              ]
+            }),
+
+            /* RIGHT: VEHICLE INFORMATION & ACQUISITION (5 Cols) */
+            T.jsxs("div", {
+              className: "lg:col-span-5 space-y-6 vd-text",
+              children: [
+                /* Category / Status Header */
+                T.jsxs("div", {
+                  className: "flex items-center justify-between",
+                  children: [
+                    T.jsxs("div", {
+                      className: "inline-flex items-center gap-2 px-3 py-1 bg-[#FAF8F5] border border-[#C59B51]/30 rounded-full text-xs font-mono font-bold tracking-wider",
+                      style: { color: "#C59B51" },
+                      children: [
+                        T.jsx("span", { className: "w-2 h-2 rounded-full bg-[#25D366] animate-pulse" }),
+                        (n.status || "AVAILABLE").toUpperCase(),
+                        " • ",
+                        bodyType.toUpperCase()
+                      ]
+                    }),
+                    T.jsx("span", {
+                      className: "text-xs font-mono font-bold text-gray-500 uppercase tracking-widest",
+                      children: n.location || "SHOWROOM"
+                    })
+                  ]
+                }),
+
+                /* Main Title */
+                T.jsx("h1", {
+                  className: "text-3xl sm:text-4xl font-serif italic text-gray-900 font-bold leading-tight",
+                  children: titleText
+                }),
+
+                /* Price Display - Standalone Without Borders */
+                T.jsxs("div", {
+                  className: "py-2 flex items-baseline justify-between",
+                  children: [
+                    T.jsxs("div", {
+                      children: [
+                        T.jsx("p", { className: "text-xs font-mono uppercase tracking-[0.2em] text-gray-400 font-semibold mb-1", children: "ACQUISITION VALUE" }),
+                        T.jsx("p", { className: "text-3xl sm:text-4xl font-extrabold tracking-tight", style: { color: "#C59B51" }, children: formattedPrice })
+                      ]
+                    }),
+                    T.jsx("span", { className: "text-xs font-mono font-medium text-gray-400", children: "Tax Paid" })
+                  ]
+                }),
+
+                /* Key Specifications Grid - Words Stand Alone Without Borders - Custom Colors */
+                T.jsxs("div", {
+                  className: "grid grid-cols-2 gap-y-4 gap-x-6 py-2",
+                  children: [
+                    T.jsxs("div", {
+                      className: "space-y-0.5",
+                      children: [
+                        T.jsx("p", { className: "text-[11px] font-mono uppercase tracking-wider font-bold", style: { color: "#DC2626" }, children: "MILEAGE" }),
+                        T.jsx("p", { className: "text-base font-bold text-gray-900", children: mileageText })
+                      ]
+                    }),
+                    T.jsxs("div", {
+                      className: "space-y-0.5",
+                      children: [
+                        T.jsx("p", { className: "text-[11px] font-mono uppercase tracking-wider font-bold", style: { color: "#2563EB" }, children: "TRANSMISSION" }),
+                        T.jsx("p", { className: "text-base font-bold text-gray-900", children: transmissionText })
+                      ]
+                    }),
+                    T.jsxs("div", {
+                      className: "space-y-0.5",
+                      children: [
+                        T.jsx("p", { className: "text-[11px] font-mono uppercase tracking-wider font-bold", style: { color: "#16A34A" }, children: "FUEL TYPE" }),
+                        T.jsx("p", { className: "text-base font-bold text-gray-900", children: fuelText })
+                      ]
+                    }),
+                    T.jsxs("div", {
+                      className: "space-y-0.5",
+                      children: [
+                        T.jsx("p", { className: "text-[11px] font-mono uppercase tracking-wider font-bold", style: { color: "#DC2626" }, children: "MODEL YEAR" }),
+                        T.jsx("p", { className: "text-base font-bold text-gray-900", children: n.year || "2024" })
+                      ]
+                    })
+                  ]
+                }),
+
+                /* Call to Actions */
+                T.jsxs("div", {
+                  className: "space-y-3 pt-2",
+                  children: [
+                    /* WhatsApp Inquiry Button */
+                    T.jsxs("a", {
+                      href: whatsappInquiryUrl,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                      className: "w-full py-4 px-6 bg-[#C59B51] hover:bg-[#B38A40] text-black font-extrabold uppercase tracking-widest text-xs rounded-xl flex items-center justify-center gap-2.5 transition-colors cursor-pointer shadow-md",
+                      children: [
+                        T.jsx("svg", { viewBox: "0 0 24 24", width: 20, height: 20, style: { fill: "#25D366" }, children: T.jsx("path", { d: "M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.79 14.11c-.24.68-1.4 1.25-1.92 1.33-.49.07-1.12.1-3.23-.77-2.69-1.12-4.41-3.86-4.54-4.04-.13-.18-1.08-1.44-1.08-2.75 0-1.31.69-1.96.93-2.22.24-.26.53-.33.71-.33.18 0 .36 0 .51.01.16.01.38-.06.6.46.22.53.77 1.87.84 2.01.07.14.11.31.02.49-.09.18-.13.29-.27.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.16.27.69 1.14 1.48 1.84 1.02.9 1.88 1.18 2.14 1.31.27.13.42.11.58-.07.16-.18.67-.78.85-1.05.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.27.13.44.2.51.31.06.12.06.7-.18 1.38z" }) }),
+                        "Inquire to Acquire"
+                      ]
+                    }),
+
+                    /* Calculate Financing & Contact Side-by-Side */
+                    T.jsxs("div", {
+                      className: "grid grid-cols-2 gap-3 mt-4",
+                      children: [
+                        T.jsx("button", {
+                          type: "button",
+                          onClick: () => {
+                            window.__selectedFinancingCar = n;
+                            try {
+                              sessionStorage.setItem("financing_car_id", n.id);
+                              sessionStorage.setItem("financing_car_price", String(n.price || ""));
+                              sessionStorage.setItem("financing_car_name", ((n.year ? n.year + " " : "") + (n.make || "") + " " + (n.model || "")).trim());
+                            } catch(err) {}
+                            e("financing");
+                          },
+                          className: "py-3 px-4 border border-black/15 hover:border-[#C59B51] hover:text-[#C59B51] text-gray-800 text-xs font-bold uppercase tracking-wider rounded-xl transition-colors cursor-pointer text-center",
+                          children: "Calculate Financing"
+                        }),
+                        T.jsxs("a", {
+                          href: "tel:+254713583829",
+                          className: "py-3 px-4 border border-black/15 hover:border-[#C59B51] hover:text-[#C59B51] text-gray-800 text-xs font-bold uppercase tracking-wider rounded-xl transition-colors cursor-pointer text-center flex items-center justify-center gap-1.5",
+                          children: [
+                            T.jsx(Ey, { size: 14 }),
+                            "Call 0713583829"
+                          ]
+                        })
+                      ]
+                    })
+                  ]
+                })
+              ]
+            })
+          ]
+        })
+      }),
+
+      /* Technical Specifications & Vehicle Features Side-by-Side */
+      T.jsx("div", {
+        className: "max-w-7xl mx-auto px-4 sm:px-6 py-12 border-t border-gray-100",
+        children: T.jsxs("div", {
+          className: "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start",
+          children: [
+            /* LEFT: VEHICLE SPECIFICATIONS */
+            T.jsxs("div", {
+              className: "space-y-4",
+              children: [
+                T.jsx("p", { className: "text-xs font-mono uppercase tracking-[0.25em] font-bold text-[#C59B51]", children: "TECHNICAL DOSSIER" }),
+                T.jsx("h2", { className: "text-2xl font-serif italic text-gray-900 font-bold", children: "Vehicle Specifications" }),
+                T.jsxs("div", {
+                  className: "divide-y divide-gray-100 border-y border-gray-100 text-sm",
+                  children: [
+                    T.jsxs("div", { className: "py-2.5 flex items-center gap-6", children: [T.jsx("span", { className: "text-gray-500 font-medium w-44 shrink-0", children: "Make" }), T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: n.make })] }),
+                    T.jsxs("div", { className: "py-2.5 flex items-center gap-6", children: [T.jsx("span", { className: "text-gray-500 font-medium w-44 shrink-0", children: "Model" }), T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: n.model })] }),
+                    T.jsxs("div", { className: "py-2.5 flex items-center gap-6", children: [T.jsx("span", { className: "text-gray-500 font-medium w-44 shrink-0", children: "Year of Manufacture" }), T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: n.year })] }),
+                    T.jsxs("div", { className: "py-2.5 flex items-center gap-6", children: [T.jsx("span", { className: "text-gray-500 font-medium w-44 shrink-0", children: "Mileage" }), T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: mileageText })] }),
+                    T.jsxs("div", { className: "py-2.5 flex items-center gap-6", children: [T.jsx("span", { className: "text-gray-500 font-medium w-44 shrink-0", children: "Transmission" }), T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: transmissionText })] }),
+                    T.jsxs("div", { className: "py-2.5 flex items-center gap-6", children: [T.jsx("span", { className: "text-gray-500 font-medium w-44 shrink-0", children: "Fuel Type" }), T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: fuelText })] }),
+                    T.jsxs("div", { className: "py-2.5 flex items-center gap-6", children: [T.jsx("span", { className: "text-gray-500 font-medium w-44 shrink-0", children: "Body Style" }), T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: bodyType })] }),
+                    T.jsxs("div", { className: "py-2.5 flex items-center gap-6", children: [T.jsx("span", { className: "text-gray-500 font-medium w-44 shrink-0", children: "Location" }), T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: n.location || "Cars in Kenya" })] })
+                  ]
+                })
+              ]
+            }),
+
+            /* RIGHT: VEHICLE FEATURES */
+            T.jsxs("div", {
+              className: "space-y-4",
+              children: [
+                T.jsx("p", { className: "text-xs font-mono uppercase tracking-[0.25em] font-bold text-[#C59B51]", children: "EQUIPMENT & AMENITIES" }),
+                T.jsx("h2", { className: "text-2xl font-serif italic text-gray-900 font-bold", children: "Vehicle Features" }),
+                T.jsx("div", {
+                  className: "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm pt-1",
+                  children: [
+                    "Keyless Entry & Push Start",
+                    "Full Executive Leather Seats",
+                    "Reverse Parking Camera",
+                    "Front & Rear Parking Sensors",
+                    "Multi-Function Power Steering",
+                    "Power Heated Electric Mirrors",
+                    "Adaptive Cruise Control",
+                    "Factory Fitted Alloy Wheels",
+                    "LED Daytime Running Lights",
+                    "Multi-Zone Climate Control",
+                    "Panoramic Glass Sunroof",
+                    "Touchscreen Infotainment",
+                    "Intelligent 4WD / AWD",
+                    "Blind Spot Monitoring System"
+                  ].map((feat, idx) => T.jsxs("div", {
+                    key: idx,
+                    className: "flex items-center gap-2.5 py-1 text-gray-800",
+                    children: [
+                      T.jsx("div", {
+                        className: "w-4 h-4 rounded-full bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0",
+                        children: T.jsx("svg", { viewBox: "0 0 24 24", width: 11, height: 11, fill: "none", stroke: "#2563EB", strokeWidth: 3, children: T.jsx("polyline", { points: "20 6 9 17 4 12" }) })
+                      }),
+                      T.jsx("span", { className: "font-medium text-sm", children: feat })
+                    ]
+                  }))
+                })
+              ]
+            })
+          ]
+        })
+      }),
+
+      /* Lightbox Modal */
+      lightboxImg && T.jsxs("div", {
+        className: "fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4",
+        onClick: () => setLightboxImg(null),
+        children: [
+          T.jsx("button", {
+            type: "button",
+            onClick: () => setLightboxImg(null),
+            className: "absolute top-5 right-5 text-white text-3xl font-bold cursor-pointer hover:opacity-75 z-50",
+            children: "✕"
+          }),
+          T.jsx("img", {
+            src: lightboxImg,
+            alt: titleText,
+            className: "max-w-full max-h-[85vh] object-contain rounded shadow-2xl",
+            onClick: ev => ev.stopPropagation()
+          }),
+          T.jsx("button", {
+            type: "button",
+            onClick: (ev) => {
+              ev.stopPropagation();
+              const curIdx = rawImages.indexOf(lightboxImg);
+              const nextIdx = (curIdx - 1 + rawImages.length) % rawImages.length;
+              setLightboxImg(rawImages[nextIdx]);
+            },
+            className: "absolute left-4 top-1/2 -translate-y-1/2 text-white bg-white/20 hover:bg-white/40 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer text-2xl font-bold",
+            children: "‹"
+          }),
+          T.jsx("button", {
+            type: "button",
+            onClick: (ev) => {
+              ev.stopPropagation();
+              const curIdx = rawImages.indexOf(lightboxImg);
+              const nextIdx = (curIdx + 1) % rawImages.length;
+              setLightboxImg(rawImages[nextIdx]);
+            },
+            className: "absolute right-4 top-1/2 -translate-y-1/2 text-white bg-white/20 hover:bg-white/40 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer text-2xl font-bold",
+            children: "›"
+          })
+        ]
+      })
+    ]
+  });
+};function sk({setView:pw}={}){
   const [formState, setFormState] = Fe.useState({ name: "", phone: "", email: "", topic: "General Inquiry", message: "" });
   const [submitted, setSubmitted] = Fe.useState(false);
   const [mailtoLink, setMailtoLink] = Fe.useState("");
@@ -3861,220 +4311,318 @@ function c7(){const[s,e]=Fe.useState(DEFAULT_PREVIOUS_CARS);return Fe.useEffect(
       })
     ]
   });
-};function ak({setView:s}){const[e,t]=Fe.useState(0),[n,i]=Fe.useState(0),[o,u]=Fe.useState(0),[h,d]=Fe.useState(0),[m,_]=Fe.useState(0);Fe.useEffect(()=>{window.scrollTo(0,0);const R=jn.context(()=>{jn.fromTo(".fin-card",{y:30,opacity:0},{y:0,opacity:1,duration:.8,stagger:.15,ease:"power2.out"})});return()=>R.revert()},[]);const v=Math.max(0,e-n-o),x=m>0?m/100/12:0,A=v>0&&h>0?(x>0?Math.round(v*x*Math.pow(1+x,h)/(Math.pow(1+x,h)-1)):Math.round(v/h)):0,y=v>0&&h>0&&A>0?Math.max(0,Math.round(A*h-v)):0,S=()=>`Hello Mr Joseph, I am interested in applying for pre-approval for a vehicle priced at Ksh ${e.toLocaleString()}. Down payment: Ksh ${n.toLocaleString()}, Trade-in: Ksh ${o.toLocaleString()}, Term: ${h} months, Rate: ${m}%. Monthly commitment: Ksh ${A.toLocaleString()}.`;const p1=e>0?Math.min(100,(e/50000000)*100):0,p2=n>0?Math.min(100,(n/30000000)*100):0,p3=o>0?Math.min(100,(o/20000000)*100):0,p4=h>0?Math.min(100,(h/84)*100):0,p5=m>0?Math.min(100,(m/25)*100):0;return T.jsxs("div",{className:"financing-dark-page pt-28 md:pt-32 px-6 pb-24",children:[T.jsxs("div",{className:"max-w-6xl mx-auto w-full",children:[T.jsxs("button",{onClick:()=>s("inventory"),className:"inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-white transition-colors mb-10 fin-card cursor-pointer",children:[T.jsx(_y,{size:15})," Back to Collection"]}),T.jsxs("div",{className:"max-w-3xl mx-auto text-center mb-14 fin-card",children:[T.jsx("p",{className:"font-mono text-xs uppercase tracking-[0.25em] mb-3 font-bold",style:{color:"#C59B51"},children:"FINANCIAL SERVICES"}),T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl mb-4 font-bold tracking-tight",style:{color:"#C59B51"},children:"Structured Acquisition."}),T.jsx("p",{className:"font-normal text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed",children:"We offer bespoke financing solutions tailored to your portfolio. Toggle or enter your numbers below to calculate your estimate."})]}),T.jsxs("div",{className:"grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto items-start",children:[T.jsxs("div",{className:"lg:col-span-7 financing-dark-card p-6 sm:p-8 md:p-10 fin-card space-y-6",children:[T.jsx("h3",{className:"text-xl font-medium text-white mb-6",children:"Finance Calculator"}),T.jsxs("div",{className:"space-y-6",children:[T.jsxs("div",{className:"space-y-2",children:[T.jsxs("div",{className:"flex justify-between items-center",children:[T.jsx("label",{className:"font-mono text-xs text-white font-bold uppercase tracking-wider",children:"VEHICLE PRICE (KSH)"}),T.jsx("input",{type:"number",min:"0",step:"50000",value:e,onChange:R=>t(Math.max(0,Number(R.target.value))),className:"financing-dark-input w-36 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"})]}),T.jsx("input",{type:"range",min:"0",max:"50000000",step:"100000",value:e,onChange:R=>t(Number(R.target.value)),className:"financing-gold-slider",style:{background:`linear-gradient(to right, #C59B51 0%, #C59B51 ${p1}%, #252530 ${p1}%, #252530 100%)`}})]}),T.jsxs("div",{className:"space-y-2",children:[T.jsxs("div",{className:"flex justify-between items-center",children:[T.jsx("label",{className:"font-mono text-xs text-white font-bold uppercase tracking-wider",children:"DOWN PAYMENT (KSH)"}),T.jsx("input",{type:"number",min:"0",step:"50000",value:n,onChange:R=>i(Math.max(0,Number(R.target.value))),className:"financing-dark-input w-36 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"})]}),T.jsx("input",{type:"range",min:"0",max:"30000000",step:"50000",value:n,onChange:R=>i(Number(R.target.value)),className:"financing-gold-slider",style:{background:`linear-gradient(to right, #C59B51 0%, #C59B51 ${p2}%, #252530 ${p2}%, #252530 100%)`}})]}),T.jsxs("div",{className:"space-y-2",children:[T.jsxs("div",{className:"flex justify-between items-center",children:[T.jsx("label",{className:"font-mono text-xs text-white font-bold uppercase tracking-wider",children:"TRADE-IN ALLOWANCE (KSH)"}),T.jsx("input",{type:"number",min:"0",step:"50000",value:o,onChange:R=>u(Math.max(0,Number(R.target.value))),className:"financing-dark-input w-36 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"})]}),T.jsx("input",{type:"range",min:"0",max:"20000000",step:"50000",value:o,onChange:R=>u(Number(R.target.value)),className:"financing-gold-slider",style:{background:`linear-gradient(to right, #C59B51 0%, #C59B51 ${p3}%, #252530 ${p3}%, #252530 100%)`}})]}),T.jsxs("div",{className:"space-y-2",children:[T.jsxs("div",{className:"flex justify-between items-center",children:[T.jsx("label",{className:"font-mono text-xs text-white font-bold uppercase tracking-wider",children:"TERM LENGTH (MONTHS)"}),T.jsx("input",{type:"number",min:"0",max:"84",step:"1",value:h,onChange:R=>d(Math.max(0,Number(R.target.value))),className:"financing-dark-input w-24 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"})]}),T.jsx("input",{type:"range",min:"0",max:"84",step:"6",value:h,onChange:R=>d(Number(R.target.value)),className:"financing-gold-slider",style:{background:`linear-gradient(to right, #C59B51 0%, #C59B51 ${p4}%, #252530 ${p4}%, #252530 100%)`}})]}),T.jsxs("div",{className:"space-y-2",children:[T.jsxs("div",{className:"flex justify-between items-center",children:[T.jsx("label",{className:"font-mono text-xs text-white font-bold uppercase tracking-wider",children:"INTEREST RATE (%)"}),T.jsx("input",{type:"number",min:"0",max:"30",step:"0.5",value:m,onChange:R=>_(Math.max(0,Number(R.target.value))),className:"financing-dark-input w-24 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"})]}),T.jsx("input",{type:"range",min:"0",max:"25",step:"0.5",value:m,onChange:R=>_(Number(R.target.value)),className:"financing-gold-slider",style:{background:`linear-gradient(to right, #C59B51 0%, #C59B51 ${p5}%, #252530 ${p5}%, #252530 100%)`}})]})]})]}),T.jsxs("div",{className:"lg:col-span-5 financing-dark-card p-6 sm:p-8 md:p-10 fin-card flex flex-col justify-between space-y-6",children:[T.jsxs("div",{children:[T.jsx("h3",{className:"text-xl font-medium text-white mb-6",children:"Estimation Summary"}),T.jsxs("div",{className:"financing-commitment-box py-8 px-6 text-center mb-8 shadow-inner",children:[T.jsx("p",{className:"font-mono text-xs text-black uppercase tracking-widest font-extrabold mb-3",children:"MONTHLY COMMITMENT"}),T.jsxs("p",{className:"font-serif text-3xl sm:text-4xl md:text-5xl font-bold",style:{color:"#C59B51"},children:["Ksh ",A.toLocaleString()]})]}),T.jsxs("div",{className:"space-y-3.5 mb-8 text-sm",children:[T.jsxs("div",{className:"flex justify-between items-center text-gray-300",children:[T.jsx("span",{children:"Total Financed"}),T.jsxs("span",{className:"font-bold font-mono",style:{color:"#C59B51"},children:["Ksh ",v.toLocaleString()]})]}),T.jsxs("div",{className:"flex justify-between items-center text-gray-300",children:[T.jsx("span",{children:"Term Length"}),T.jsxs("span",{className:"font-bold font-mono",style:{color:"#C59B51"},children:[h," Months"]})]}),T.jsxs("div",{className:"flex justify-between items-center text-gray-300",children:[T.jsx("span",{children:"Interest Rate"}),T.jsxs("span",{className:"font-bold font-mono",style:{color:"#C59B51"},children:[m,"% APR"]})]}),T.jsxs("div",{className:"flex justify-between items-center text-gray-300 pt-3 border-t border-white/10",children:[T.jsx("span",{children:"Estimated Interest"}),T.jsxs("span",{className:"font-bold font-mono",style:{color:"#C59B51"},children:["Ksh ",y.toLocaleString()]})]})]})]}),T.jsxs("div",{className:"space-y-4 pt-2",children:[T.jsx("a",{href:`https://wa.me/254713583829?text=${encodeURIComponent(S())}`,target:"_blank",rel:"noopener noreferrer",className:"w-full block text-center py-4 bg-black hover:bg-neutral-900 text-white text-xs uppercase tracking-[0.2em] font-extrabold transition-all shadow-lg rounded-lg border border-white/20 cursor-pointer",children:"Apply for Pre-Approval"}),T.jsx("div",{className:"p-3.5 border border-red-500/40 bg-red-950/20 rounded-lg",children:T.jsxs("p",{className:"text-[10.5px] text-red-400 leading-relaxed font-mono",children:[T.jsx("span",{className:"font-bold text-red-400",children:"DISCLAIMER:"})," This calculator is for estimation purposes only. Actual rates and payments may vary based on credit history, final vehicle price, and lender terms. Not an offer of credit."]})})]})]})]})]})]});}
-const CAR_DATABASE = {
-  "Toyota": {
-    aliases: ["toyota"],
-    models: [
-      "Land Cruiser 300", "Land Cruiser 200", "Land Cruiser Prado 250",
-      "Land Cruiser Prado 150", "Land Cruiser 79", "Land Cruiser 76",
-      "Hilux", "Fortuner", "RAV4", "Harrier", "Vanguard", "Crown",
-      "Camry", "Mark X", "Premio", "Allion", "Alphard", "Vellfire",
-      "Voxy", "Noah", "Esquire", "HiAce", "Probox", "Succeed",
-      "Sienta", "Wish", "Corolla Cross", "Corolla Fielder", "Corolla Axio",
-      "Auris", "Vitz", "Yaris", "Ractis", "Passo", "Rush", "Raize",
-      "C-HR", "GR Supra", "GR Yaris", "GR86"
-    ]
-  },
-  "Mercedes-Benz": {
-    aliases: ["mercedes", "mercedes-benz", "mercedes benz", "merc", "benz"],
-    models: [
-      "C-Class", "E-Class", "S-Class", "G-Class / G-Wagon", "GLC", "GLE",
-      "GLS", "GLA", "GLB", "CLA", "CLS", "A-Class", "AMG GT", "V-Class",
-      "Maybach S-Class", "Maybach GLS", "C200", "C300", "C43 AMG", "C63 AMG",
-      "E200", "E220d", "E250", "E300", "E350", "E53 AMG", "E63 AMG",
-      "G63 AMG", "GLE 450", "GLE 53 AMG", "GLC 250", "GLC 300"
-    ]
-  },
-  "Nissan": {
-    aliases: ["nissan"],
-    models: [
-      "Patrol Y62", "Patrol Super Safari", "Patrol NISMO", "X-Trail",
-      "Navara", "Qashqai", "Juke", "Note", "Serena", "GT-R", "Teana",
-      "Sylphy", "Tiida", "Wingroad", "AD Van", "NV200", "NV350 Caravan",
-      "Murano", "Pathfinder"
-    ]
-  },
-  "Mazda": {
-    aliases: ["mazda"],
-    models: [
-      "CX-5", "Atenza", "Axela", "Demio", "CX-3", "CX-30", "CX-8",
-      "CX-9", "CX-60", "CX-90", "BT-50", "MX-5 Miata", "Biante", "Premacy"
-    ]
-  },
-  "Subaru": {
-    aliases: ["subaru"],
-    models: [
-      "Outback", "Forester", "Legacy", "XV", "Crosstrek", "WRX STI",
-      "WRX", "Impreza", "Levorg", "BRZ", "Exiga"
-    ]
-  },
-  "Land Rover": {
-    aliases: ["land rover", "range rover", "rangerover", "landrover", "defender"],
-    models: [
-      "Range Rover Vogue", "Range Rover Autobiography", "Range Rover SV",
-      "Range Rover Sport", "Range Rover Sport SVR", "Range Rover Velar",
-      "Range Rover Evoque", "Defender 110", "Defender 90", "Defender 130",
-      "Discovery 5", "Discovery 4", "Discovery Sport", "Freelander 2"
-    ]
-  },
-  "BMW": {
-    aliases: ["bmw"],
-    models: [
-      "3 Series", "5 Series", "7 Series", "X1", "X2", "X3", "X4", "X5",
-      "X6", "X7", "4 Series", "6 Series", "8 Series", "M2", "M3", "M4",
-      "M5", "Z4", "320i", "320d", "330i", "M340i", "520i", "520d", "530i"
-    ]
-  },
-  "Porsche": {
-    aliases: ["porsche"],
-    models: [
-      "Cayenne", "Cayenne Coupe", "Macan", "Panamera", "911 Carrera",
-      "911 Turbo", "911 GT3", "718 Cayman", "718 Boxster", "Taycan"
-    ]
-  },
-  "Lexus": {
-    aliases: ["lexus"],
-    models: [
-      "LX 600", "LX 570", "LX 500d", "RX 350", "RX 450h", "RX 500h",
-      "GX 550", "GX 460", "NX 300", "NX 350", "ES 300h", "ES 250",
-      "IS 300", "IS 350", "LS 500", "LC 500", "LM 350", "UX 250h"
-    ]
-  },
-  "Isuzu": {
-    aliases: ["isuzu"],
-    models: [
-      "D-Max", "D-Max V-Cross", "D-Max Double Cab", "D-Max Single Cab",
-      "MU-X", "NPR", "NQR", "FRR"
-    ]
-  },
-  "Volkswagen": {
-    aliases: ["volkswagen", "vw"],
-    models: [
-      "Touareg", "Tiguan", "Tiguan Allspace", "Golf", "Golf GTI",
-      "Golf R", "Passat", "Arteon", "Amarok", "T-Roc", "T-Cross", "Polo"
-    ]
-  },
-  "Audi": {
-    aliases: ["audi"],
-    models: [
-      "Q7", "Q8", "Q5", "Q3", "Q2", "A6", "A7", "A8", "A4", "A5", "A3",
-      "RS6", "RS7", "RSQ8", "RS3", "R8"
-    ]
-  },
-  "Ford": {
-    aliases: ["ford"],
-    models: [
-      "Ranger", "Ranger Raptor", "Ranger Wildtrak", "Everest", "Mustang",
-      "F-150", "F-150 Raptor", "Explorer", "Expedition", "Bronco"
-    ]
-  },
-  "Mitsubishi": {
-    aliases: ["mitsubishi"],
-    models: [
-      "Pajero", "Pajero Sport", "Outlander", "L200 / Triton",
-      "Eclipse Cross", "ASX", "Delica D:5", "Lancer Evolution"
-    ]
-  },
-  "Honda": {
-    aliases: ["honda"],
-    models: [
-      "CR-V", "HR-V / Vezel", "Civic", "Civic Type R", "Fit / Jazz",
-      "Accord", "Freed", "Stepwgn", "Odyssey"
-    ]
-  },
-  "Suzuki": {
-    aliases: ["suzuki"],
-    models: [
-      "Jimny", "Jimny 5-Door", "Grand Vitara", "Vitara", "Swift",
-      "Swift Sport", "Alto", "Hustler", "Spacia", "Wagon R", "Baleno", "Ertiga"
-    ]
-  },
-  "Volvo": {
-    aliases: ["volvo"],
-    models: [
-      "XC90", "XC60", "XC40", "V90 Cross Country", "S90", "S60"
-    ]
-  },
-  "Hyundai": {
-    aliases: ["hyundai"],
-    models: [
-      "Santa Fe", "Tucson", "Palisade", "Creta", "Staria", "Elantra",
-      "Kona", "H-1"
-    ]
-  },
-  "Kia": {
-    aliases: ["kia"],
-    models: [
-      "Sportage", "Sorento", "Telluride", "Carnival", "Seltos", "Stinger"
-    ]
-  },
-  "Daihatsu": {
-    aliases: ["daihatsu"],
-    models: [
-      "Terios", "Hijet Truck", "Hijet Cargo", "Boon", "Mira e:S",
-      "Tanto", "Cast", "Move", "Rocky"
-    ]
-  },
-  "Rolls-Royce": {
-    aliases: ["rolls-royce", "rolls royce", "rolls"],
-    models: ["Phantom", "Ghost", "Cullinan", "Wraith", "Dawn", "Spectre"]
-  },
-  "Bentley": {
-    aliases: ["bentley"],
-    models: ["Continental GT", "Flying Spur", "Bentayga", "Mulsanne"]
-  },
-  "Lamborghini": {
-    aliases: ["lamborghini", "lambo"],
-    models: ["Urus", "Huracan", "Revuelto", "Aventador"]
-  },
-  "Ferrari": {
-    aliases: ["ferrari"],
-    models: ["Purosangue", "296 GTB", "SF90 Stradale", "F8 Tributo", "Roma", "812 Superfast"]
-  },
-  "Aston Martin": {
-    aliases: ["aston martin", "aston"],
-    models: ["DBX", "DBX 707", "Vantage", "DB12", "DB11", "DBS"]
-  },
-  "Jeep": {
-    aliases: ["jeep"],
-    models: ["Wrangler Rubicon", "Wrangler Sahara", "Gladiator", "Grand Cherokee"]
-  },
-  "Peugeot": {
-    aliases: ["peugeot"],
-    models: ["3008", "5008", "2008", "508", "Landtrek"]
-  },
-  "Jaguar": {
-    aliases: ["jaguar", "jag"],
-    models: ["F-Pace", "E-Pace", "F-Type", "XF", "XJ"]
-  },
-  "Tesla": {
-    aliases: ["tesla"],
-    models: ["Model S", "Model 3", "Model X", "Model Y", "Cybertruck"]
-  },
-  "Chevrolet": {
-    aliases: ["chevrolet", "chevy"],
-    models: ["Corvette", "Tahoe", "Suburban", "Silverado", "Camaro"]
-  },
-  "Cadillac": {
-    aliases: ["cadillac"],
-    models: ["Escalade", "CT5-V", "XT6"]
-  },
-  "Renault": {
-    aliases: ["renault"],
-    models: ["Duster", "Koleos", "Kwid", "Triber", "Megane"]
-  },
-  "Mini": {
-    aliases: ["mini", "mini cooper"],
-    models: ["Cooper", "Cooper S", "Countryman", "Clubman", "John Cooper Works"]
-  },
-  "Mahindra": {
-    aliases: ["mahindra"],
-    models: ["Scorpio-N", "Scorpio Classic", "XUV700", "Thar", "Bolero Pik-Up"]
-  }
-};
+};function ak({ setView: s, carId: targetCarId }) {
+  const allCars = c7();
 
-function getModelsAndBrand(e) {
+  let storedId = null;
+  let storedPrice = null;
+  let storedName = null;
+  try {
+    storedId = sessionStorage.getItem("financing_car_id");
+    storedPrice = sessionStorage.getItem("financing_car_price");
+    storedName = sessionStorage.getItem("financing_car_name");
+  } catch (err) {}
+
+  const effectiveCarId = targetCarId || (window.__selectedFinancingCar && window.__selectedFinancingCar.id) || storedId;
+
+  const selectedCar = (window.__selectedFinancingCar && (!effectiveCarId || window.__selectedFinancingCar.id === effectiveCarId))
+    ? window.__selectedFinancingCar
+    : (effectiveCarId ? (allCars.find(c => c.id === effectiveCarId) || (typeof SIX_SCREENSHOT_CARS !== "undefined" ? SIX_SCREENSHOT_CARS.find(c => c.id === effectiveCarId) : null)) : (allCars[0] || null));
+
+  const resolvedPrice = (selectedCar && selectedCar.price) ? selectedCar.price : (storedPrice ? Number(storedPrice) : ((allCars[0] && allCars[0].price) ? allCars[0].price : 16499999));
+  const resolvedDown = Math.round(resolvedPrice * 0.2);
+
+  const [e, t] = Fe.useState(resolvedPrice),
+        [n, i] = Fe.useState(resolvedDown),
+        [o, u] = Fe.useState(0),
+        [h, d] = Fe.useState(48),
+        [m, _] = Fe.useState(13);
+
+  Fe.useEffect(() => {
+    window.scrollTo(0, 0);
+    const R = jn.context(() => {
+      jn.fromTo(".fin-card", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" });
+    });
+    return () => R.revert();
+  }, []);
+
+  Fe.useEffect(() => {
+    if (resolvedPrice > 0) {
+      t(resolvedPrice);
+      i(Math.round(resolvedPrice * 0.2));
+      d(48);
+      _(13);
+    }
+  }, [effectiveCarId, resolvedPrice]);
+
+  const v = Math.max(0, e - n - o),
+        x = m > 0 ? m / 100 / 12 : 0,
+        A = v > 0 && h > 0 ? (x > 0 ? Math.round(v * x * Math.pow(1 + x, h) / (Math.pow(1 + x, h) - 1)) : Math.round(v / h)) : 0,
+        y = v > 0 && h > 0 && A > 0 ? Math.max(0, Math.round(A * h - v)) : 0,
+        carName = selectedCar ? ((selectedCar.year ? selectedCar.year + " " : "") + (selectedCar.make || "") + " " + (selectedCar.model || "")).trim() : (storedName || "Luxury Vehicle"),
+        S = () => `Hello Mr Joseph, I am interested in applying for pre-approval for the ${carName} priced at Ksh ${e.toLocaleString()}. Down payment: Ksh ${n.toLocaleString()}, Trade-in: Ksh ${o.toLocaleString()}, Term: ${h} months, Rate: ${m}%. Monthly commitment: Ksh ${A.toLocaleString()}.`;
+
+  const p1 = e > 0 ? Math.min(100, (e / 50000000) * 100) : 0,
+        p2 = n > 0 ? Math.min(100, (n / 30000000) * 100) : 0,
+        p3 = o > 0 ? Math.min(100, (o / 20000000) * 100) : 0,
+        p4 = h > 0 ? Math.min(100, (h / 84) * 100) : 0,
+        p5 = m > 0 ? Math.min(100, (m / 25) * 100) : 0;
+
+  return T.jsxs("div", {
+    className: "financing-dark-page pt-28 md:pt-32 px-6 pb-24",
+    children: [
+      T.jsxs("div", {
+        className: "max-w-6xl mx-auto w-full",
+        children: [
+          T.jsxs("button", {
+            onClick: () => selectedCar ? s("vehicle") : s("our-cars"),
+            className: "inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-white transition-colors mb-10 fin-card cursor-pointer",
+            children: [
+              T.jsx(_y, { size: 15 }),
+              selectedCar ? (" Back to " + carName) : " Back to Collection"
+            ]
+          }),
+          T.jsxs("div", {
+            className: "max-w-3xl mx-auto text-center mb-14 fin-card",
+            children: [
+              T.jsx("p", {
+                className: "font-mono text-xs uppercase tracking-[0.25em] mb-3 font-bold",
+                style: { color: "#C59B51" },
+                children: selectedCar ? ("FINANCING DOSSIER • " + carName.toUpperCase()) : "FINANCIAL SERVICES"
+              }),
+              T.jsx("h1", {
+                className: "font-serif italic text-4xl sm:text-5xl md:text-6xl mb-4 font-bold tracking-tight",
+                style: { color: "#C59B51" },
+                children: selectedCar ? carName : "Structured Acquisition."
+              }),
+              T.jsx("p", {
+                className: "font-normal text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed",
+                children: selectedCar ? ("Bespoke financing proposal calibrated specifically for this " + carName + ". Adjust your parameters below.") : "We offer bespoke financing solutions tailored to your portfolio. Toggle or enter your numbers below to calculate your estimate."
+              })
+            ]
+          }),
+          T.jsxs("div", {
+            className: "grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto items-start",
+            children: [
+              T.jsxs("div", {
+                className: "lg:col-span-7 financing-dark-card p-6 sm:p-8 md:p-10 fin-card space-y-6",
+                children: [
+                  T.jsx("h3", { className: "text-xl font-medium text-white mb-6", children: "Finance Calculator" }),
+                  T.jsxs("div", {
+                    className: "space-y-6",
+                    children: [
+                      /* Price Input */
+                      T.jsxs("div", {
+                        className: "space-y-2",
+                        children: [
+                          T.jsxs("div", {
+                            className: "flex justify-between items-center",
+                            children: [
+                              T.jsx("label", { className: "font-mono text-xs text-white font-bold uppercase tracking-wider", children: "VEHICLE PRICE (KSH)" }),
+                              T.jsx("input", {
+                                type: "number",
+                                min: "0",
+                                step: "50000",
+                                value: e,
+                                onChange: R => t(Math.max(0, Number(R.target.value))),
+                                className: "financing-dark-input w-36 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"
+                              })
+                            ]
+                          }),
+                          T.jsx("input", {
+                            type: "range",
+                            min: "0",
+                            max: "50000000",
+                            step: "100000",
+                            value: e,
+                            onChange: R => t(Number(R.target.value)),
+                            className: "financing-gold-slider",
+                            style: { background: `linear-gradient(to right, #C59B51 0%, #C59B51 ${p1}%, #252530 ${p1}%, #252530 100%)` }
+                          })
+                        ]
+                      }),
+                      /* Down Payment Input */
+                      T.jsxs("div", {
+                        className: "space-y-2",
+                        children: [
+                          T.jsxs("div", {
+                            className: "flex justify-between items-center",
+                            children: [
+                              T.jsx("label", { className: "font-mono text-xs text-white font-bold uppercase tracking-wider", children: "DOWN PAYMENT (KSH)" }),
+                              T.jsx("input", {
+                                type: "number",
+                                min: "0",
+                                step: "50000",
+                                value: n,
+                                onChange: R => i(Math.max(0, Number(R.target.value))),
+                                className: "financing-dark-input w-36 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"
+                              })
+                            ]
+                          }),
+                          T.jsx("input", {
+                            type: "range",
+                            min: "0",
+                            max: "30000000",
+                            step: "50000",
+                            value: n,
+                            onChange: R => i(Number(R.target.value)),
+                            className: "financing-gold-slider",
+                            style: { background: `linear-gradient(to right, #C59B51 0%, #C59B51 ${p2}%, #252530 ${p2}%, #252530 100%)` }
+                          })
+                        ]
+                      }),
+                      /* Trade-in Input */
+                      T.jsxs("div", {
+                        className: "space-y-2",
+                        children: [
+                          T.jsxs("div", {
+                            className: "flex justify-between items-center",
+                            children: [
+                              T.jsx("label", { className: "font-mono text-xs text-white font-bold uppercase tracking-wider", children: "TRADE-IN ALLOWANCE (KSH)" }),
+                              T.jsx("input", {
+                                type: "number",
+                                min: "0",
+                                step: "50000",
+                                value: o,
+                                onChange: R => u(Math.max(0, Number(R.target.value))),
+                                className: "financing-dark-input w-36 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"
+                              })
+                            ]
+                          }),
+                          T.jsx("input", {
+                            type: "range",
+                            min: "0",
+                            max: "20000000",
+                            step: "50000",
+                            value: o,
+                            onChange: R => u(Number(R.target.value)),
+                            className: "financing-gold-slider",
+                            style: { background: `linear-gradient(to right, #C59B51 0%, #C59B51 ${p3}%, #252530 ${p3}%, #252530 100%)` }
+                          })
+                        ]
+                      }),
+                      /* Term Length Input */
+                      T.jsxs("div", {
+                        className: "space-y-2",
+                        children: [
+                          T.jsxs("div", {
+                            className: "flex justify-between items-center",
+                            children: [
+                              T.jsx("label", { className: "font-mono text-xs text-white font-bold uppercase tracking-wider", children: "TERM LENGTH (MONTHS)" }),
+                              T.jsx("input", {
+                                type: "number",
+                                min: "0",
+                                max: "84",
+                                step: "1",
+                                value: h,
+                                onChange: R => d(Math.max(0, Number(R.target.value))),
+                                className: "financing-dark-input w-24 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"
+                              })
+                            ]
+                          }),
+                          T.jsx("input", {
+                            type: "range",
+                            min: "0",
+                            max: "84",
+                            step: "6",
+                            value: h,
+                            onChange: R => d(Number(R.target.value)),
+                            className: "financing-gold-slider",
+                            style: { background: `linear-gradient(to right, #C59B51 0%, #C59B51 ${p4}%, #252530 ${p4}%, #252530 100%)` }
+                          })
+                        ]
+                      }),
+                      /* Interest Rate Input */
+                      T.jsxs("div", {
+                        className: "space-y-2",
+                        children: [
+                          T.jsxs("div", {
+                            className: "flex justify-between items-center",
+                            children: [
+                              T.jsx("label", { className: "font-mono text-xs text-white font-bold uppercase tracking-wider", children: "INTEREST RATE (%)" }),
+                              T.jsx("input", {
+                                type: "number",
+                                min: "0",
+                                max: "30",
+                                step: "0.5",
+                                value: m,
+                                onChange: R => _(Math.max(0, Number(R.target.value))),
+                                className: "financing-dark-input w-24 px-3 py-1.5 text-right font-medium text-white text-sm outline-none"
+                              })
+                            ]
+                          }),
+                          T.jsx("input", {
+                            type: "range",
+                            min: "0",
+                            max: "25",
+                            step: "0.5",
+                            value: m,
+                            onChange: R => _(Number(R.target.value)),
+                            className: "financing-gold-slider",
+                            style: { background: `linear-gradient(to right, #C59B51 0%, #C59B51 ${p5}%, #252530 ${p5}%, #252530 100%)` }
+                          })
+                        ]
+                      })
+                    ]
+                  })
+                ]
+              }),
+              /* Summary Column */
+              T.jsxs("div", {
+                className: "lg:col-span-5 financing-dark-card p-6 sm:p-8 md:p-10 fin-card flex flex-col justify-between space-y-6",
+                children: [
+                  T.jsxs("div", {
+                    children: [
+                      T.jsx("h3", { className: "text-xl font-medium text-white mb-6", children: "Estimation Summary" }),
+                      T.jsxs("div", {
+                        className: "financing-commitment-box py-8 px-6 text-center mb-8 shadow-inner",
+                        children: [
+                          T.jsx("p", { className: "font-mono text-xs text-black uppercase tracking-widest font-extrabold mb-3", children: "MONTHLY COMMITMENT" }),
+                          T.jsxs("p", { className: "font-serif text-3xl sm:text-4xl md:text-5xl font-bold", style: { color: "#C59B51" }, children: ["Ksh ", A.toLocaleString()] })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-3.5 mb-8 text-sm",
+                        children: [
+                          T.jsxs("div", { className: "flex justify-between items-center text-gray-300", children: [T.jsx("span", { children: "Total Financed" }), T.jsxs("span", { className: "font-bold font-mono", style: { color: "#C59B51" }, children: ["Ksh ", v.toLocaleString()] })] }),
+                          T.jsxs("div", { className: "flex justify-between items-center text-gray-300", children: [T.jsx("span", { children: "Term Length" }), T.jsxs("span", { className: "font-bold font-mono", style: { color: "#C59B51" }, children: [h, " Months"] })] }),
+                          T.jsxs("div", { className: "flex justify-between items-center text-gray-300", children: [T.jsx("span", { children: "Interest Rate" }), T.jsxs("span", { className: "font-bold font-mono", style: { color: "#C59B51" }, children: [m, "% APR"] })] }),
+                          T.jsxs("div", { className: "flex justify-between items-center text-gray-300 pt-3 border-t border-white/10", children: [T.jsx("span", { children: "Estimated Interest" }), T.jsxs("span", { className: "font-bold font-mono", style: { color: "#C59B51" }, children: ["Ksh ", y.toLocaleString()] })] })
+                        ]
+                      })
+                    ]
+                  }),
+                  T.jsxs("div", {
+                    className: "space-y-4 pt-2",
+                    children: [
+                      T.jsx("a", {
+                        href: `https://wa.me/254713583829?text=${encodeURIComponent(S())}`,
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        className: "w-full block text-center py-4 bg-black hover:bg-neutral-900 text-white text-xs uppercase tracking-[0.2em] font-extrabold transition-all shadow-lg rounded-lg border border-white/20 cursor-pointer",
+                        children: "Apply for Pre-Approval"
+                      }),
+                      T.jsx("div", {
+                        className: "p-3.5 border border-red-500/40 bg-red-950/20 rounded-lg",
+                        children: T.jsxs("p", {
+                          className: "text-[10.5px] text-red-400 leading-relaxed font-mono",
+                          children: [
+                            T.jsx("span", { className: "font-bold text-red-400", children: "DISCLAIMER:" }),
+                            " This calculator is for estimation purposes only. Actual rates and payments may vary based on credit history, final vehicle price, and lender terms. Not an offer of credit."
+                          ]
+                        })
+                      })
+                    ]
+                  })
+                ]
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+};function getModelsAndBrand(e) {
   if (!e) return { brand: "", models: [] };
   const t = e.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
   if (!t) return { brand: "", models: [] };
@@ -4101,4 +4649,4 @@ function ok({setView:pw,onBack:pb}={}){var X,le,ye;const[s,e]=Fe.useState(null),
 Panoramic Sunroof
 Heated Seats`})]}),T.jsxs("div",{children:[T.jsxs("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 flex items-center justify-between font-medium",children:[T.jsxs("span",{className:"flex items-center gap-2",children:[T.jsx(zb,{size:14})," Photographs (Max 10)"]}),T.jsxs("span",{className:"text-[10px] bg-white/10 px-2 py-0.5 rounded",children:[((X=te.images)==null?void 0:X.length)||0,"/10 uploaded"]})]}),T.jsxs("div",{className:"border-2 border-dashed border-white/20 rounded-xl p-6 sm:p-8 flex flex-col items-center relative hover:bg-white/5 transition-colors mb-4 cursor-pointer",children:[T.jsx("input",{type:"file",multiple:!0,accept:"image/*",onChange:U,className:"absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20",disabled:(((le=te.images)==null?void 0:le.length)||0)>=10}),T.jsx("span",{className:"text-white/40 text-sm pointer-events-none",children:"Click to upload photos"})]}),(((ye=te.images)==null?void 0:ye.length)||0)>0&&T.jsx("div",{className:"grid grid-cols-2 sm:grid-cols-5 gap-2 mt-4",children:te.images.map((ae,B)=>T.jsxs("div",{className:"relative group rounded border border-white/10 overflow-hidden bg-black/50 aspect-square",children:[T.jsx("img",{src:ae,alt:`Preview ${B+1}`,className:"w-full h-full object-cover"}),T.jsx("button",{type:"button",onClick:()=>L(B),className:"absolute top-1 right-1 bg-red-500/80 hover:bg-red-500 w-6 h-6 flex items-center justify-center rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity z-30",children:"×"})]},B))})]}),T.jsx("button",{type:"submit",disabled:Y,className:"bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors disabled:opacity-50 text-sm w-full sm:w-auto",children:Y?"Saving...":k?"Save Changes":"Publish Listing"})]})]}):T.jsxs("div",{className:"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4",children:[x.filter(ae=>!ae.isDecorative).length===0&&T.jsx("div",{className:"col-span-full py-12 text-center text-white/30 border border-dashed border-white/10 rounded-2xl text-sm italic",children:"Inventory is empty."}),x.filter(ae=>!ae.isDecorative).map(ae=>{var B;return T.jsxs("div",{className:"bg-black/40 border border-white/5 rounded-2xl overflow-hidden flex flex-col",children:[T.jsx("div",{className:"h-32 p-4 flex items-center justify-center bg-black/60 shadow-inner",children:T.jsx("img",{src:ae.image,alt:"",className:"max-h-full object-contain"})}),T.jsxs("div",{className:"p-4 flex-1 flex flex-col justify-between gap-3",children:[T.jsxs("div",{children:[T.jsx("div",{className:"flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-2",children:T.jsxs("h4",{className:"font-serif text-lg text-white leading-tight",children:[ae.make," ",ae.model,ae.status&&ae.status!=="Available"&&T.jsx("span",{className:`ml-2 text-[9px] px-1.5 py-0.5 rounded uppercase tracking-widest font-mono align-middle ${ae.status==="Sold"?"bg-red-500/20 text-red-400 border border-red-500/30":"bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"}`,children:ae.status})]})}),T.jsxs("div",{className:"text-xs text-white/50 font-mono",children:[ae.year," • ",ae.price?`Ksh ${(B=ae.price)==null?void 0:B.toLocaleString()}`:"Price on Application"]})]}),T.jsxs("div",{className:"flex flex-col gap-3 mt-2 pt-2 border-t border-white/5",children:[ae.location&&T.jsxs("div",{className:"text-[10px] text-white/30 flex items-center gap-1 uppercase tracking-wider",children:[T.jsx(vy,{size:10})," ",ae.location]}),T.jsxs("div",{className:"flex items-center gap-2 w-full mt-1",children:[T.jsxs("button",{onClick:()=>V(ae),className:"flex-1 text-center text-white/70 hover:text-white bg-white/5 hover:bg-white/10 py-2 rounded flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider transition-all",children:[T.jsx(ew,{size:12})," Edit"]}),T.jsxs("button",{onClick:()=>Le(ae.id),className:"flex-1 text-center text-white/70 hover:text-red-400 bg-white/5 hover:bg-red-500/10 py-2 rounded flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider transition-all",children:[T.jsx(lw,{size:12})," Delete"]})]})]})]})]},ae.id)})]})]})]})]})}):T.jsx("div",{className:"admin-black-portal min-h-screen flex items-center justify-center p-6",style:{backgroundColor:"#0A0A0F",color:"#FFFFFF",minHeight:"100vh",width:"100%"},children:T.jsxs("div",{className:"w-full max-w-sm p-8 rounded-2xl shadow-2xl relative z-10",style:{backgroundColor:"#121218",border:"1px solid rgba(255,255,255,0.12)",color:"#FFFFFF"},children:[T.jsx("h2",{className:"text-3xl font-serif text-white mb-6 tracking-tight text-center",children:"Admin Portal"}),T.jsx("div",{className:"mb-4 text-center",children:T.jsxs("button",{type:"button",onClick:()=>pw?pw("home"):pb?pb():(window.location.hash="",window.location.pathname="/"),className:"text-xs text-[#C59B51] hover:underline font-mono inline-flex items-center gap-1.5 cursor-pointer",children:[T.jsx("span",{children:"←"}),"Back to Website"]})}),d&&T.jsx("div",{className:"text-red-400 mb-4 text-sm bg-red-900/20 p-3 rounded-lg border border-red-500/20",children:d}),T.jsxs("form",{onSubmit:O,className:"space-y-4",children:[T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2",children:"Email Address"}),T.jsx("input",{type:"email",value:t,onChange:ae=>n(ae.target.value),className:"w-full bg-transparent border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 transition-colors",required:!0})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2",children:"Password"}),T.jsx("input",{type:"password",value:i,onChange:ae=>o(ae.target.value),className:"w-full bg-transparent border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 transition-colors",required:!0})]}),T.jsx("button",{type:"submit",disabled:u,className:"w-full bg-white text-black font-medium py-3 rounded-lg hover:bg-white/90 transition-colors mt-2",children:u?"Authenticating...":"Sign In"})]})]})})}function zk({setView:s}){Fe.useEffect(()=>{window.scrollTo(0,0)},[]);return T.jsxs("div",{className:"min-h-screen pt-8 sm:pt-12 px-6 pb-24 max-w-6xl mx-auto w-full bg-white text-black",children:[T.jsxs("button",{onClick:()=>s("home"),className:"flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-black hover:opacity-70 transition-colors mb-10 cursor-pointer",children:[T.jsx(_y,{size:16})," Back to Home"]}),T.jsxs("div",{className:"grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center",children:[T.jsx("div",{className:"lg:col-span-5 relative",children:T.jsx("div",{className:"relative rounded-2xl overflow-hidden shadow-2xl border-2 border-[#C59B51]/30 aspect-[4/5] bg-neutral-900",children:T.jsx("img",{src:"/images/hero_showroom.jpg",alt:"Mr. Joseph Luxury Showroom",className:"w-full h-full object-cover filter brightness-90"})})}),T.jsxs("div",{className:"lg:col-span-7 space-y-6",children:[T.jsxs("div",{className:"space-y-3",children:[T.jsx("p",{className:"font-mono text-xs uppercase tracking-[0.25em] font-bold",style:{color:"#C59B51"},children:"ABOUT US"}),T.jsx("h1",{className:"font-serif italic text-3xl sm:text-4xl lg:text-5xl font-bold text-black leading-tight",children:"Business Strategist | Marketing Consultant | Premium Auto Specialist"}),T.jsx("div",{className:"w-20 h-1 bg-[#C59B51] rounded-full mt-4"})]}),T.jsx("p",{className:"text-gray-700 text-base sm:text-lg leading-relaxed font-normal",children:"I empower brands and entrepreneurs through tailored business strategy and high-impact marketing solutions that drive growth, visibility, and profitability. With a strong focus on results, I help businesses structure for sustainability and scale."}),T.jsx("p",{className:"text-gray-700 text-base sm:text-lg leading-relaxed font-normal",children:"I also deal in premium and luxury vehicles, offering trusted, high-end car solutions for elite clients."}),T.jsxs("div",{className:"p-6 bg-[#FAF8F5] border-l-4 border-[#C59B51] rounded-r-xl shadow-sm space-y-2 my-6",children:[T.jsx("p",{className:"font-sans font-bold text-black text-lg tracking-wide",children:"Business. Strategy. Luxury. All in one."}),T.jsx("p",{className:"font-serif italic text-xl font-bold",style:{color:"#C59B51"},children:"Let’s build your business. Let’s drive your dream."})]}),T.jsxs("div",{className:"flex flex-wrap gap-4 pt-2",children:[T.jsxs("a",{href:"https://wa.me/254713583829?text=Hello%20Mr%20Joseph%2C%20I%20would%20like%20to%20connect%20regarding%20business%20strategy%20and%20premium%20vehicles.",target:"_blank",rel:"noopener noreferrer",className:"px-7 py-3.5 bg-black hover:bg-neutral-800 text-white font-bold text-xs uppercase tracking-widest rounded-lg transition-all shadow-md flex items-center gap-2",children:["Contact Mr. Joseph",T.jsx("span",{children:"→"})]}),T.jsx("button",{onClick:()=>s("inventory"),className:"px-7 py-3.5 border-2 border-[#C59B51] text-[#C59B51] hover:bg-[#C59B51] hover:text-black font-bold text-xs uppercase tracking-widest rounded-lg transition-all cursor-pointer",children:"View Collection"})]})]})]})]});}
 function Yk({setView:s,setSelectedCar:e}){Fe.useEffect(()=>{window.scrollTo(0,0)},[]);const t=SIX_SCREENSHOT_CARS;return T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full bg-white text-black",children:[T.jsxs("button",{onClick:()=>s("home"),className:"flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-black hover:opacity-70 transition-colors mb-8 cursor-pointer",children:[T.jsx(_y,{size:15})," Back to Home"]}),T.jsxs("div",{className:"mb-10 text-left",children:[T.jsx("p",{className:"font-mono text-xs uppercase tracking-[0.25em] font-bold mb-2",style:{color:"#C59B51"},children:"SHOWROOM ARRIVALS"}),T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-black mb-3 font-bold",children:"New Arrivals"}),T.jsx("p",{className:"font-normal text-gray-600 text-sm sm:text-base max-w-xl",children:"Explore our latest handpicked prestige vehicles, featuring the premier motorcars from our showroom collection."})]}),T.jsx("div",{className:"six-cards-grid",children:t.map(n=>T.jsx(Mx,{car:n,onClick:i=>{e(i),s("vehicle")}},n.id))})]});}
-function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.useState(!1),[u,h]=Fe.useState("home"),d=m=>{m!==s&&(o(!0),jn.to(".main-content-area",{opacity:0,y:10,duration:.3,ease:"power2.inOut",onComplete:()=>{e(m),h(m),m!=="vehicle"&&n(null),jn.fromTo(".main-content-area",{opacity:0,y:-10},{opacity:1,y:0,duration:.4,ease:"power2.out"}),o(!1)}}))};return T.jsxs(T.Fragment,{children:[T.jsx(cw,{currentView:u,setView:d}),T.jsxs("main",{className:"main-content-area w-full",children:[s==="home"&&T.jsx(nk,{setView:d,setSelectedCar:n}),s==="our-cars"&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="new-arrivals"&&T.jsx(Yk,{setView:d,setSelectedCar:n}),s==="inventory-incoming"||s==="inventory-new"?T.jsx(Yk,{setView:d,setSelectedCar:n}):s.startsWith("inventory")&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="vehicle"&&t&&T.jsx(ik,{id:t,setView:d}),s==="about"&&T.jsx(zk,{setView:d}),s==="contact"&&T.jsx(sk,{}),s==="financing"&&T.jsx(ak,{setView:d})]}),T.jsx(hw,{setView:d})]})}function uk(){const s="/jii2",e=window.location.pathname,t=window.location.hash,n=e===s||e==="/jii2/"||t==="#jii2"||t==="#/jii2";return T.jsx("div",{className:"min-h-screen bg-[var(--color-obsidian)] text-[var(--color-base)] font-sans relative",children:n?T.jsx("div",{style:{backgroundColor:"#0A0A0F",minHeight:"100vh",width:"100%"},children:T.jsx(ok,{onBack:()=>{window.location.hash="",window.location.pathname="/"}})}):T.jsx(lk,{})})}Tb.createRoot(document.getElementById("root")).render(T.jsx(Fe.StrictMode,{children:T.jsx(uk,{})}));
+function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.useState(!1),[u,h]=Fe.useState("home"),d=m=>{m!==s&&(o(!0),jn.to(".main-content-area",{opacity:0,y:10,duration:.3,ease:"power2.inOut",onComplete:()=>{e(m),h(m),m!=="vehicle"&&m!=="financing"&&n(null),jn.fromTo(".main-content-area",{opacity:0,y:-10},{opacity:1,y:0,duration:.4,ease:"power2.out"}),o(!1)}}))};return T.jsxs(T.Fragment,{children:[T.jsx(cw,{currentView:u,setView:d}),T.jsxs("main",{className:"main-content-area w-full",children:[s==="home"&&T.jsx(nk,{setView:d,setSelectedCar:n}),s==="our-cars"&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="new-arrivals"&&T.jsx(Yk,{setView:d,setSelectedCar:n}),s==="inventory-incoming"||s==="inventory-new"?T.jsx(Yk,{setView:d,setSelectedCar:n}):s.startsWith("inventory")&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="vehicle"&&t&&T.jsx(ik,{id:t,setView:d}),s==="about"&&T.jsx(zk,{setView:d}),s==="contact"&&T.jsx(sk,{}),s==="financing"&&T.jsx(ak,{setView:d,carId:t})]}),T.jsx(hw,{setView:d})]})}function uk(){const s="/jii2",e=window.location.pathname,t=window.location.hash,n=e===s||e==="/jii2/"||t==="#jii2"||t==="#/jii2";return T.jsx("div",{className:"min-h-screen bg-[var(--color-obsidian)] text-[var(--color-base)] font-sans relative",children:n?T.jsx("div",{style:{backgroundColor:"#0A0A0F",minHeight:"100vh",width:"100%"},children:T.jsx(ok,{onBack:()=>{window.location.hash="",window.location.pathname="/"}})}):T.jsx(lk,{})})}Tb.createRoot(document.getElementById("root")).render(T.jsx(Fe.StrictMode,{children:T.jsx(uk,{})}));
