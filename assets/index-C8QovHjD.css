@@ -822,10 +822,10 @@ body {
 /* Compact Individual Car Card */
 .compact-car-card {
   background-color: #ffffff;
-  border: 1px solid #E5E7EB;
-  border-radius: 6px;
+  border: none !important;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   display: flex;
   flex-direction: column;
@@ -833,8 +833,8 @@ body {
 }
 .compact-car-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  border-color: #D1D5DB;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.09);
+  border: none !important;
 }
 .compact-card-image-wrap {
   position: relative;
@@ -878,8 +878,9 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 3px 6px;
   padding: 5px 0;
-  border-top: 1px solid #F3F4F6;
-  border-bottom: 1px solid #F3F4F6;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
 }
 .compact-spec-item {
   display: flex;
@@ -1172,4 +1173,10 @@ body:has(.contact-black-page) {
   background-color: #0A0A0C !important;
   color: #FFFFFF !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* #borderless-featured-css */
+#featured-vehicles, #featured-vehicles *, .featured-section-box, .featured-section-box *, .compact-car-card, .compact-car-card * {
+  border: none !important;
+  border-color: transparent !important;
 }
