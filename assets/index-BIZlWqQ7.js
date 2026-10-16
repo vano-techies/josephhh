@@ -3769,6 +3769,63 @@ function resolveActiveFeaturedCars() {
   return [...customList, ...remaining];
 }
 
+function useFeaturedCars() {
+  const [featuredCars, setFeaturedCars] = Fe.useState(() => resolveActiveFeaturedCars());
+  Fe.useEffect(() => {
+    const handleUpdate = () => {
+      setFeaturedCars(resolveActiveFeaturedCars());
+    };
+    window.addEventListener("mrjoseph_featured_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+
+    let unsubSnapshot = null;
+    try {
+      if (typeof wh !== "undefined" && typeof vg !== "undefined" && typeof kM !== "undefined" && typeof FM !== "undefined") {
+        const q = kM(vg(wh, "featured_cars"));
+        unsubSnapshot = FM(q, (snapshot) => {
+          if (snapshot && !snapshot.empty) {
+            const remoteDocs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
+              .filter(c => !c.archived && !c.isArchived)
+              .sort((a, b) => (a.order || 0) - (b.order || 0));
+            if (remoteDocs.length > 0) {
+              window.__MRJOSEPH_CUSTOM_FEATURED = remoteDocs;
+              try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(remoteDocs)); } catch (_) {}
+              SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
+              setFeaturedCars(resolveActiveFeaturedCars());
+            }
+          } else if (snapshot && snapshot.empty && (!window.__MRJOSEPH_CUSTOM_FEATURED || window.__MRJOSEPH_CUSTOM_FEATURED.length === 0)) {
+            if (typeof jM !== "undefined") {
+              jM(vg(wh, "cars")).then(carsSnap => {
+                const confDoc = carsSnap.docs.find(d => d.id === "featured_config");
+                if (confDoc && confDoc.data() && confDoc.data().customCars && confDoc.data().customCars.length > 0) {
+                  const cc = confDoc.data().customCars.filter(c => !c.archived && !c.isArchived);
+                  if (cc.length > 0) {
+                    window.__MRJOSEPH_CUSTOM_FEATURED = cc;
+                    try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(cc)); } catch (_) {}
+                    SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
+                    setFeaturedCars(resolveActiveFeaturedCars());
+                  }
+                }
+              }).catch(() => {});
+            }
+          }
+        }, (err) => {
+          console.warn("Firestore featured sync note:", err);
+        });
+      }
+    } catch (e) {
+      console.warn("Firestore featured listener error:", e);
+    }
+
+    return () => {
+      window.removeEventListener("mrjoseph_featured_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+      if (unsubSnapshot) unsubSnapshot();
+    };
+  }, []);
+  return featuredCars;
+}
+
 if (typeof window !== "undefined") {
   try {
     idbGetFeatured().then(idbCars => {
@@ -3779,11 +3836,26 @@ if (typeof window !== "undefined") {
         }
       }
     });
+    setTimeout(() => {
+      if (typeof wh !== "undefined" && typeof jM !== "undefined" && typeof vg !== "undefined") {
+        jM(vg(wh, "featured_cars")).then(snap => {
+          if (snap && !snap.empty) {
+            const remoteDocs = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+              .filter(c => !c.archived && !c.isArchived)
+              .sort((a, b) => (a.order || 0) - (b.order || 0));
+            if (remoteDocs.length > 0) {
+              window.__MRJOSEPH_CUSTOM_FEATURED = remoteDocs;
+              try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(remoteDocs)); } catch (_) {}
+              SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
+              window.dispatchEvent(new CustomEvent("mrjoseph_featured_updated", { detail: remoteDocs }));
+            }
+          }
+        }).catch(() => {});
+      }
+    }, 40);
   } catch (_) {}
 }
 let SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
-
-
 function c7(){const[s,e]=Fe.useState(DEFAULT_PREVIOUS_CARS);return Fe.useEffect(()=>{const t=kM(vg(wh,"cars")),n=FM(t,async i=>{const o=i.docs.map(m=>({id:m.id,...m.data()}));if(o.length>0){e(o.filter(m=>!m.isDecorative))}else{e(DEFAULT_PREVIOUS_CARS)}},i=>{console.error("Firestore error:",i);e(DEFAULT_PREVIOUS_CARS)});return()=>n()},[]),s}function Mx({car:s,onClick:e}){
   var f;
   const t=(f=s.images)!=null&&f.length?s.images:s.image?[s.image]:["/images/hero_showroom.jpg"],
@@ -3840,7 +3912,7 @@ function c7(){const[s,e]=Fe.useState(DEFAULT_PREVIOUS_CARS);return Fe.useEffect(
       })
     ]})
   ]})
-}const Jl=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];function nk({setView:s,setSelectedCar:e}){const[t,n]=Fe.useState(0),i=c7(),o=resolveActiveFeaturedCars(),u=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];return T.jsxs("div",{style:{backgroundColor:"#ffffff",width:"100%"},children:[T.jsxs("section",{className:"hero-section-box",children:[T.jsx("img",{src:u[t%u.length],alt:"Mr Joseph Premium Showroom",className:"hero-bg-cover"}),T.jsx("div",{className:"hero-dark-vignette"}),T.jsxs("div",{style:{position:"absolute",top:16,left:32,zIndex:15,display:"flex",alignItems:"center",gap:8},className:"hidden sm:flex",children:[T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}}),T.jsx("span",{style:{color:"rgba(255,255,255,0.92)",fontFamily:"'Inter', sans-serif",fontSize:10,fontWeight:700,letterSpacing:"0.22em",textTransform:"uppercase"},children:"home of luxury and class"}),T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}})]}),T.jsx("div",{className:"hero-inner-content",children:T.jsxs("div",{className:"hero-text-wrapper",children:[T.jsx("p",{className:"hero-welcome-badge",children:"WELCOME TO"}),T.jsx("h1",{className:"hero-h1-white",children:"MR JOSEPH"}),T.jsx("h2",{className:"hero-h2-gold",children:"PREMIUM CARS"}),T.jsxs("p",{className:"hero-p-sub",children:["Luxury Vehicles. Exceptional Service.",T.jsx("br",{}),"Your Next Drive Starts Here."]}),T.jsxs("button",{onClick:()=>{const h=document.getElementById("our-cars-section");h?h.scrollIntoView({behavior:"smooth"}):s("inventory")},className:"hero-btn-cta",children:["BROWSE OUR CARS",T.jsx("span",{style:{fontSize:13,fontWeight:"bold"},children:"→"})]})]})}),T.jsxs("div",{className:"hero-arrow-controls",children:[T.jsx("button",{onClick:()=>n(h=>(h-1+u.length)%u.length),className:"hero-arrow-btn","aria-label":"Previous slide",children:T.jsx("span",{children:"‹"})}),T.jsx("button",{onClick:()=>n(h=>(h+1)%u.length),className:"hero-arrow-btn","aria-label":"Next slide",children:T.jsx("span",{children:"›"})})]})]}),T.jsxs("section",{id:"featured-vehicles",className:"featured-section-box",children:[T.jsxs("div",{className:"featured-header-row",children:[T.jsxs("div",{className:"featured-title-flex",children:[T.jsx("span",{className:"featured-gold-bar"}),T.jsx("h2",{className:"featured-title-text",children:"FEATURED VEHICLES"}),T.jsx("span",{className:"featured-gold-bar"})]})]}),T.jsx("div",{className:"six-cards-grid",children:o.map(h=>T.jsx(Mx,{car:h,onClick:d=>{try{window.history.pushState({},"","/?featured="+h.id)}catch(_){}window.location.hash="featured-"+h.id;window.dispatchEvent(new Event("popstate"));window.dispatchEvent(new Event("hashchange"));window.scrollTo(0,0)}},h.id))})]}),T.jsxs("section",{id:"our-cars-section",className:"py-14 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-[1680px] mx-auto bg-white border-t border-gray-100",children:[T.jsxs("div",{className:"text-center mb-10",children:[T.jsxs("div",{className:"flex items-center justify-center gap-4 mb-2",children:[T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"}),T.jsx("h2",{className:"text-2xl sm:text-3xl font-extrabold tracking-wider text-black uppercase",children:"OUR CARS"}),T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"})]}),T.jsx("p",{className:"text-gray-500 text-sm sm:text-base",children:"Explore our complete showroom collection of prestige vehicles available in Kenya."})]}),T.jsx("div",{className:"four-cards-grid",children:i.slice(0,12).map(h=>T.jsx(Mx,{car:h,onClick:d=>{e(d),s("vehicle")}},h.id))}),i.length>12&&T.jsx("div",{className:"text-center mt-12 sm:mt-14",children:T.jsxs("button",{type:"button",onClick:()=>s("our-cars"),className:"inline-flex items-center justify-center gap-3 px-8 py-4 bg-black hover:bg-[#C59B51] hover:text-black text-white text-xs sm:text-sm font-extrabold uppercase tracking-[0.2em] rounded-xl transition-all duration-300 shadow-md cursor-pointer border border-black/10 group",children:["View All Available Cars",T.jsx("span",{className:"text-base font-bold transition-transform group-hover:translate-x-1",children:"→"})]})})]}),T.jsx("a",{href:"https://wa.me/254713583829?text=Hello%20Mr%20Joseph%2C%20I%20am%20interested%20in%20inquiring%20about%20your%20premium%20cars.",target:"_blank",rel:"noopener noreferrer",style:{position:"fixed",bottom:20,right:20,zIndex:40,display:"flex",alignItems:"center",justifyContent:"center",width:50,height:50,backgroundColor:"#25D366",color:"#ffffff",borderRadius:"50%",boxShadow:"0 4px 16px rgba(37,211,102,0.4)",textDecoration:"none"},"aria-label":"Contact on WhatsApp",children:T.jsx("svg",{viewBox:"0 0 24 24",style:{width:26,height:26,fill:"currentColor"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})})})]});}function rk({setView:s,setSelectedCar:e,initialFilter:t="All"}){const n=c7(),[i,o]=Fe.useState(t),[u,h]=Fe.useState("newest"),[srch,setSrch]=Fe.useState("");Fe.useEffect(()=>{o(t)},[t]),Fe.useEffect(()=>{window.scrollTo(0,0);const _=jn.context(()=>{jn.fromTo(".inv-header",{y:30,opacity:0},{y:0,opacity:1,duration:.8,ease:"power3.out"}),jn.fromTo(".inv-card",{y:40,opacity:0},{y:0,opacity:1,duration:.6,stagger:.1,ease:"power2.out",delay:.2})});return()=>_.revert()},[]);const d=["All","Our Cars","New Arrivals","Sedan","SUV","Coupe","GT"];let m=n.filter(_=>i==="All"||_.type===i?!0:(i==="Our Cars"||i==="Kenya")?(_.location==="Our Cars"||_.location==="Cars in Kenya"||_.status==="Kenya"||_.status==="Our Cars"):(i==="New Arrivals"||i==="Incoming")?(_.location==="New Arrivals"||_.location==="Incoming Cars"||_.status==="Incoming"||_.status==="New Arrivals"):!1).filter(_=>srch===""||_.make.toLowerCase().includes(srch.toLowerCase())||_.model.toLowerCase().includes(srch.toLowerCase())||(_.price&&_.price.toString().includes(srch)));return u==="price-low"&&m.sort((_,v)=>_.price-v.price),u==="price-high"&&m.sort((_,v)=>v.price-_.price),u==="newest"&&m.sort((_,v)=>v.year-_.year),T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full",children:[T.jsxs("div",{className:"inv-header flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6",children:[T.jsxs("div",{children:[T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-[var(--color-base)] mb-3",children:i==="Our Cars"?"Our Cars":i==="New Arrivals"?"New Arrivals":"The Collection"}),T.jsx("p",{className:"font-medium text-[var(--color-slate)]/70 max-w-md text-sm sm:text-base",children:i==="Our Cars"?"Explore our complete showroom collection of prestige vehicles available in Kenya.":i==="New Arrivals"?"Incoming luxury motorcars and newly arrived stock.":"Our current inventory of exceptional motorcars, available for immediate acquisition."})]}),T.jsxs("div",{className:"flex flex-col xl:flex-row gap-4 w-full md:w-auto",children:[T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-[var(--color-obsidian)] px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-64",children:[T.jsx("input",{type:"text",placeholder:"Search brand, model or price...",className:"bg-transparent text-sm font-medium outline-none text-[var(--color-base)] w-full placeholder:text-[var(--color-slate)]/50",value:srch,onChange:_=>setSrch(_.target.value)})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsxs("div",{className:"flex items-center gap-2",children:[T.jsx(Ty,{size:18,className:"text-[var(--color-champagne)]"}),T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Filter:"})]}),T.jsx("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:i,onChange:_=>o(_.target.value),children:d.map(_=>T.jsxs("option",{value:_,children:[_," Models"]},_))})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Sort by:"}),T.jsxs("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:u,onChange:_=>h(_.target.value),children:[T.jsx("option",{value:"newest",children:"Newest Arrivals"}),T.jsx("option",{value:"price-low",children:"Price: Low to High"}),T.jsx("option",{value:"price-high",children:"Price: High to Low"})]})]})]})]}),T.jsx("div",{className:"four-cards-grid",children:m.map(_=>T.jsx("div",{className:"inv-card",children:T.jsx(Mx,{car:_,onClick:v=>{e(v),s("vehicle")}})},_.id))}),m.length===0&&T.jsxs("div",{className:"text-center py-24",children:[T.jsx("p",{className:"text-lg text-[var(--color-slate)]/60 font-medium",children:"No vehicles found matching your criteria."}),T.jsx("button",{onClick:()=>o("All"),className:"mt-4 text-[var(--color-champagne)] font-medium hover:underline",children:"Clear Filters"})]})]})}function ik({ id: s, setView: e }) {
+}const Jl=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];function nk({setView:s,setSelectedCar:e}){const[t,n]=Fe.useState(0),i=c7(),o=useFeaturedCars(),u=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];return T.jsxs("div",{style:{backgroundColor:"#ffffff",width:"100%"},children:[T.jsxs("section",{className:"hero-section-box",children:[T.jsx("img",{src:u[t%u.length],alt:"Mr Joseph Premium Showroom",className:"hero-bg-cover"}),T.jsx("div",{className:"hero-dark-vignette"}),T.jsxs("div",{style:{position:"absolute",top:16,left:32,zIndex:15,display:"flex",alignItems:"center",gap:8},className:"hidden sm:flex",children:[T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}}),T.jsx("span",{style:{color:"rgba(255,255,255,0.92)",fontFamily:"'Inter', sans-serif",fontSize:10,fontWeight:700,letterSpacing:"0.22em",textTransform:"uppercase"},children:"home of luxury and class"}),T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}})]}),T.jsx("div",{className:"hero-inner-content",children:T.jsxs("div",{className:"hero-text-wrapper",children:[T.jsx("p",{className:"hero-welcome-badge",children:"WELCOME TO"}),T.jsx("h1",{className:"hero-h1-white",children:"MR JOSEPH"}),T.jsx("h2",{className:"hero-h2-gold",children:"PREMIUM CARS"}),T.jsxs("p",{className:"hero-p-sub",children:["Luxury Vehicles. Exceptional Service.",T.jsx("br",{}),"Your Next Drive Starts Here."]}),T.jsxs("button",{onClick:()=>{const h=document.getElementById("our-cars-section");h?h.scrollIntoView({behavior:"smooth"}):s("inventory")},className:"hero-btn-cta",children:["BROWSE OUR CARS",T.jsx("span",{style:{fontSize:13,fontWeight:"bold"},children:"→"})]})]})}),T.jsxs("div",{className:"hero-arrow-controls",children:[T.jsx("button",{onClick:()=>n(h=>(h-1+u.length)%u.length),className:"hero-arrow-btn","aria-label":"Previous slide",children:T.jsx("span",{children:"‹"})}),T.jsx("button",{onClick:()=>n(h=>(h+1)%u.length),className:"hero-arrow-btn","aria-label":"Next slide",children:T.jsx("span",{children:"›"})})]})]}),T.jsxs("section",{id:"featured-vehicles",className:"featured-section-box",children:[T.jsxs("div",{className:"featured-header-row",children:[T.jsxs("div",{className:"featured-title-flex",children:[T.jsx("span",{className:"featured-gold-bar"}),T.jsx("h2",{className:"featured-title-text",children:"FEATURED VEHICLES"}),T.jsx("span",{className:"featured-gold-bar"})]})]}),T.jsx("div",{className:"six-cards-grid",children:o.map(h=>T.jsx(Mx,{car:h,onClick:d=>{try{window.history.pushState({},"","/?featured="+h.id)}catch(_){}window.location.hash="featured-"+h.id;window.dispatchEvent(new Event("popstate"));window.dispatchEvent(new Event("hashchange"));window.scrollTo(0,0)}},h.id))})]}),T.jsxs("section",{id:"our-cars-section",className:"py-14 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-[1680px] mx-auto bg-white border-t border-gray-100",children:[T.jsxs("div",{className:"text-center mb-10",children:[T.jsxs("div",{className:"flex items-center justify-center gap-4 mb-2",children:[T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"}),T.jsx("h2",{className:"text-2xl sm:text-3xl font-extrabold tracking-wider text-black uppercase",children:"OUR CARS"}),T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"})]}),T.jsx("p",{className:"text-gray-500 text-sm sm:text-base",children:"Explore our complete showroom collection of prestige vehicles available in Kenya."})]}),T.jsx("div",{className:"four-cards-grid",children:i.slice(0,12).map(h=>T.jsx(Mx,{car:h,onClick:d=>{e(d),s("vehicle")}},h.id))}),i.length>12&&T.jsx("div",{className:"text-center mt-12 sm:mt-14",children:T.jsxs("button",{type:"button",onClick:()=>s("our-cars"),className:"inline-flex items-center justify-center gap-3 px-8 py-4 bg-black hover:bg-[#C59B51] hover:text-black text-white text-xs sm:text-sm font-extrabold uppercase tracking-[0.2em] rounded-xl transition-all duration-300 shadow-md cursor-pointer border border-black/10 group",children:["View All Available Cars",T.jsx("span",{className:"text-base font-bold transition-transform group-hover:translate-x-1",children:"→"})]})})]}),T.jsx("a",{href:"https://wa.me/254713583829?text=Hello%20Mr%20Joseph%2C%20I%20am%20interested%20in%20inquiring%20about%20your%20premium%20cars.",target:"_blank",rel:"noopener noreferrer",style:{position:"fixed",bottom:20,right:20,zIndex:40,display:"flex",alignItems:"center",justifyContent:"center",width:50,height:50,backgroundColor:"#25D366",color:"#ffffff",borderRadius:"50%",boxShadow:"0 4px 16px rgba(37,211,102,0.4)",textDecoration:"none"},"aria-label":"Contact on WhatsApp",children:T.jsx("svg",{viewBox:"0 0 24 24",style:{width:26,height:26,fill:"currentColor"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})})})]});}function rk({setView:s,setSelectedCar:e,initialFilter:t="All"}){const n=c7(),[i,o]=Fe.useState(t),[u,h]=Fe.useState("newest"),[srch,setSrch]=Fe.useState("");Fe.useEffect(()=>{o(t)},[t]),Fe.useEffect(()=>{window.scrollTo(0,0);const _=jn.context(()=>{jn.fromTo(".inv-header",{y:30,opacity:0},{y:0,opacity:1,duration:.8,ease:"power3.out"}),jn.fromTo(".inv-card",{y:40,opacity:0},{y:0,opacity:1,duration:.6,stagger:.1,ease:"power2.out",delay:.2})});return()=>_.revert()},[]);const d=["All","Our Cars","New Arrivals","Sedan","SUV","Coupe","GT"];let m=n.filter(_=>i==="All"||_.type===i?!0:(i==="Our Cars"||i==="Kenya")?(_.location==="Our Cars"||_.location==="Cars in Kenya"||_.status==="Kenya"||_.status==="Our Cars"):(i==="New Arrivals"||i==="Incoming")?(_.location==="New Arrivals"||_.location==="Incoming Cars"||_.status==="Incoming"||_.status==="New Arrivals"):!1).filter(_=>srch===""||_.make.toLowerCase().includes(srch.toLowerCase())||_.model.toLowerCase().includes(srch.toLowerCase())||(_.price&&_.price.toString().includes(srch)));return u==="price-low"&&m.sort((_,v)=>_.price-v.price),u==="price-high"&&m.sort((_,v)=>v.price-_.price),u==="newest"&&m.sort((_,v)=>v.year-_.year),T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full",children:[T.jsxs("div",{className:"inv-header flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6",children:[T.jsxs("div",{children:[T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-[var(--color-base)] mb-3",children:i==="Our Cars"?"Our Cars":i==="New Arrivals"?"New Arrivals":"The Collection"}),T.jsx("p",{className:"font-medium text-[var(--color-slate)]/70 max-w-md text-sm sm:text-base",children:i==="Our Cars"?"Explore our complete showroom collection of prestige vehicles available in Kenya.":i==="New Arrivals"?"Incoming luxury motorcars and newly arrived stock.":"Our current inventory of exceptional motorcars, available for immediate acquisition."})]}),T.jsxs("div",{className:"flex flex-col xl:flex-row gap-4 w-full md:w-auto",children:[T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-[var(--color-obsidian)] px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-64",children:[T.jsx("input",{type:"text",placeholder:"Search brand, model or price...",className:"bg-transparent text-sm font-medium outline-none text-[var(--color-base)] w-full placeholder:text-[var(--color-slate)]/50",value:srch,onChange:_=>setSrch(_.target.value)})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsxs("div",{className:"flex items-center gap-2",children:[T.jsx(Ty,{size:18,className:"text-[var(--color-champagne)]"}),T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Filter:"})]}),T.jsx("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:i,onChange:_=>o(_.target.value),children:d.map(_=>T.jsxs("option",{value:_,children:[_," Models"]},_))})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Sort by:"}),T.jsxs("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:u,onChange:_=>h(_.target.value),children:[T.jsx("option",{value:"newest",children:"Newest Arrivals"}),T.jsx("option",{value:"price-low",children:"Price: Low to High"}),T.jsx("option",{value:"price-high",children:"Price: High to Low"})]})]})]})]}),T.jsx("div",{className:"four-cards-grid",children:m.map(_=>T.jsx("div",{className:"inv-card",children:T.jsx(Mx,{car:_,onClick:v=>{e(v),s("vehicle")}})},_.id))}),m.length===0&&T.jsxs("div",{className:"text-center py-24",children:[T.jsx("p",{className:"text-lg text-[var(--color-slate)]/60 font-medium",children:"No vehicles found matching your criteria."}),T.jsx("button",{onClick:()=>o("All"),className:"mt-4 text-[var(--color-champagne)] font-medium hover:underline",children:"Clear Filters"})]})]})}function ik({ id: s, setView: e }) {
   const allCars = c7();
   const n = allCars.find(S => S.id === s) || (typeof SIX_SCREENSHOT_CARS !== "undefined" ? SIX_SCREENSHOT_CARS.find(S => S.id === s) : null);
   
@@ -4811,6 +4883,32 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
   const fileInputRef = Fe.useRef(null);
   const slotFileInputRef = Fe.useRef(null);
   const [targetUploadIndex, setTargetUploadIndex] = Fe.useState(0);
+  // Auto-sync from cloud on mount if opening on a fresh device in production
+  Fe.useEffect(() => {
+    if (typeof wh !== "undefined" && typeof jM !== "undefined" && typeof vg !== "undefined") {
+      jM(vg(wh, "featured_cars")).then(snap => {
+        if (snap && !snap.empty) {
+          const remote = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+            .sort((a, b) => (a.order || 0) - (b.order || 0));
+          if (remote.length > 0) {
+            setCustomCars(prev => (prev && prev.length > 0) ? prev : remote);
+            setActiveCarId(prev => prev || remote[0].id);
+            window.__MRJOSEPH_CUSTOM_FEATURED = remote;
+            try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(remote)); } catch (_) {}
+          }
+        } else {
+          jM(vg(wh, "cars")).then(carsSnap => {
+            const conf = carsSnap.docs.find(d => d.id === "featured_config");
+            if (conf && conf.data() && conf.data().customCars && conf.data().customCars.length > 0) {
+              const remote = conf.data().customCars;
+              setCustomCars(prev => (prev && prev.length > 0) ? prev : remote);
+              setActiveCarId(prev => prev || remote[0].id);
+            }
+          }).catch(() => {});
+        }
+      }).catch(err => console.warn("Error loading featured cars from cloud:", err));
+    }
+  }, []);
 
   // Keep activeCarId synchronized with customCars
   Fe.useEffect(() => {
@@ -4857,61 +4955,106 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
   };
 
   // PERSISTENCE ENGINE (Multi-tiered: memory + IndexedDB + safe localStorage + Firestore + events)
-  const persistChanges = async (updatedList, toastMsg = "All featured vehicle changes saved successfully!") => {
+  const persistChanges = async (updatedList, toastMsg = "All featured vehicle changes saved and synced live to production!") => {
     setIsSaving(true);
     setSaveSuccess(false);
 
-    // 1. Update in-memory state & public showroom models
+    // 1. Instant local & memory update
     if (typeof window !== "undefined") {
       window.__MRJOSEPH_CUSTOM_FEATURED = updatedList;
     }
     if (typeof resolveActiveFeaturedCars === "function") {
       SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
     }
-
-    // 2. Safe LocalStorage with auto-fallback to prevent QuotaExceededError
     try {
       localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(updatedList));
     } catch (quotaErr) {
-      console.warn("LocalStorage setItem quota warning, optimizing storage:", quotaErr);
-      try {
-        const compact = updatedList.map(c => ({
-          ...c,
-          images: (c.images || []).map(img => (img && img.startsWith("data:") && img.length > 50000) ? img.slice(0, 50000) : img)
-        }));
-        localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(compact));
-      } catch (_) {}
+      console.warn("LocalStorage quota note:", quotaErr);
     }
-
-    // 3. IndexedDB for large image payloads (handles hundreds of MBs seamlessly)
     try {
       if (typeof idbSaveFeatured === "function") {
         await idbSaveFeatured(updatedList);
       }
-    } catch (idbErr) {
-      console.warn("IndexedDB save note:", idbErr);
-    }
+    } catch (_) {}
 
-    // 4. Firestore persistence if available
+    // 2. PRODUCTION FIRESTORE PERSISTENCE (Sync across all devices and visitors)
     try {
       if (typeof wh !== "undefined" && typeof zM !== "undefined" && typeof Eg !== "undefined") {
-        const cleanForDb = updatedList.map(c => {
-          const clone = { ...c };
-          clone.images = (clone.images || []).map(img => img && img.startsWith("data:") ? img.slice(0, 1500) : img);
-          clone.image = clone.image && clone.image.startsWith("data:") ? clone.image.slice(0, 1500) : clone.image;
-          return clone;
+        const savePromises = updatedList.map((car, idx) => {
+          const docData = {
+            id: car.id,
+            make: car.make || "Prestige",
+            model: car.model || "Edition",
+            year: Number(car.year) || 2023,
+            price: Number(car.price) || 0,
+            mileage: car.mileage || "35,000 km",
+            fuel: car.fuel || "Diesel",
+            transmission: car.transmission || "Automatic",
+            type: car.type || "Prestige SUV",
+            location: car.location || "Kiambu Road, Ridgeways",
+            status: car.status || "Available",
+            description: car.description || "",
+            image: car.image || (car.images && car.images[0]) || "/images/hero_showroom.jpg",
+            images: (car.images && car.images.length) ? car.images : [car.image || "/images/hero_showroom.jpg"],
+            features: car.features || [...DEFAULT_FEATURE_EQUIPMENT_LIST],
+            styles: car.styles || { featuresBg: "#000F1E", titleBarBg: "#000F1E", accentColor: "#C59B51" },
+            specifications: car.specifications || {
+              drivetrain: "Intelligent All-Wheel Drive (AWD)",
+              exteriorPaint: "Metallic Factory Finish",
+              interiorTrim: "Full Premium Nappa Leather",
+              importStatus: "Duty & Clearance Settled",
+              extraInfo: car.description || ""
+            },
+            videoUrl: car.videoUrl || "",
+            order: idx,
+            archived: !!car.archived,
+            updatedAt: new Date().toISOString()
+          };
+          return zM(Eg(wh, "featured_cars", car.id), docData);
         });
-        await zM(Eg(wh, "cars", "featured_config"), {
-          customCars: cleanForDb,
+
+        // Also clean up removed docs in Firestore
+        if (typeof jM !== "undefined" && typeof BM !== "undefined" && typeof vg !== "undefined") {
+          jM(vg(wh, "featured_cars")).then(existingSnap => {
+            const currentIds = new Set(updatedList.map(c => c.id));
+            existingSnap.docs.forEach(docItem => {
+              if (!currentIds.has(docItem.id)) {
+                BM(Eg(wh, "featured_cars", docItem.id)).catch(() => {});
+              }
+            });
+          }).catch(() => {});
+        }
+
+        // Also save config document in cars collection for redundancy
+        const cleanForConfig = updatedList.map(c => ({
+          id: c.id,
+          make: c.make,
+          model: c.model,
+          year: c.year,
+          price: c.price,
+          mileage: c.mileage,
+          fuel: c.fuel,
+          transmission: c.transmission,
+          image: c.image,
+          images: c.images || [c.image],
+          videoUrl: c.videoUrl || "",
+          status: c.status || "Available",
+          archived: !!c.archived
+        }));
+
+        savePromises.push(zM(Eg(wh, "cars", "featured_config"), {
+          customCars: cleanForConfig,
           isDecorative: true,
           updatedAt: new Date().toISOString()
-        });
+        }));
+
+        await Promise.all(savePromises);
       }
     } catch (fsErr) {
-      console.warn("Firestore save note (non-fatal):", fsErr);
+      console.warn("Firestore production sync warning:", fsErr);
     }
 
-    // 5. Broadcast to all open tabs and UI instances
+    // 3. Broadcast to all open tabs and windows
     if (typeof window !== "undefined") {
       try {
         window.dispatchEvent(new CustomEvent("mrjoseph_featured_updated", { detail: updatedList }));
@@ -4919,21 +5062,13 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
       } catch (_) {}
     }
 
-    // Feedback lifecycle
     setIsSaving(false);
     setSaveSuccess(true);
     setHasUnsavedChanges(false);
-    setSaveToast(toastMsg);
-
-    setTimeout(() => {
-      setSaveSuccess(false);
-    }, 4000);
-    setTimeout(() => {
-      setSaveToast(null);
-    }, 5000);
-  };
-
-  const handleSave = () => {
+    setSaveToast(toastMsg || "All featured vehicles saved and synced live to production across all devices!");
+    setTimeout(() => { setSaveSuccess(false); }, 4000);
+    setTimeout(() => { setSaveToast(null); }, 5000);
+  };  const handleSave = () => {
     persistChanges(customCars, "All featured vehicle changes saved and applied to the live showroom!");
   };
 
@@ -4945,10 +5080,13 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
     setCustomCars(updated);
     setActiveCarId(updated.length > 0 ? updated[0].id : null);
     setDeleteConfirmId(null);
-    persistChanges(updated, carName + " deleted. Default vehicle restored to slot.");
-  };
-
-  // 2. ADD FROM INVENTORY / ADDED VEHICLES
+    try {
+      if (typeof wh !== "undefined" && typeof BM !== "undefined" && typeof Eg !== "undefined") {
+        BM(Eg(wh, "featured_cars", idToDelete)).catch(() => {});
+      }
+    } catch (_) {}
+    persistChanges(updated, carName + " deleted and synced live. Default vehicle restored to slot.");
+  };  // 2. ADD FROM INVENTORY / ADDED VEHICLES
   const allInventoryList = (inventoryCars && inventoryCars.length > 0)
     ? inventoryCars
     : (typeof DEFAULT_PREVIOUS_CARS !== "undefined" ? DEFAULT_PREVIOUS_CARS : []);
@@ -5289,6 +5427,13 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                 className: "flex items-center gap-3",
                 children: [
                   T.jsx("h3", { className: "text-2xl font-serif text-white tracking-wide", children: "Featured Vehicles Studio" }),
+                  T.jsxs("span", {
+                    className: "ml-3 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 align-middle",
+                    children: [
+                      T.jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }),
+                      "Cloud Production Sync Active"
+                    ]
+                  }),
                   T.jsxs("span", {
                     className: "px-2.5 py-1 bg-[#C59B51]/15 text-[#C59B51] text-[11px] font-mono font-bold uppercase rounded-full border border-[#C59B51]/30",
                     children: [customCount, " of 5 Active Slots Used"]
@@ -6366,10 +6511,11 @@ Heated Seats`})]}),T.jsxs("div",{children:[T.jsxs("label",{className:"block text
       })
     ]
   },B))})]})]}),T.jsx("button",{type:"submit",disabled:Y,className:"bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors disabled:opacity-50 text-sm w-full sm:w-auto",children:Y?"Saving...":k?"Save Changes":"Publish Listing"})]})]}):T.jsxs("div",{className:"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4",children:[x.filter(ae=>!ae.isDecorative).length===0&&T.jsx("div",{className:"col-span-full py-12 text-center text-white/30 border border-dashed border-white/10 rounded-2xl text-sm italic",children:"Inventory is empty."}),x.filter(ae=>!ae.isDecorative).map(ae=>{var B;return T.jsxs("div",{className:"bg-black/40 border border-white/5 rounded-2xl overflow-hidden flex flex-col",children:[T.jsx("div",{className:"h-32 p-4 flex items-center justify-center bg-black/60 shadow-inner",children:T.jsx("img",{src:ae.image,alt:"",className:"max-h-full object-contain"})}),T.jsxs("div",{className:"p-4 flex-1 flex flex-col justify-between gap-3",children:[T.jsxs("div",{children:[T.jsx("div",{className:"flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-2",children:T.jsxs("h4",{className:"font-serif text-lg text-white leading-tight",children:[ae.make," ",ae.model,ae.status&&ae.status!=="Available"&&T.jsx("span",{className:`ml-2 text-[9px] px-1.5 py-0.5 rounded uppercase tracking-widest font-mono align-middle ${ae.status==="Sold"?"bg-red-500/20 text-red-400 border border-red-500/30":"bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"}`,children:ae.status})]})}),T.jsxs("div",{className:"text-xs text-white/50 font-mono",children:[ae.year," • ",ae.price?`Ksh ${(B=ae.price)==null?void 0:B.toLocaleString()}`:"Price on Application"]})]}),T.jsxs("div",{className:"flex flex-col gap-3 mt-2 pt-2 border-t border-white/5",children:[ae.location&&T.jsxs("div",{className:"text-[10px] text-white/30 flex items-center gap-1 uppercase tracking-wider",children:[T.jsx(vy,{size:10})," ",ae.location]}),T.jsxs("div",{className:"flex items-center gap-2 w-full mt-1",children:[T.jsxs("button",{onClick:()=>V(ae),className:"flex-1 text-center text-white/70 hover:text-white bg-white/5 hover:bg-white/10 py-2 rounded flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider transition-all",children:[T.jsx(ew,{size:12})," Edit"]}),T.jsxs("button",{onClick:()=>Le(ae.id),className:"flex-1 text-center text-white/70 hover:text-red-400 bg-white/5 hover:bg-red-500/10 py-2 rounded flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider transition-all",children:[T.jsx(lw,{size:12})," Delete"]})]})]})]})]},ae.id)})]})]})]})]})}):T.jsx("div",{className:"admin-black-portal min-h-screen flex items-center justify-center p-6",style:{backgroundColor:"#0A0A0F",color:"#FFFFFF",minHeight:"100vh",width:"100%"},children:T.jsxs("div",{className:"w-full max-w-sm p-8 rounded-2xl shadow-2xl relative z-10",style:{backgroundColor:"#121218",border:"1px solid rgba(255,255,255,0.12)",color:"#FFFFFF"},children:[T.jsx("h2",{className:"text-3xl font-serif text-white mb-6 tracking-tight text-center",children:"Admin Portal"}),T.jsx("div",{className:"mb-4 text-center",children:T.jsxs("button",{type:"button",onClick:()=>pw?pw("home"):pb?pb():(window.location.hash="",window.location.pathname="/"),className:"text-xs text-[#C59B51] hover:underline font-mono inline-flex items-center gap-1.5 cursor-pointer",children:[T.jsx("span",{children:"←"}),"Back to Website"]})}),d&&T.jsx("div",{className:"text-red-400 mb-4 text-sm bg-red-900/20 p-3 rounded-lg border border-red-500/20",children:d}),T.jsxs("form",{onSubmit:O,className:"space-y-4",children:[T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2",children:"Email Address"}),T.jsx("input",{type:"email",value:t,onChange:ae=>n(ae.target.value),className:"w-full bg-transparent border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 transition-colors",required:!0})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2",children:"Password"}),T.jsx("input",{type:"password",value:i,onChange:ae=>o(ae.target.value),className:"w-full bg-transparent border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 transition-colors",required:!0})]}),T.jsx("button",{type:"submit",disabled:u,className:"w-full bg-white text-black font-medium py-3 rounded-lg hover:bg-white/90 transition-colors mt-2",children:u?"Authenticating...":"Sign In"})]})]})})}function zk({setView:s}){Fe.useEffect(()=>{window.scrollTo(0,0)},[]);return T.jsxs("div",{className:"min-h-screen pt-8 sm:pt-12 px-6 pb-24 max-w-6xl mx-auto w-full bg-white text-black",children:[T.jsxs("button",{onClick:()=>s("home"),className:"flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-black hover:opacity-70 transition-colors mb-10 cursor-pointer",children:[T.jsx(_y,{size:16})," Back to Home"]}),T.jsxs("div",{className:"grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center",children:[T.jsx("div",{className:"lg:col-span-5 relative",children:T.jsx("div",{className:"relative rounded-2xl overflow-hidden shadow-2xl border-2 border-[#C59B51]/30 aspect-[4/5] bg-neutral-900",children:T.jsx("img",{src:"/images/hero_showroom.jpg",alt:"Mr. Joseph Luxury Showroom",className:"w-full h-full object-cover filter brightness-90"})})}),T.jsxs("div",{className:"lg:col-span-7 space-y-6",children:[T.jsxs("div",{className:"space-y-3",children:[T.jsx("p",{className:"font-mono text-xs uppercase tracking-[0.25em] font-bold",style:{color:"#C59B51"},children:"ABOUT US"}),T.jsx("h1",{className:"font-serif italic text-3xl sm:text-4xl lg:text-5xl font-bold text-black leading-tight",children:"Business Strategist | Marketing Consultant | Premium Auto Specialist"}),T.jsx("div",{className:"w-20 h-1 bg-[#C59B51] rounded-full mt-4"})]}),T.jsx("p",{className:"text-gray-700 text-base sm:text-lg leading-relaxed font-normal",children:"I empower brands and entrepreneurs through tailored business strategy and high-impact marketing solutions that drive growth, visibility, and profitability. With a strong focus on results, I help businesses structure for sustainability and scale."}),T.jsx("p",{className:"text-gray-700 text-base sm:text-lg leading-relaxed font-normal",children:"I also deal in premium and luxury vehicles, offering trusted, high-end car solutions for elite clients."}),T.jsxs("div",{className:"p-6 bg-[#FAF8F5] border-l-4 border-[#C59B51] rounded-r-xl shadow-sm space-y-2 my-6",children:[T.jsx("p",{className:"font-sans font-bold text-black text-lg tracking-wide",children:"Business. Strategy. Luxury. All in one."}),T.jsx("p",{className:"font-serif italic text-xl font-bold",style:{color:"#C59B51"},children:"Let’s build your business. Let’s drive your dream."})]}),T.jsxs("div",{className:"flex flex-wrap gap-4 pt-2",children:[T.jsxs("a",{href:"https://wa.me/254713583829?text=Hello%20Mr%20Joseph%2C%20I%20would%20like%20to%20connect%20regarding%20business%20strategy%20and%20premium%20vehicles.",target:"_blank",rel:"noopener noreferrer",className:"px-7 py-3.5 bg-black hover:bg-neutral-800 text-white font-bold text-xs uppercase tracking-widest rounded-lg transition-all shadow-md flex items-center gap-2",children:["Contact Mr. Joseph",T.jsx("span",{children:"→"})]}),T.jsx("button",{onClick:()=>s("inventory"),className:"px-7 py-3.5 border-2 border-[#C59B51] text-[#C59B51] hover:bg-[#C59B51] hover:text-black font-bold text-xs uppercase tracking-widest rounded-lg transition-all cursor-pointer",children:"View Collection"})]})]})]})]});}
-function Yk({setView:s,setSelectedCar:e}){Fe.useEffect(()=>{window.scrollTo(0,0)},[]);const t=SIX_SCREENSHOT_CARS;return T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full bg-white text-black",children:[T.jsxs("button",{onClick:()=>s("home"),className:"flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-black hover:opacity-70 transition-colors mb-8 cursor-pointer",children:[T.jsx(_y,{size:15})," Back to Home"]}),T.jsxs("div",{className:"mb-10 text-left",children:[T.jsx("p",{className:"font-mono text-xs uppercase tracking-[0.25em] font-bold mb-2",style:{color:"#C59B51"},children:"SHOWROOM ARRIVALS"}),T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-black mb-3 font-bold",children:"New Arrivals"}),T.jsx("p",{className:"font-normal text-gray-600 text-sm sm:text-base max-w-xl",children:"Explore our latest handpicked prestige vehicles, featuring the premier motorcars from our showroom collection."})]}),T.jsx("div",{className:"six-cards-grid",children:t.map(n=>T.jsx(Mx,{car:n,onClick:i=>{e(i),s("vehicle")}},n.id))})]});}
+function Yk({setView:s,setSelectedCar:e}){Fe.useEffect(()=>{window.scrollTo(0,0)},[]);const t=useFeaturedCars();return T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full bg-white text-black",children:[T.jsxs("button",{onClick:()=>s("home"),className:"flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-black hover:opacity-70 transition-colors mb-8 cursor-pointer",children:[T.jsx(_y,{size:15})," Back to Home"]}),T.jsxs("div",{className:"mb-10 text-left",children:[T.jsx("p",{className:"font-mono text-xs uppercase tracking-[0.25em] font-bold mb-2",style:{color:"#C59B51"},children:"SHOWROOM ARRIVALS"}),T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-black mb-3 font-bold",children:"New Arrivals"}),T.jsx("p",{className:"font-normal text-gray-600 text-sm sm:text-base max-w-xl",children:"Explore our latest handpicked prestige vehicles, featuring the premier motorcars from our showroom collection."})]}),T.jsx("div",{className:"six-cards-grid",children:t.map(n=>T.jsx(Mx,{car:n,onClick:i=>{e(i),s("vehicle")}},n.id))})]});}
 function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.useState(!1),[u,h]=Fe.useState("home"),d=m=>{m!==s&&(o(!0),jn.to(".main-content-area",{opacity:0,y:10,duration:.3,ease:"power2.inOut",onComplete:()=>{e(m),h(m),m!=="vehicle"&&m!=="financing"&&n(null),jn.fromTo(".main-content-area",{opacity:0,y:-10},{opacity:1,y:0,duration:.4,ease:"power2.out"}),o(!1)}}))};return T.jsxs(T.Fragment,{children:[T.jsx(cw,{currentView:u,setView:d}),T.jsxs("main",{className:"main-content-area w-full",children:[s==="home"&&T.jsx(nk,{setView:d,setSelectedCar:n}),s==="our-cars"&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="new-arrivals"&&T.jsx(Yk,{setView:d,setSelectedCar:n}),s==="inventory-incoming"||s==="inventory-new"?T.jsx(Yk,{setView:d,setSelectedCar:n}):s.startsWith("inventory")&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="vehicle"&&t&&T.jsx(ik,{id:t,setView:d}),s==="about"&&T.jsx(zk,{setView:d}),s==="contact"&&T.jsx(sk,{}),s==="financing"&&T.jsx(ak,{setView:d,carId:t})]}),T.jsx(hw,{setView:d})]})}function FLPage({ carId: sId, onBack: backFn }) {
   const allCars = c7();
-  const car = ((resolveActiveFeaturedCars().find(c => c.id === sId) || DEFAULT_FEATURED_CARS.find(c => c.id === sId))) ||
+  const featuredList = useFeaturedCars();
+  const car = ((featuredList.find(c => c.id === sId) || resolveActiveFeaturedCars().find(c => c.id === sId) || DEFAULT_FEATURED_CARS.find(c => c.id === sId))) ||
               allCars.find(c => c.id === sId) ||
               (typeof DEFAULT_PREVIOUS_CARS !== "undefined" ? DEFAULT_PREVIOUS_CARS.find(c => c.id === sId) : null) ||
               (typeof SIX_SCREENSHOT_CARS !== "undefined" ? SIX_SCREENSHOT_CARS[0] : null);

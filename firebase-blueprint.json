@@ -1,0 +1,34 @@
+{
+  "entities": {
+    "Car": {
+      "title": "Car",
+      "description": "Dealership inventory vehicle or featured vehicle listing",
+      "type": "object",
+      "properties": {
+        "make": { "type": "string" },
+        "model": { "type": "string" },
+        "year": { "type": "number" },
+        "price": { "type": "number" },
+        "mileage": { "type": "string" },
+        "fuel": { "type": "string" },
+        "transmission": { "type": "string" },
+        "status": { "type": "string" },
+        "location": { "type": "string" },
+        "image": { "type": "string" },
+        "images": { "type": "array" },
+        "features": { "type": "array" },
+        "videoUrl": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/cars/{carId}": {
+      "schema": "Car",
+      "description": "Collection of all showroom vehicles and configuration documents"
+    },
+    "/featured_cars/{carId}": {
+      "schema": "Car",
+      "description": "Collection of active featured vehicles synchronized across all devices in production"
+    }
+  }
+}
