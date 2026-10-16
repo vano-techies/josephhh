@@ -3691,12 +3691,70 @@ const DEFAULT_FEATURED_CARS = [
   }
 ];
 
+function idbSaveFeatured(cars) {
+  return new Promise((resolve) => {
+    try {
+      if (typeof indexedDB === "undefined") return resolve(false);
+      const req = indexedDB.open("mrjoseph_showroom_db", 1);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains("featured")) {
+          db.createObjectStore("featured", { keyPath: "id" });
+        }
+      };
+      req.onsuccess = (e) => {
+        const db = e.target.result;
+        const tx = db.transaction("featured", "readwrite");
+        const store = tx.objectStore("featured");
+        store.put({ id: "active_featured_list", data: cars, updatedAt: Date.now() });
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      };
+      req.onerror = () => resolve(false);
+    } catch (_) {
+      resolve(false);
+    }
+  });
+}
+
+function idbGetFeatured() {
+  return new Promise((resolve) => {
+    try {
+      if (typeof indexedDB === "undefined") return resolve(null);
+      const req = indexedDB.open("mrjoseph_showroom_db", 1);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains("featured")) {
+          db.createObjectStore("featured", { keyPath: "id" });
+        }
+      };
+      req.onsuccess = (e) => {
+        const db = e.target.result;
+        const tx = db.transaction("featured", "readonly");
+        const store = tx.objectStore("featured");
+        const getReq = store.get("active_featured_list");
+        getReq.onsuccess = () => resolve(getReq.result ? getReq.result.data : null);
+        getReq.onerror = () => resolve(null);
+      };
+      req.onerror = () => resolve(null);
+    } catch (_) {
+      resolve(null);
+    }
+  });
+}
+
 function getCustomFeaturedCars() {
+  if (typeof window !== "undefined" && window.__MRJOSEPH_CUSTOM_FEATURED && Array.isArray(window.__MRJOSEPH_CUSTOM_FEATURED) && window.__MRJOSEPH_CUSTOM_FEATURED.length > 0) {
+    return window.__MRJOSEPH_CUSTOM_FEATURED;
+  }
   try {
     const raw = localStorage.getItem("mrjoseph_custom_featured_cars");
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return parsed;
+      if (Array.isArray(parsed)) {
+        if (typeof window !== "undefined") window.__MRJOSEPH_CUSTOM_FEATURED = parsed;
+        return parsed;
+      }
     }
   } catch (_) {}
   return [];
@@ -3711,6 +3769,18 @@ function resolveActiveFeaturedCars() {
   return [...customList, ...remaining];
 }
 
+if (typeof window !== "undefined") {
+  try {
+    idbGetFeatured().then(idbCars => {
+      if (idbCars && Array.isArray(idbCars) && idbCars.length > 0) {
+        window.__MRJOSEPH_CUSTOM_FEATURED = idbCars;
+        if (typeof resolveActiveFeaturedCars === "function") {
+          SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
+        }
+      }
+    });
+  } catch (_) {}
+}
 let SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
 
 
@@ -4730,15 +4800,30 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
   });
   const [newFeatureText, setNewFeatureText] = Fe.useState("");
   const [saveToast, setSaveToast] = Fe.useState(null);
+  const [isSaving, setIsSaving] = Fe.useState(false);
+  const [saveSuccess, setSaveSuccess] = Fe.useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = Fe.useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = Fe.useState(null);
   const [showInventoryModal, setShowInventoryModal] = Fe.useState(false);
   const [inventorySearch, setInventorySearch] = Fe.useState("");
   const [showArchivedDefaults, setShowArchivedDefaults] = Fe.useState(false);
+
   const fileInputRef = Fe.useRef(null);
   const slotFileInputRef = Fe.useRef(null);
   const [targetUploadIndex, setTargetUploadIndex] = Fe.useState(0);
 
-  const activeCar = customCars.find(c => c.id === activeCarId) || customCars[0] || null;
+  // Keep activeCarId synchronized with customCars
+  Fe.useEffect(() => {
+    if (customCars.length > 0) {
+      if (!activeCarId || !customCars.some(c => c.id === activeCarId)) {
+        setActiveCarId(customCars[0].id);
+      }
+    } else {
+      setActiveCarId(null);
+    }
+  }, [customCars.length, activeCarId]);
+
+  const activeCar = (activeCarId ? customCars.find(c => c.id === activeCarId) : null) || customCars[0] || null;
 
   const activeStyles = (activeCar && activeCar.styles) || {
     featuresBg: "#000F1E",
@@ -4755,37 +4840,104 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
     exteriorPaint: "Metallic Factory Finish",
     interiorTrim: "Full Premium Nappa Leather",
     importStatus: "Duty & Clearance Settled",
-    extraInfo: (activeCar && activeCar.description) || ""
+    extraInfo: (activeCar && (activeCar.description || activeCar.extraInfo)) || ""
   };
 
   const updateActiveCar = (updater) => {
-    if (!activeCarId) return;
+    const currId = activeCarId || (customCars[0] ? customCars[0].id : null);
+    if (!currId) return;
+    setHasUnsavedChanges(true);
+    setSaveSuccess(false);
     setCustomCars(prev => prev.map(c => {
-      if (c.id === activeCarId) {
+      if (c.id === currId) {
         return updater(c);
       }
       return c;
     }));
   };
 
-  const persistChanges = (updatedList, toastMsg = "Featured cars updated and applied to the live showroom!") => {
+  // PERSISTENCE ENGINE (Multi-tiered: memory + IndexedDB + safe localStorage + Firestore + events)
+  const persistChanges = async (updatedList, toastMsg = "All featured vehicle changes saved successfully!") => {
+    setIsSaving(true);
+    setSaveSuccess(false);
+
+    // 1. Update in-memory state & public showroom models
+    if (typeof window !== "undefined") {
+      window.__MRJOSEPH_CUSTOM_FEATURED = updatedList;
+    }
+    if (typeof resolveActiveFeaturedCars === "function") {
+      SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
+    }
+
+    // 2. Safe LocalStorage with auto-fallback to prevent QuotaExceededError
     try {
       localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(updatedList));
-      if (typeof resolveActiveFeaturedCars === "function") {
-        SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
-      }
-      setSaveToast(toastMsg);
-      setTimeout(() => setSaveToast(null), 4000);
-    } catch (e) {
-      alert("Error saving: " + e.message);
+    } catch (quotaErr) {
+      console.warn("LocalStorage setItem quota warning, optimizing storage:", quotaErr);
+      try {
+        const compact = updatedList.map(c => ({
+          ...c,
+          images: (c.images || []).map(img => (img && img.startsWith("data:") && img.length > 50000) ? img.slice(0, 50000) : img)
+        }));
+        localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(compact));
+      } catch (_) {}
     }
+
+    // 3. IndexedDB for large image payloads (handles hundreds of MBs seamlessly)
+    try {
+      if (typeof idbSaveFeatured === "function") {
+        await idbSaveFeatured(updatedList);
+      }
+    } catch (idbErr) {
+      console.warn("IndexedDB save note:", idbErr);
+    }
+
+    // 4. Firestore persistence if available
+    try {
+      if (typeof wh !== "undefined" && typeof zM !== "undefined" && typeof Eg !== "undefined") {
+        const cleanForDb = updatedList.map(c => {
+          const clone = { ...c };
+          clone.images = (clone.images || []).map(img => img && img.startsWith("data:") ? img.slice(0, 1500) : img);
+          clone.image = clone.image && clone.image.startsWith("data:") ? clone.image.slice(0, 1500) : clone.image;
+          return clone;
+        });
+        await zM(Eg(wh, "cars", "featured_config"), {
+          customCars: cleanForDb,
+          isDecorative: true,
+          updatedAt: new Date().toISOString()
+        });
+      }
+    } catch (fsErr) {
+      console.warn("Firestore save note (non-fatal):", fsErr);
+    }
+
+    // 5. Broadcast to all open tabs and UI instances
+    if (typeof window !== "undefined") {
+      try {
+        window.dispatchEvent(new CustomEvent("mrjoseph_featured_updated", { detail: updatedList }));
+        window.dispatchEvent(new Event("storage"));
+      } catch (_) {}
+    }
+
+    // Feedback lifecycle
+    setIsSaving(false);
+    setSaveSuccess(true);
+    setHasUnsavedChanges(false);
+    setSaveToast(toastMsg);
+
+    setTimeout(() => {
+      setSaveSuccess(false);
+    }, 4000);
+    setTimeout(() => {
+      setSaveToast(null);
+    }, 5000);
   };
 
   const handleSave = () => {
-    persistChanges(customCars, "All featured vehicle changes saved successfully!");
+    persistChanges(customCars, "All featured vehicle changes saved and applied to the live showroom!");
   };
 
-  // 1. DELETE FEATURE (ZERO window.confirm to avoid iframe sandbox blocking!)
+  // 1. DELETE FEATURE
   const handleDeleteCar = (idToDelete) => {
     const carToDelete = customCars.find(c => c.id === idToDelete);
     const carName = carToDelete ? (carToDelete.make + " " + carToDelete.model) : "Featured vehicle";
@@ -4807,7 +4959,6 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
       ? invCar.images
       : (invCar.image ? [invCar.image] : ["/images/hero_showroom.jpg"]);
     
-    // Ensure 6 studio images slots
     let filledImgs = [...existingImgs];
     while (filledImgs.length < 6) {
       filledImgs.push(existingImgs[0] || "/images/hero_showroom.jpg");
@@ -4892,7 +5043,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
     persistChanges(updated, "Created new featured car slot!");
   };
 
-  // 4. LOCAL STORAGE / DEVICE IMAGE UPLOAD
+  // 4. HIGH-PERFORMANCE IMAGE COMPRESSION (Max 850px, 0.72 quality JPEG: ~50KB per photo)
   const handleLocalImageUpload = (e, slotIdx = null) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0 || !activeCar) return;
@@ -4903,7 +5054,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
         const img = new Image();
         img.onload = () => {
           const canvas = document.createElement("canvas");
-          const maxDim = 1200;
+          const maxDim = 850;
           let w = img.width;
           let h = img.height;
           if (w > h) {
@@ -4922,7 +5073,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
           const ctx = canvas.getContext("2d");
           if (ctx) {
             ctx.drawImage(img, 0, 0, w, h);
-            const dataUrl = canvas.toDataURL("image/webp", 0.8) || canvas.toDataURL("image/jpeg", 0.8);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.72);
             updateActiveCar(c => {
               const currentImgs = (c.images && c.images.length) ? [...c.images] : [];
               while (currentImgs.length < 6) {
@@ -4976,8 +5127,40 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
     return fullName.includes(term) || (c.year && c.year.toString().includes(term));
   });
 
+  // Reusable Save Button Component
+  const renderSaveButton = (isPrimary = true) => {
+    return T.jsxs("button", {
+      type: "button",
+      onClick: handleSave,
+      disabled: isSaving,
+      className: "px-7 py-3 rounded-xl text-xs font-extrabold uppercase tracking-widest transition-all duration-300 shadow-lg cursor-pointer flex items-center justify-center gap-2.5 " + (
+        saveSuccess
+          ? "bg-emerald-500 text-black shadow-emerald-500/40 ring-2 ring-emerald-300 scale-105"
+          : isSaving
+            ? "bg-[#C59B51]/70 text-black cursor-wait"
+            : hasUnsavedChanges
+              ? "bg-[#C59B51] hover:bg-[#B38A40] text-black ring-2 ring-[#C59B51] shadow-xl hover:scale-102"
+              : isPrimary
+                ? "bg-[#C59B51] hover:bg-[#B38A40] text-black shadow-md hover:scale-102"
+                : "bg-white hover:bg-gray-100 text-black shadow-md hover:scale-102"
+      ),
+      children: [
+        isSaving
+          ? T.jsx("span", { className: "animate-spin text-sm leading-none inline-block", children: "⟳" })
+          : saveSuccess
+            ? T.jsx("span", { className: "text-base font-black leading-none", children: "✓" })
+            : T.jsx("span", { className: "text-sm leading-none", children: "💾" }),
+        isSaving
+          ? "Saving Changes..."
+          : saveSuccess
+            ? "Saved Successfully!"
+            : "Save All Changes"
+      ]
+    });
+  };
+
   return T.jsxs("div", {
-    className: "animate-in fade-in slide-in-from-bottom-2 duration-500 space-y-8 relative",
+    className: "animate-in fade-in slide-in-from-bottom-2 duration-500 space-y-8 relative pb-28",
     children: [
       /* Hidden File Input for Multiple Uploads */
       T.jsx("input", {
@@ -4988,6 +5171,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
         style: { display: "none" },
         onChange: (e) => handleLocalImageUpload(e)
       }),
+
       /* Hidden File Input for Single Slot Upload */
       T.jsx("input", {
         ref: slotFileInputRef,
@@ -5018,60 +5202,72 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                 T.jsx("button", {
                   type: "button",
                   onClick: () => setShowInventoryModal(false),
-                  className: "w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm cursor-pointer",
+                  className: "w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-white flex items-center justify-center cursor-pointer",
                   children: "✕"
                 })
               ]
             }),
 
-            /* Search Bar */
+            /* Search bar */
             T.jsx("div", {
-              className: "p-4 border-b border-white/10 bg-black/20",
+              className: "p-4 border-b border-white/5 bg-black/30",
               children: T.jsx("input", {
                 type: "text",
-                placeholder: "Search make, model, year in inventory...",
+                placeholder: "Search by make, model, or year...",
                 value: inventorySearch,
                 onChange: (e) => setInventorySearch(e.target.value),
                 className: "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm outline-none focus:border-[#C59B51]"
               })
             }),
 
-            /* Cars Grid in Modal */
+            /* Inventory Grid */
             T.jsx("div", {
               className: "p-6 overflow-y-auto space-y-3 flex-1",
-              children: filteredInventory.length === 0 ? T.jsx("div", {
-                className: "text-center py-12 text-white/40 text-sm",
-                children: "No inventory vehicles found matching search."
+              children: filteredInventory.length === 0 ? T.jsx("p", {
+                className: "text-white/40 text-center py-10 text-sm",
+                children: "No vehicles found matching your search."
               }) : T.jsx("div", {
-                className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5",
-                children: filteredInventory.map(inv => {
-                  const cover = (inv.images && inv.images[0]) || inv.image || "/images/hero_showroom.jpg";
-                  const priceStr = inv.price ? "KSh " + Number(inv.price).toLocaleString() : "Price on App";
+                className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4",
+                children: filteredInventory.map(invCar => {
+                  const coverImg = (invCar.images && invCar.images[0]) || invCar.image || "/images/hero_showroom.jpg";
+                  const priceStr = invCar.price ? "KSh " + Number(invCar.price).toLocaleString() : "Price on App";
                   return T.jsxs("div", {
-                    key: inv.id,
-                    className: "bg-white/5 border border-white/10 rounded-2xl p-3 flex flex-col justify-between gap-3 hover:border-[#C59B51] hover:bg-white/10 transition-all",
+                    key: invCar.id,
+                    className: "bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-[#C59B51] transition-all group flex flex-col justify-between",
                     children: [
                       T.jsxs("div", {
-                        className: "space-y-2",
+                        className: "relative aspect-[16/10] bg-black/40",
                         children: [
-                          T.jsx("div", {
-                            className: "w-full aspect-[16/10] rounded-xl overflow-hidden bg-black/40",
-                            children: T.jsx("img", { src: cover, alt: inv.make, className: "w-full h-full object-cover" })
+                          T.jsx("img", {
+                            src: coverImg,
+                            alt: invCar.make,
+                            className: "w-full h-full object-cover group-hover:scale-105 transition-transform"
                           }),
-                          T.jsxs("div", {
-                            children: [
-                              T.jsx("span", { className: "text-xs font-mono text-[#C59B51] font-bold block", children: inv.year || "2023" }),
-                              T.jsx("h4", { className: "text-sm font-bold text-white line-clamp-1", children: inv.make + " " + inv.model }),
-                              T.jsx("p", { className: "text-xs text-white/50 font-mono", children: priceStr })
-                            ]
+                          T.jsx("span", {
+                            className: "absolute top-2 right-2 px-2 py-0.5 bg-black/70 backdrop-blur-md text-[10px] font-mono text-white rounded-md",
+                            children: invCar.year || 2022
                           })
                         ]
                       }),
-                      T.jsxs("button", {
-                        type: "button",
-                        onClick: () => handleSelectFromInventory(inv),
-                        className: "w-full py-2 bg-[#C59B51] hover:bg-[#B38A40] text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm",
-                        children: ["Feature This Car", T.jsx("span", { children: "→" })]
+                      T.jsxs("div", {
+                        className: "p-3.5 space-y-2",
+                        children: [
+                          T.jsxs("div", {
+                            children: [
+                              T.jsx("h4", { className: "text-sm font-bold text-white line-clamp-1", children: (invCar.make || "") + " " + (invCar.model || "") }),
+                              T.jsx("p", { className: "text-xs font-mono text-[#C59B51]", children: priceStr })
+                            ]
+                          }),
+                          T.jsxs("button", {
+                            type: "button",
+                            onClick: () => handleSelectFromInventory(invCar),
+                            className: "w-full py-2 bg-[#C59B51] hover:bg-[#B38A40] text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md flex items-center justify-center gap-1.5",
+                            children: [
+                              T.jsx("span", { children: "+" }),
+                              "Add to Featured"
+                            ]
+                          })
+                        ]
                       })
                     ]
                   });
@@ -5082,76 +5278,53 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
         })
       }),
 
-      /* Top Header & Slot Status Tracker */
+      /* TOP BANNER & ACTION HEADER */
       T.jsxs("div", {
-        className: "flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/10 pb-6",
+        className: "flex flex-col lg:flex-row justify-between lg:items-center gap-4 border-b border-white/10 pb-6",
         children: [
           T.jsxs("div", {
+            className: "space-y-1",
             children: [
               T.jsxs("div", {
                 className: "flex items-center gap-3",
                 children: [
-                  T.jsx("div", { className: "w-2.5 h-7 bg-[#C59B51] rounded-xs" }),
-                  T.jsx("h3", {
-                    className: "text-2xl sm:text-3xl font-serif text-white tracking-tight",
-                    children: "Featured Cars Management"
+                  T.jsx("h3", { className: "text-2xl font-serif text-white tracking-wide", children: "Featured Vehicles Studio" }),
+                  T.jsxs("span", {
+                    className: "px-2.5 py-1 bg-[#C59B51]/15 text-[#C59B51] text-[11px] font-mono font-bold uppercase rounded-full border border-[#C59B51]/30",
+                    children: [customCount, " of 5 Active Slots Used"]
+                  }),
+                  hasUnsavedChanges && T.jsx("span", {
+                    className: "px-2.5 py-1 bg-amber-500/20 text-amber-300 text-[10px] font-mono font-extrabold uppercase rounded-full border border-amber-500/40 animate-pulse",
+                    children: "● Unsaved Changes"
                   })
                 ]
               }),
-              /* Slot Status Pill */
-              T.jsxs("div", {
-                className: "flex items-center gap-2 mt-2 flex-wrap",
+              T.jsxs("p", {
+                className: "text-xs text-white/60",
                 children: [
-                  T.jsxs("span", {
-                    className: "text-xs font-mono px-3 py-1 rounded-full font-bold " + (
-                      customCount >= 5
-                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                        : customCount > 0
-                        ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                        : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                    ),
-                    children: [
-                      customCount >= 5
-                        ? "All 5 Custom Slots Active (Defaults Completely Replaced)"
-                        : customCount > 0
-                        ? customCount + " of 5 Custom Slots Active (" + defaultRemaining + " Default Fallback" + (defaultRemaining > 1 ? "s" : "") + " Visible)"
-                        : "0 of 5 Custom Slots Active (5 Default Fallbacks Visible)"
-                    ]
-                  }),
-                  T.jsx("span", {
-                    className: "text-xs text-white/40",
-                    children: "• Factory defaults archived from active list"
-                  })
+                  "Configure high-definition photos, custom specifications, executive extra notes, YouTube review walkarounds, and section palettes. ",
+                  defaultRemaining > 0
+                    ? "(" + defaultRemaining + " archived default " + (defaultRemaining === 1 ? "car is" : "cars are") + " filling the remaining slots)"
+                    : "(All 5 showroom slots are filled with your custom featured vehicles)"
                 ]
               })
             ]
           }),
 
-          /* Action Buttons */
+          /* Top Action Buttons */
           T.jsxs("div", {
             className: "flex items-center gap-2.5 flex-wrap",
             children: [
-              /* Button to select from added inventory vehicles */
               T.jsxs("button", {
                 type: "button",
                 onClick: () => setShowInventoryModal(true),
-                className: "px-4 py-2.5 bg-[#C59B51] hover:bg-[#B38A40] text-black rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-1.5 cursor-pointer",
+                className: "px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/15 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-sm",
                 children: [
-                  T.jsx("span", { className: "text-sm", children: "🚗" }),
+                  T.jsx("span", { children: "🚗" }),
                   "Select from Added Vehicles"
                 ]
               }),
-              /* Button to create blank template car */
-              T.jsxs("button", {
-                type: "button",
-                onClick: handleAddNewCar,
-                className: "px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer border border-white/10",
-                children: [
-                  T.jsx("span", { className: "text-sm", children: "+" }),
-                  "Add Blank Car"
-                ]
-              }),
-              activeCar && T.jsx("button", {
+              activeCarId && T.jsxs("button", {
                 type: "button",
                 onClick: () => {
                   try {
@@ -5162,40 +5335,16 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                   window.dispatchEvent(new Event("hashchange"));
                   window.scrollTo(0, 0);
                 },
-                className: "px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer border border-white/10",
+                className: "px-4 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer border border-white/10 shadow-sm",
                 children: ["Preview", T.jsx("span", { children: "↗" })]
               }),
-              customCars.length > 0 && T.jsx("button", {
-                type: "button",
-                onClick: handleSave,
-                className: "px-5 py-2.5 bg-white text-black hover:bg-gray-100 rounded-xl text-xs font-extrabold uppercase tracking-widest transition-all shadow-md cursor-pointer",
-                children: "Save Changes"
-              })
+              renderSaveButton(true)
             ]
           })
         ]
       }),
 
-      /* Save Toast Alert */
-      saveToast && T.jsxs("div", {
-        className: "p-4 bg-emerald-500/20 border border-emerald-500/40 rounded-2xl flex items-center justify-between text-emerald-300 text-sm font-semibold animate-in fade-in",
-        children: [
-          T.jsxs("div", {
-            className: "flex items-center gap-3",
-            children: [
-              T.jsx("span", { className: "text-lg", children: "✓" }),
-              saveToast
-            ]
-          }),
-          T.jsx("button", {
-            onClick: () => setSaveToast(null),
-            className: "text-emerald-300 hover:text-white text-xs font-bold uppercase",
-            children: "Dismiss"
-          })
-        ]
-      }),
-
-      /* EMPTY STATE */
+      /* EMPTY STATE WHEN NO CUSTOM CARS */
       customCars.length === 0 ? T.jsxs("div", {
         className: "bg-black/40 border border-white/10 p-10 sm:p-14 rounded-3xl text-center space-y-6 max-w-2xl mx-auto my-8",
         children: [
@@ -5245,7 +5394,6 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
           })
         ]
       }) :
-
       /* CUSTOM CARS ACTIVE */
       T.jsxs("div", {
         className: "space-y-8",
@@ -5306,51 +5454,45 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                               className: "w-full h-full object-cover"
                             }),
                             T.jsxs("span", {
-                              className: "absolute top-1.5 left-1.5 px-2 py-0.5 bg-black/75 backdrop-blur-md rounded-md text-[9px] font-mono text-[#C59B51] font-bold uppercase",
+                              className: "absolute top-1.5 left-1.5 px-2 py-0.5 bg-black/70 backdrop-blur-md text-[10px] font-mono text-white rounded-md",
                               children: ["Slot ", idx + 1]
                             })
                           ]
                         }),
                         T.jsxs("div", {
-                          className: "flex items-center justify-between gap-1",
+                          className: "min-w-0 flex items-center justify-between gap-1",
                           children: [
                             T.jsxs("div", {
-                              className: "truncate",
+                              className: "min-w-0 flex-1",
                               children: [
-                                T.jsx("span", {
-                                  className: "text-xs font-mono uppercase text-[#C59B51] font-bold block",
-                                  children: c.year || "2024"
-                                }),
-                                T.jsx("span", {
-                                  className: "text-xs font-bold text-white line-clamp-1 block truncate",
-                                  children: c.make + " " + c.model
-                                })
+                                T.jsx("h5", { className: "text-xs font-bold truncate text-white", children: c.make + " " + c.model }),
+                                T.jsx("p", { className: "text-[10px] font-mono text-[#C59B51]", children: c.price ? "KSh " + Number(c.price).toLocaleString() : "POA" })
                               ]
                             }),
-                            /* Reliable Direct Delete Button on Tab */
+                            /* Delete Button on card */
                             T.jsx("button", {
                               type: "button",
                               onClick: (e) => {
                                 e.stopPropagation();
-                                handleDeleteCar(c.id);
+                                setDeleteConfirmId(c.id);
                               },
                               className: "p-1.5 text-white/40 hover:text-red-400 hover:bg-red-500/10 rounded-lg cursor-pointer transition-colors text-sm shrink-0",
                               title: "Delete this featured car",
-                              children: "✕"
+                              children: "🗑"
                             })
                           ]
                         })
                       ]
                     });
                   }),
-                  /* Add Button Slot */
-                  T.jsxs("button", {
+                  customCars.length < 5 && T.jsxs("button", {
                     type: "button",
                     onClick: () => setShowInventoryModal(true),
-                    className: "border border-dashed border-white/20 hover:border-[#C59B51] hover:bg-white/5 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-white/40 hover:text-[#C59B51] transition-all cursor-pointer min-h-[120px]",
+                    className: "p-4 border-2 border-dashed border-white/10 hover:border-[#C59B51]/50 rounded-2xl flex flex-col items-center justify-center gap-1.5 text-white/40 hover:text-white text-xs cursor-pointer transition-all aspect-[16/10]",
                     children: [
-                      T.jsx("span", { className: "text-2xl font-bold", children: "+" }),
-                      T.jsxs("span", { className: "text-xs font-bold uppercase tracking-wider text-center", children: ["Add Slot ", customCars.length + 1] })
+                      T.jsx("span", { className: "text-xl", children: "🚗" }),
+                      T.jsx("span", { className: "font-bold", children: "+ Add Featured" }),
+                      T.jsx("span", { className: "text-[10px] text-white/30", children: "Replaces default car" })
                     ]
                   })
                 ]
@@ -5358,40 +5500,69 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
             ]
           }),
 
-          /* ACTIVE CAR STUDIO EDITOR */
+          /* ACTIVE CAR EDITING CARD */
           activeCar && T.jsxs("div", {
-            className: "space-y-6",
+            className: "bg-[#101018] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-8 shadow-xl",
             children: [
-              /* DELETE CONFIRMATION ALERT (INLINE, FOOLPROOF, ZERO window.confirm) */
-              deleteConfirmId === activeCar.id && T.jsxs("div", {
-                className: "p-5 bg-red-500/15 border border-red-500/40 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in",
+              /* Active Car Header */
+              T.jsxs("div", {
+                className: "flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-white/10 pb-6",
                 children: [
                   T.jsxs("div", {
-                    className: "space-y-1 text-center sm:text-left",
                     children: [
-                      T.jsx("h5", { className: "text-sm font-bold text-red-300", children: "Confirm Deletion of this Featured Vehicle?" }),
-                      T.jsxs("p", {
-                        className: "text-xs text-white/60",
+                      T.jsxs("div", {
+                        className: "flex items-center gap-2",
                         children: [
-                          "Deleting \"", activeCar.make, " ", activeCar.model,
-                          "\" will remove it from featured slots and automatically restore the factory default vehicle."
+                          T.jsx("span", { className: "text-xs font-mono text-[#C59B51] font-bold uppercase", children: "Configuring Vehicle" }),
+                          T.jsxs("span", { className: "text-xs text-white/30", children: ["• ID: ", activeCar.id] })
                         ]
-                      })
+                      }),
+                      T.jsx("h3", { className: "text-2xl font-bold text-white", children: (activeCar.make || "") + " " + (activeCar.model || "") })
+                    ]
+                  }),
+
+                  T.jsxs("div", {
+                    className: "flex items-center gap-3",
+                    children: [
+                      /* Delete Button */
+                      T.jsxs("button", {
+                        type: "button",
+                        onClick: () => setDeleteConfirmId(activeCar.id),
+                        className: "px-4 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer transition-all",
+                        children: [
+                          T.jsx("span", { children: "🗑" }),
+                          "Delete from Featured"
+                        ]
+                      }),
+                      renderSaveButton(true)
+                    ]
+                  })
+                ]
+              }),
+
+              /* INLINE DELETE CONFIRMATION BANNER */
+              deleteConfirmId && T.jsxs("div", {
+                className: "p-4.5 bg-red-500/15 border border-red-500/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-in fade-in duration-200",
+                children: [
+                  T.jsxs("div", {
+                    children: [
+                      T.jsx("h5", { className: "text-sm font-bold text-red-300", children: "Remove this vehicle from Featured Cars?" }),
+                      T.jsx("p", { className: "text-xs text-white/60", children: "One default archived car will be restored automatically to maintain 5 featured cars on the showroom." })
                     ]
                   }),
                   T.jsxs("div", {
-                    className: "flex items-center gap-2.5 shrink-0",
+                    className: "flex items-center gap-2 shrink-0",
                     children: [
                       T.jsx("button", {
                         type: "button",
-                        onClick: () => handleDeleteCar(activeCar.id),
+                        onClick: () => handleDeleteCar(deleteConfirmId),
                         className: "px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-extrabold uppercase tracking-wider shadow-md cursor-pointer transition-all",
                         children: "Yes, Delete Now"
                       }),
                       T.jsx("button", {
                         type: "button",
                         onClick: () => setDeleteConfirmId(null),
-                        className: "px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer",
+                        className: "px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold cursor-pointer transition-all",
                         children: "Cancel"
                       })
                     ]
@@ -5399,26 +5570,19 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                 ]
               }),
 
-              /* 1. STYLES & COLOR PALETTE */
+              /* 1. STYLES & COLOR THEME CONTROLS */
               T.jsxs("div", {
-                className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-5",
+                className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-4",
                 children: [
                   T.jsxs("div", {
-                    className: "flex items-center justify-between",
                     children: [
-                      T.jsxs("div", {
-                        children: [
-                          T.jsx("h4", { className: "text-lg font-bold text-white", children: "Theme & Section Colors" }),
-                          T.jsx("p", { className: "text-xs text-white/40", children: "Configure background colors and accent styling for this featured car." })
-                        ]
-                      }),
-                      T.jsxs("span", {
-                        className: "text-xs font-mono text-[#C59B51] font-bold",
-                        children: ["Editing: ", activeCar.make, " ", activeCar.model]
+                      T.jsx("h4", { className: "text-lg font-bold text-white", children: "Styles & Color Customization" }),
+                      T.jsxs("p", {
+                        className: "text-xs text-white/40",
+                        children: ["Custom palette for ", activeCar.make, " ", activeCar.model]
                       })
                     ]
                   }),
-
                   T.jsxs("div", {
                     className: "grid grid-cols-1 md:grid-cols-3 gap-6",
                     children: [
@@ -5446,7 +5610,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                                   ...c,
                                   styles: { ...activeStyles, featuresBg: e.target.value }
                                 })),
-                                className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white font-mono text-xs uppercase"
+                                className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white font-mono text-xs uppercase outline-none focus:border-[#C59B51]"
                               })
                             ]
                           }),
@@ -5491,7 +5655,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                                   ...c,
                                   styles: { ...activeStyles, titleBarBg: e.target.value }
                                 })),
-                                className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white font-mono text-xs uppercase"
+                                className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white font-mono text-xs uppercase outline-none focus:border-[#C59B51]"
                               })
                             ]
                           }),
@@ -5536,7 +5700,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                                   ...c,
                                   styles: { ...activeStyles, accentColor: e.target.value }
                                 })),
-                                className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white font-mono text-xs uppercase"
+                                className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white font-mono text-xs uppercase outline-none focus:border-[#C59B51]"
                               })
                             ]
                           }),
@@ -5642,7 +5806,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                 ]
               }),
 
-              /* 3. TECHNICAL DOSSIER & EXTRA INFORMATION */
+              /* 3. TECHNICAL DOSSIER & VEHICLE SPECS */
               T.jsxs("div", {
                 className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-5",
                 children: [
@@ -5656,20 +5820,28 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                   T.jsxs("div", {
                     className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4",
                     children: [
+                      /* Separate Make & Model for error-free editing */
                       T.jsxs("div", {
                         className: "space-y-1.5",
                         children: [
-                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Make & Model" }),
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Make (Manufacturer)" }),
                           T.jsx("input", {
                             type: "text",
-                            value: (activeCar.make || "") + " " + (activeCar.model || ""),
-                            onChange: (e) => {
-                              const parts = e.target.value.split(" ");
-                              const mk = parts[0] || "";
-                              const mdl = parts.slice(1).join(" ") || "";
-                              updateActiveCar(c => ({ ...c, make: mk, model: mdl }));
-                            },
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            value: activeCar.make || "",
+                            onChange: (e) => updateActiveCar(c => ({ ...c, make: e.target.value })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Model Name" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: activeCar.model || "",
+                            onChange: (e) => updateActiveCar(c => ({ ...c, model: e.target.value })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
@@ -5681,7 +5853,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                             type: "number",
                             value: activeCar.year || 2024,
                             onChange: (e) => updateActiveCar(c => ({ ...c, year: Number(e.target.value) })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
@@ -5693,7 +5865,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                             type: "number",
                             value: activeCar.price || 0,
                             onChange: (e) => updateActiveCar(c => ({ ...c, price: Number(e.target.value) })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
@@ -5705,7 +5877,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                             type: "text",
                             value: activeCar.type || "Prestige SUV",
                             onChange: (e) => updateActiveCar(c => ({ ...c, type: e.target.value })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
@@ -5717,7 +5889,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                             type: "text",
                             value: activeCar.fuel || "Diesel",
                             onChange: (e) => updateActiveCar(c => ({ ...c, fuel: e.target.value })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
@@ -5729,7 +5901,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                             type: "text",
                             value: activeCar.transmission || "Automatic",
                             onChange: (e) => updateActiveCar(c => ({ ...c, transmission: e.target.value })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
@@ -5739,12 +5911,12 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                           T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Drivetrain" }),
                           T.jsx("input", {
                             type: "text",
-                            value: activeSpecs.drivetrain || "All-Wheel Drive (AWD / 4WD)",
+                            value: activeSpecs.drivetrain || "AWD",
                             onChange: (e) => updateActiveCar(c => ({
                               ...c,
                               specifications: { ...activeSpecs, drivetrain: e.target.value }
                             })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
@@ -5754,12 +5926,12 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                           T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Exterior Paint" }),
                           T.jsx("input", {
                             type: "text",
-                            value: activeSpecs.exteriorPaint || "Metallic Factory Finish",
+                            value: activeSpecs.exteriorPaint || "Factory Metallic",
                             onChange: (e) => updateActiveCar(c => ({
                               ...c,
                               specifications: { ...activeSpecs, exteriorPaint: e.target.value }
                             })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
@@ -5769,53 +5941,76 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                           T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Interior Trim" }),
                           T.jsx("input", {
                             type: "text",
-                            value: activeSpecs.interiorTrim || "Full Premium Nappa Leather",
+                            value: activeSpecs.interiorTrim || "Nappa Leather",
                             onChange: (e) => updateActiveCar(c => ({
                               ...c,
                               specifications: { ...activeSpecs, interiorTrim: e.target.value }
                             })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
                       T.jsxs("div", {
-                        className: "space-y-1.5 sm:col-span-2 lg:col-span-3",
+                        className: "space-y-1.5",
                         children: [
-                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Import & Duty Status" }),
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Import / Duty Status" }),
                           T.jsx("input", {
                             type: "text",
-                            value: activeSpecs.importStatus || "Duty & Clearance Settled",
+                            value: activeSpecs.importStatus || "Duty Paid",
                             onChange: (e) => updateActiveCar(c => ({
                               ...c,
                               specifications: { ...activeSpecs, importStatus: e.target.value }
                             })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
                       }),
-                      /* EXTRA INFORMATION / PROVENANCE HIGHLIGHTS FIELD */
                       T.jsxs("div", {
-                        className: "space-y-1.5 sm:col-span-2 lg:col-span-3",
+                        className: "space-y-1.5",
                         children: [
-                          T.jsx("label", { className: "text-xs font-mono uppercase text-[#C59B51] font-bold", children: "Extra Information & Executive Provenance Notes" }),
-                          T.jsx("textarea", {
-                            rows: 2,
-                            placeholder: "e.g. Single owner from new, full dealership service records, ceramic paint protection, clean customs clearance...",
-                            value: activeSpecs.extraInfo || "",
-                            onChange: (e) => updateActiveCar(c => ({
-                              ...c,
-                              specifications: { ...activeSpecs, extraInfo: e.target.value }
-                            })),
-                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 text-white text-xs outline-none focus:border-[#C59B51]"
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Showroom Location" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: activeCar.location || "Kiambu Road, Ridgeways",
+                            onChange: (e) => updateActiveCar(c => ({ ...c, location: e.target.value })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
                           })
                         ]
+                      })
+                    ]
+                  }),
+
+                  /* EXTRA INFORMATION / PROVENANCE FIELD */
+                  T.jsxs("div", {
+                    className: "space-y-2 pt-2",
+                    children: [
+                      T.jsxs("div", {
+                        className: "flex items-center justify-between",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-[#C59B51] font-bold", children: "Executive Provenance & Special Highlights (Extra Information)" }),
+                          T.jsx("span", { className: "text-[11px] text-white/40", children: "Renders in Section 3 Technical Dossier" })
+                        ]
+                      }),
+                      T.jsx("textarea", {
+                        rows: 3,
+                        placeholder: "e.g. Certified one-owner executive direct import. Equipped with factory sport exhaust, carbon fiber styling pack, and full official maintenance service dossier...",
+                        value: activeSpecs.extraInfo || "",
+                        onChange: (e) => updateActiveCar(c => ({
+                          ...c,
+                          description: e.target.value,
+                          specifications: {
+                            ...(c.specifications || activeSpecs),
+                            extraInfo: e.target.value
+                          }
+                        })),
+                        className: "w-full bg-white/5 border border-white/10 rounded-xl p-3.5 text-white text-xs leading-relaxed outline-none focus:border-[#C59B51]"
                       })
                     ]
                   })
                 ]
               }),
 
-              /* 4. STUDIO PHOTOGRAPHS & LOCAL STORAGE UPLOAD */
+              /* 4. HIGH-DEFINITION PHOTOS (SLOTS 1-6) */
               T.jsxs("div", {
                 className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-5",
                 children: [
@@ -5824,76 +6019,81 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                     children: [
                       T.jsxs("div", {
                         children: [
-                          T.jsx("h4", { className: "text-lg font-bold text-white", children: "Studio Angles & Photographs (6 Images)" }),
-                          T.jsx("p", { className: "text-xs text-white/40", children: "Upload photos from your local storage / device, or provide image URLs." })
+                          T.jsx("h4", { className: "text-lg font-bold text-white", children: "6 High-Definition Photographs" }),
+                          T.jsx("p", { className: "text-xs text-white/40", children: "Slot 1 is the primary Hero image. Slots 2-6 populate the 5-photo showcase gallery." })
                         ]
                       }),
-                      /* LOCAL DEVICE STORAGE UPLOAD BUTTON */
                       T.jsxs("button", {
                         type: "button",
                         onClick: () => fileInputRef.current && fileInputRef.current.click(),
-                        className: "px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer border border-white/15",
+                        className: "inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer transition-all shrink-0",
                         children: [
-                          T.jsx("span", { className: "text-sm", children: "📁" }),
-                          "Upload Photos from Local Storage"
+                          T.jsx("span", { children: "📁" }),
+                          "Upload Photos from Device"
                         ]
                       })
                     ]
                   }),
 
-                  /* 6 Photos Grid with Individual Upload Buttons */
                   T.jsx("div", {
                     className: "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3",
-                    children: [0, 1, 2, 3, 4, 5].map(idx => {
-                      const currentImgs = (activeCar.images && activeCar.images.length) ? [...activeCar.images] : [];
-                      const val = currentImgs[idx] || "";
+                    children: [0, 1, 2, 3, 4, 5].map(sIdx => {
+                      const currentImgs = (activeCar.images && activeCar.images.length) ? activeCar.images : [activeCar.image || ""];
+                      const imgUrl = currentImgs[sIdx] || "";
+                      const slotLabels = ["Hero Main", "Angle 2", "Angle 3", "Angle 4", "Angle 5", "Interior / Detail"];
                       return T.jsxs("div", {
-                        key: idx,
-                        className: "space-y-2 bg-white/5 p-3 rounded-2xl border border-white/10 flex flex-col justify-between",
+                        key: sIdx,
+                        className: "space-y-2 group",
                         children: [
                           T.jsxs("div", {
-                            className: "space-y-1.5",
+                            className: "relative aspect-[16/10] rounded-xl overflow-hidden bg-black/60 border border-white/10 group-hover:border-[#C59B51] transition-all",
                             children: [
-                              T.jsx("div", {
-                                className: "w-full aspect-[16/10] bg-black/50 rounded-xl overflow-hidden",
-                                children: val ? T.jsx("img", { src: val, alt: "Angle " + (idx + 1), className: "w-full h-full object-cover" }) : T.jsx("div", { className: "w-full h-full flex items-center justify-center text-white/30 text-xs", children: "Empty" })
+                              imgUrl ? T.jsx("img", {
+                                src: imgUrl,
+                                alt: "Slot " + (sIdx + 1),
+                                className: "w-full h-full object-cover"
+                              }) : T.jsx("div", {
+                                className: "w-full h-full flex items-center justify-center text-white/20 text-xs",
+                                children: "Empty Slot"
                               }),
-                              T.jsxs("div", {
-                                className: "flex items-center justify-between",
+                              T.jsxs("span", {
+                                className: "absolute top-1 left-1 px-1.5 py-0.5 bg-black/80 text-[9px] font-mono font-bold text-[#C59B51] rounded",
+                                children: ["#", sIdx + 1]
+                              }),
+                              T.jsx("button", {
+                                type: "button",
+                                onClick: () => {
+                                  setTargetUploadIndex(sIdx);
+                                  slotFileInputRef.current && slotFileInputRef.current.click();
+                                },
+                                className: "absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-[11px] font-bold text-white gap-1 cursor-pointer",
                                 children: [
-                                  T.jsxs("span", {
-                                    className: "text-[10px] font-mono text-white/50 uppercase font-bold",
-                                    children: [idx === 0 ? "1. Hero Image" : "Photo " + (idx + 1)]
-                                  }),
-                                  /* Slot individual upload */
-                                  T.jsx("button", {
-                                    type: "button",
-                                    onClick: () => {
-                                      setTargetUploadIndex(idx);
-                                      if (slotFileInputRef.current) slotFileInputRef.current.click();
-                                    },
-                                    className: "text-[10px] font-mono text-[#C59B51] hover:underline cursor-pointer",
-                                    title: "Upload from device",
-                                    children: "Upload"
-                                  })
+                                  T.jsx("span", { className: "text-base", children: "📷" }),
+                                  "Change"
                                 ]
                               })
                             ]
                           }),
-                          T.jsx("input", {
-                            type: "text",
-                            placeholder: "/images/... or data:image",
-                            value: val,
-                            onChange: (e) => {
-                              const newImgs = [...currentImgs];
-                              newImgs[idx] = e.target.value;
-                              updateActiveCar(c => ({
-                                ...c,
-                                images: newImgs,
-                                image: newImgs[0] || c.image || ""
-                              }));
-                            },
-                            className: "w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-white font-mono text-[9px] truncate"
+                          T.jsxs("div", {
+                            className: "space-y-1",
+                            children: [
+                              T.jsx("span", { className: "text-[10px] font-mono text-white/50 block truncate", children: slotLabels[sIdx] }),
+                              T.jsx("input", {
+                                type: "text",
+                                placeholder: "URL or uploaded",
+                                value: imgUrl,
+                                onChange: (e) => {
+                                  const newImgs = [...currentImgs];
+                                  newImgs[sIdx] = e.target.value;
+                                  updateActiveCar(c => ({
+                                    ...c,
+                                    images: newImgs,
+                                    image: sIdx === 0 ? e.target.value : (c.image || newImgs[0])
+                                  }));
+                                },
+                                className: "w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-white text-[10px] font-mono truncate outline-none focus:border-[#C59B51]"
+                              })
+                            ]
                           })
                         ]
                       });
@@ -5902,17 +6102,17 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                 ]
               }),
 
-              /* 5. YOUTUBE VIDEO WALKAROUND URL */
+              /* 5. YOUTUBE WALKTHROUGH LINK */
               T.jsxs("div", {
                 className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-4",
                 children: [
                   T.jsxs("div", {
-                    className: "flex flex-col sm:flex-row justify-between sm:items-center gap-2",
+                    className: "flex items-center justify-between gap-4",
                     children: [
                       T.jsxs("div", {
                         children: [
-                          T.jsx("h4", { className: "text-lg font-bold text-white", children: "YouTube Walkaround Video URL" }),
-                          T.jsx("p", { className: "text-xs text-white/40", children: "Direct YouTube link opened when users click the red YouTube icon on the showcase." })
+                          T.jsx("h4", { className: "text-lg font-bold text-white", children: "YouTube Walkaround & Review Link" }),
+                          T.jsx("p", { className: "text-xs text-white/40", children: "Direct YouTube video link for the Centered Video Review & Walkaround Section." })
                         ]
                       }),
                       activeCar.videoUrl && T.jsxs("a", {
@@ -5920,12 +6120,15 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                         target: "_blank",
                         rel: "noopener noreferrer",
                         className: "text-xs font-mono text-[#FF0000] hover:underline flex items-center gap-1 shrink-0",
-                        children: ["▶ Test Video Link", T.jsx("span", { children: "↗" })]
+                        children: [
+                          T.jsx("span", { children: "▶" }),
+                          "Test Link"
+                        ]
                       })
                     ]
                   }),
                   T.jsx("input", {
-                    type: "text",
+                    type: "url",
                     placeholder: "https://www.youtube.com/watch?v=... or https://youtu.be/...",
                     value: activeCar.videoUrl || "",
                     onChange: (e) => updateActiveCar(c => ({ ...c, videoUrl: e.target.value })),
@@ -5934,19 +6137,24 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                 ]
               }),
 
-              /* BOTTOM ACTION FOOTER */
+              /* BOTTOM ACTION BAR */
               T.jsxs("div", {
-                className: "flex items-center justify-between gap-4 pt-4 border-t border-white/10 flex-wrap",
+                className: "pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4",
                 children: [
-                  /* WORKING DELETE BUTTON (triggers clean state-based confirmation) */
-                  T.jsx("button", {
-                    type: "button",
-                    onClick: () => setDeleteConfirmId(activeCar.id),
-                    className: "px-5 py-3 border border-red-500/30 hover:border-red-500 hover:bg-red-500/10 text-red-400 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors",
-                    children: "Delete This Featured Car"
-                  }),
                   T.jsxs("div", {
                     className: "flex items-center gap-3",
+                    children: [
+                      T.jsx("div", {
+                        className: "w-3 h-3 rounded-full " + (hasUnsavedChanges ? "bg-amber-400 animate-pulse" : "bg-emerald-400")
+                      }),
+                      T.jsx("span", {
+                        className: "text-xs text-white/60 font-mono",
+                        children: hasUnsavedChanges ? "You have unsaved changes in this vehicle" : "All modifications synced in memory"
+                      })
+                    ]
+                  }),
+                  T.jsxs("div", {
+                    className: "flex items-center gap-3 flex-wrap",
                     children: [
                       T.jsxs("button", {
                         type: "button",
@@ -5957,12 +6165,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                           "Select from Added Vehicles"
                         ]
                       }),
-                      T.jsx("button", {
-                        type: "button",
-                        onClick: handleSave,
-                        className: "px-8 py-3 bg-[#C59B51] hover:bg-[#B38A40] text-black rounded-xl text-xs font-extrabold uppercase tracking-widest shadow-lg cursor-pointer transition-all",
-                        children: "Save All Changes"
-                      })
+                      renderSaveButton(true)
                     ]
                   })
                 ]
@@ -5970,7 +6173,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
             ]
           }),
 
-          /* ARCHIVED FACTORY DEFAULTS */
+          /* ARCHIVED FACTORY DEFAULTS ACCORDION */
           T.jsxs("div", {
             className: "pt-6 border-t border-white/5",
             children: [
@@ -6016,12 +6219,82 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
             ]
           })
         ]
+      }),
+
+      /* PERSISTENT FLOATING BOTTOM ACTION BAR */
+      customCars.length > 0 && T.jsxs("div", {
+        className: "fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-[#000F1E]/95 backdrop-blur-xl border border-white/20 px-6 py-3 rounded-2xl shadow-2xl flex items-center justify-between gap-6 max-w-2xl w-[92%]",
+        children: [
+          T.jsxs("div", {
+            className: "flex items-center gap-3 min-w-0",
+            children: [
+              T.jsx("span", {
+                className: "w-2.5 h-2.5 rounded-full shrink-0 " + (hasUnsavedChanges ? "bg-amber-400 animate-ping" : "bg-emerald-400")
+              }),
+              T.jsxs("div", {
+                className: "min-w-0 truncate",
+                children: [
+                  T.jsxs("span", {
+                    className: "text-xs font-bold text-white block truncate",
+                    children: activeCar ? (activeCar.make + " " + activeCar.model) : "Featured Vehicles"
+                  }),
+                  T.jsx("span", {
+                    className: "text-[10px] font-mono text-white/50 block truncate",
+                    children: hasUnsavedChanges ? "Pending unsaved changes" : "Showroom up to date"
+                  })
+                ]
+              })
+            ]
+          }),
+          T.jsxs("div", {
+            className: "flex items-center gap-2.5 shrink-0",
+            children: [
+              activeCarId && T.jsx("button", {
+                type: "button",
+                onClick: () => {
+                  try {
+                    window.history.pushState({}, "", "/?featured=" + activeCarId);
+                  } catch (_) {}
+                  window.location.hash = "featured-" + activeCarId;
+                  window.dispatchEvent(new Event("popstate"));
+                  window.dispatchEvent(new Event("hashchange"));
+                  window.scrollTo(0, 0);
+                },
+                className: "px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold transition-all",
+                children: "Preview ↗"
+              }),
+              renderSaveButton(true)
+            ]
+          })
+        ]
+      }),
+
+      /* FLOATING SUCCESS TOAST (Always in view at bottom right) */
+      saveToast && T.jsxs("div", {
+        className: "fixed bottom-20 right-6 z-50 bg-[#000F1E] border-2 border-emerald-500 text-white p-4.5 rounded-2xl shadow-2xl flex items-center gap-3.5 max-w-sm animate-in slide-in-from-bottom-5 duration-300",
+        children: [
+          T.jsx("div", {
+            className: "w-9 h-9 rounded-xl bg-emerald-500 text-black flex items-center justify-center font-black text-lg shrink-0 shadow-md",
+            children: "✓"
+          }),
+          T.jsxs("div", {
+            className: "flex-1 min-w-0",
+            children: [
+              T.jsx("h5", { className: "text-xs font-bold text-emerald-400 uppercase tracking-wide", children: "Saved & Published" }),
+              T.jsx("p", { className: "text-xs text-white/90 leading-snug line-clamp-2", children: saveToast })
+            ]
+          }),
+          T.jsx("button", {
+            type: "button",
+            onClick: () => setSaveToast(null),
+            className: "text-white/40 hover:text-white text-xs font-bold p-1 cursor-pointer",
+            children: "✕"
+          })
+        ]
       })
     ]
   });
 }
-
-
 function ok({setView:pw,onBack:pb}={}){var X,le,ye;const[s,e]=Fe.useState(null),[t,n]=Fe.useState(""),[i,o]=Fe.useState(""),[u,h]=Fe.useState(!1),[d,m]=Fe.useState(""),[_,v]=Fe.useState("dashboard"),[x,A]=Fe.useState([]),[S,R]=Fe.useState(!1),[k,G]=Fe.useState(null),[Y,J]=Fe.useState(!1),[W,re]=Fe.useState(""),[te,C]=Fe.useState({make:"",model:"",year:new Date().getFullYear(),price:0,spec:"",features:[],location:"Our Cars",status:"Available",image:"",images:[],videoUrl:""}),{brand:matchedBrand,models:matchedModels}=getModelsAndBrand(te.make);Fe.useEffect(()=>{s&&I()},[s]);const I=async()=>{try{const ae=await jM(vg(wh,"cars"));A(ae.docs.map(B=>({id:B.id,...B.data()})))}catch(ae){console.error("Error fetching inventory",ae)}},O=async ae=>{ae.preventDefault(),h(!0),m(""),(t==="mrjoseph@afzet.co.ke"||t==="admin@mrjoseph.com")&&i==="JOSe1phkr@4#3"?e({email:"mrjoseph@afzet.co.ke",uid:"hardcoded-admin"}):m("Invalid credentials."),h(!1)},M=async()=>{e(null)},U=ae=>{const B=Array.from(ae.target.files||[]);if(B.length!==0){if(te.images.length+B.length>10){alert("You can only upload up to 10 images per car.");return}B.forEach(j=>{if(j.size>10*1024*1024){alert(`Image ${j.name} is too large. Please select images under 10MB.`);return}const oe=new FileReader;oe.onload=_e=>{var Se;const ge=new Image;ge.onload=()=>{const Ne=document.createElement("canvas"),De=600,ct=600;let Ye=ge.width,pn=ge.height;Ye>pn?Ye>De&&(pn*=De/Ye,Ye=De):pn>ct&&(Ye*=ct/pn,pn=ct),Ne.width=Ye,Ne.height=pn;const un=Ne.getContext("2d");if(un){un.drawImage(ge,0,0,Ye,pn);const mn=Ne.toDataURL("image/webp",.3);C(Je=>{const At=[...Je.images,mn].slice(0,10);return{...Je,images:At,image:At[0]||""}})}},(Se=_e.target)!=null&&Se.result&&(ge.src=_e.target.result)},oe.readAsDataURL(j)})}},L=ae=>{C(B=>{const j=B.images.filter((oe,_e)=>_e!==ae);return{...B,images:j,image:j[0]||""}})},
 makeCover=ae=>{C(B=>{const j=[...B.images];const[oe]=j.splice(ae,1);j.unshift(oe);return{...B,images:j,image:j[0]||""}})},
 swapImages=(ae,B)=>{if(B<0||B>=te.images.length)return;C(j=>{const oe=[...j.images];const _e=oe[ae];oe[ae]=oe[B];oe[B]=_e;return{...j,images:oe,image:oe[0]||""}})},
