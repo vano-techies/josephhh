@@ -58,13 +58,13 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&family=Alex+Brush&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/assets/index-BIZlWqQ7.js?v=20261014-v4"></script>
+    <script type="module" crossorigin src="/assets/index-BIZlWqQ7.js?v=20261016-feat-1792144859248"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-C8QovHjD.css">
   
     <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="preload" as="image" href="/logo.png" />
     <link rel="preload" href="/assets/index-C8QovHjD.css" as="style" />
-    <link rel="modulepreload" href="/assets/index-BIZlWqQ7.js?v=20261014-v4" />
+    <link rel="modulepreload" href="/assets/index-BIZlWqQ7.js?v=20261016-feat-1792144859248" />
 <style id="exact-pixel-perfect-styles">
 /* STRICT REDUCTION OF GALLERY PERSPECTIVE IMAGES */
 #gallery-dossier img,
@@ -821,8 +821,7 @@ body:has(.contact-black-page) {
 #gallery-dossier *,
 #specifications-dossier,
 #specifications-dossier *,
-#features-equipment,
-#features-equipment *,
+#features-equipment, #features-equipment *, #car-photos-gallery, #car-photos-gallery *,
 #video-review,
 #video-review * {
   border: none !important;
@@ -833,7 +832,23 @@ body:has(.contact-black-page) {
   border-color: transparent !important;
   outline: none !important;
 }
-</style></head>
+</style><style id="features-visibility-fix">
+#features-equipment,
+section#features-equipment {
+  background-color: #000F1E !important;
+  color: #FFFFFF !important;
+}
+#features-equipment * {
+  border-color: transparent !important;
+}
+#features-equipment h2 {
+  color: #FFFFFF !important;
+}
+#features-equipment span {
+  color: #FFFFFF !important;
+}
+</style>
+</head>
   <body>
     <div id="root">
       <style>

@@ -3573,7 +3573,7 @@ const DEFAULT_PREVIOUS_CARS = [
   }
 ];
 
-const SIX_SCREENSHOT_CARS = [
+const DEFAULT_FEATURED_CARS = [
   {
     id: "gle-400d",
     make: "Mercedes-Benz",
@@ -3690,6 +3690,30 @@ const SIX_SCREENSHOT_CARS = [
     description: "2021 Volvo XC60 B5 AWD Inscription. Onyx Black Metallic, Bowers & Wilkins High Fidelity audio, crystal gear shift by Orrefors, panoramic glass sunroof, Pilot Assist with adaptive cruise control."
   }
 ];
+
+function getCustomFeaturedCars() {
+  try {
+    const raw = localStorage.getItem("mrjoseph_custom_featured_cars");
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (_) {}
+  return [];
+}
+
+function resolveActiveFeaturedCars() {
+  const customList = getCustomFeaturedCars().filter(c => !c.archived && !c.isArchived);
+  if (customList.length >= 5) {
+    return customList;
+  }
+  const remaining = DEFAULT_FEATURED_CARS.slice(customList.length, 5);
+  return [...customList, ...remaining];
+}
+
+let SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
+
+
 function c7(){const[s,e]=Fe.useState(DEFAULT_PREVIOUS_CARS);return Fe.useEffect(()=>{const t=kM(vg(wh,"cars")),n=FM(t,async i=>{const o=i.docs.map(m=>({id:m.id,...m.data()}));if(o.length>0){e(o.filter(m=>!m.isDecorative))}else{e(DEFAULT_PREVIOUS_CARS)}},i=>{console.error("Firestore error:",i);e(DEFAULT_PREVIOUS_CARS)});return()=>n()},[]),s}function Mx({car:s,onClick:e}){
   var f;
   const t=(f=s.images)!=null&&f.length?s.images:s.image?[s.image]:["/images/hero_showroom.jpg"],
@@ -3746,7 +3770,7 @@ function c7(){const[s,e]=Fe.useState(DEFAULT_PREVIOUS_CARS);return Fe.useEffect(
       })
     ]})
   ]})
-}const Jl=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];function nk({setView:s,setSelectedCar:e}){const[t,n]=Fe.useState(0),i=c7(),o=SIX_SCREENSHOT_CARS,u=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];return T.jsxs("div",{style:{backgroundColor:"#ffffff",width:"100%"},children:[T.jsxs("section",{className:"hero-section-box",children:[T.jsx("img",{src:u[t%u.length],alt:"Mr Joseph Premium Showroom",className:"hero-bg-cover"}),T.jsx("div",{className:"hero-dark-vignette"}),T.jsxs("div",{style:{position:"absolute",top:16,left:32,zIndex:15,display:"flex",alignItems:"center",gap:8},className:"hidden sm:flex",children:[T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}}),T.jsx("span",{style:{color:"rgba(255,255,255,0.92)",fontFamily:"'Inter', sans-serif",fontSize:10,fontWeight:700,letterSpacing:"0.22em",textTransform:"uppercase"},children:"home of luxury and class"}),T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}})]}),T.jsx("div",{className:"hero-inner-content",children:T.jsxs("div",{className:"hero-text-wrapper",children:[T.jsx("p",{className:"hero-welcome-badge",children:"WELCOME TO"}),T.jsx("h1",{className:"hero-h1-white",children:"MR JOSEPH"}),T.jsx("h2",{className:"hero-h2-gold",children:"PREMIUM CARS"}),T.jsxs("p",{className:"hero-p-sub",children:["Luxury Vehicles. Exceptional Service.",T.jsx("br",{}),"Your Next Drive Starts Here."]}),T.jsxs("button",{onClick:()=>{const h=document.getElementById("our-cars-section");h?h.scrollIntoView({behavior:"smooth"}):s("inventory")},className:"hero-btn-cta",children:["BROWSE OUR CARS",T.jsx("span",{style:{fontSize:13,fontWeight:"bold"},children:"→"})]})]})}),T.jsxs("div",{className:"hero-arrow-controls",children:[T.jsx("button",{onClick:()=>n(h=>(h-1+u.length)%u.length),className:"hero-arrow-btn","aria-label":"Previous slide",children:T.jsx("span",{children:"‹"})}),T.jsx("button",{onClick:()=>n(h=>(h+1)%u.length),className:"hero-arrow-btn","aria-label":"Next slide",children:T.jsx("span",{children:"›"})})]})]}),T.jsxs("section",{id:"featured-vehicles",className:"featured-section-box",children:[T.jsxs("div",{className:"featured-header-row",children:[T.jsxs("div",{className:"featured-title-flex",children:[T.jsx("span",{className:"featured-gold-bar"}),T.jsx("h2",{className:"featured-title-text",children:"FEATURED VEHICLES"}),T.jsx("span",{className:"featured-gold-bar"})]})]}),T.jsx("div",{className:"six-cards-grid",children:o.map(h=>T.jsx(Mx,{car:h,onClick:d=>{window.open("/?featured="+h.id,"_blank");}},h.id))})]}),T.jsxs("section",{id:"our-cars-section",className:"py-14 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-[1680px] mx-auto bg-white border-t border-gray-100",children:[T.jsxs("div",{className:"text-center mb-10",children:[T.jsxs("div",{className:"flex items-center justify-center gap-4 mb-2",children:[T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"}),T.jsx("h2",{className:"text-2xl sm:text-3xl font-extrabold tracking-wider text-black uppercase",children:"OUR CARS"}),T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"})]}),T.jsx("p",{className:"text-gray-500 text-sm sm:text-base",children:"Explore our complete showroom collection of prestige vehicles available in Kenya."})]}),T.jsx("div",{className:"four-cards-grid",children:i.slice(0,12).map(h=>T.jsx(Mx,{car:h,onClick:d=>{e(d),s("vehicle")}},h.id))}),i.length>12&&T.jsx("div",{className:"text-center mt-12 sm:mt-14",children:T.jsxs("button",{type:"button",onClick:()=>s("our-cars"),className:"inline-flex items-center justify-center gap-3 px-8 py-4 bg-black hover:bg-[#C59B51] hover:text-black text-white text-xs sm:text-sm font-extrabold uppercase tracking-[0.2em] rounded-xl transition-all duration-300 shadow-md cursor-pointer border border-black/10 group",children:["View All Available Cars",T.jsx("span",{className:"text-base font-bold transition-transform group-hover:translate-x-1",children:"→"})]})})]}),T.jsx("a",{href:"https://wa.me/254713583829?text=Hello%20Mr%20Joseph%2C%20I%20am%20interested%20in%20inquiring%20about%20your%20premium%20cars.",target:"_blank",rel:"noopener noreferrer",style:{position:"fixed",bottom:20,right:20,zIndex:40,display:"flex",alignItems:"center",justifyContent:"center",width:50,height:50,backgroundColor:"#25D366",color:"#ffffff",borderRadius:"50%",boxShadow:"0 4px 16px rgba(37,211,102,0.4)",textDecoration:"none"},"aria-label":"Contact on WhatsApp",children:T.jsx("svg",{viewBox:"0 0 24 24",style:{width:26,height:26,fill:"currentColor"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})})})]});}function rk({setView:s,setSelectedCar:e,initialFilter:t="All"}){const n=c7(),[i,o]=Fe.useState(t),[u,h]=Fe.useState("newest"),[srch,setSrch]=Fe.useState("");Fe.useEffect(()=>{o(t)},[t]),Fe.useEffect(()=>{window.scrollTo(0,0);const _=jn.context(()=>{jn.fromTo(".inv-header",{y:30,opacity:0},{y:0,opacity:1,duration:.8,ease:"power3.out"}),jn.fromTo(".inv-card",{y:40,opacity:0},{y:0,opacity:1,duration:.6,stagger:.1,ease:"power2.out",delay:.2})});return()=>_.revert()},[]);const d=["All","Our Cars","New Arrivals","Sedan","SUV","Coupe","GT"];let m=n.filter(_=>i==="All"||_.type===i?!0:(i==="Our Cars"||i==="Kenya")?(_.location==="Our Cars"||_.location==="Cars in Kenya"||_.status==="Kenya"||_.status==="Our Cars"):(i==="New Arrivals"||i==="Incoming")?(_.location==="New Arrivals"||_.location==="Incoming Cars"||_.status==="Incoming"||_.status==="New Arrivals"):!1).filter(_=>srch===""||_.make.toLowerCase().includes(srch.toLowerCase())||_.model.toLowerCase().includes(srch.toLowerCase())||(_.price&&_.price.toString().includes(srch)));return u==="price-low"&&m.sort((_,v)=>_.price-v.price),u==="price-high"&&m.sort((_,v)=>v.price-_.price),u==="newest"&&m.sort((_,v)=>v.year-_.year),T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full",children:[T.jsxs("div",{className:"inv-header flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6",children:[T.jsxs("div",{children:[T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-[var(--color-base)] mb-3",children:i==="Our Cars"?"Our Cars":i==="New Arrivals"?"New Arrivals":"The Collection"}),T.jsx("p",{className:"font-medium text-[var(--color-slate)]/70 max-w-md text-sm sm:text-base",children:i==="Our Cars"?"Explore our complete showroom collection of prestige vehicles available in Kenya.":i==="New Arrivals"?"Incoming luxury motorcars and newly arrived stock.":"Our current inventory of exceptional motorcars, available for immediate acquisition."})]}),T.jsxs("div",{className:"flex flex-col xl:flex-row gap-4 w-full md:w-auto",children:[T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-[var(--color-obsidian)] px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-64",children:[T.jsx("input",{type:"text",placeholder:"Search brand, model or price...",className:"bg-transparent text-sm font-medium outline-none text-[var(--color-base)] w-full placeholder:text-[var(--color-slate)]/50",value:srch,onChange:_=>setSrch(_.target.value)})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsxs("div",{className:"flex items-center gap-2",children:[T.jsx(Ty,{size:18,className:"text-[var(--color-champagne)]"}),T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Filter:"})]}),T.jsx("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:i,onChange:_=>o(_.target.value),children:d.map(_=>T.jsxs("option",{value:_,children:[_," Models"]},_))})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Sort by:"}),T.jsxs("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:u,onChange:_=>h(_.target.value),children:[T.jsx("option",{value:"newest",children:"Newest Arrivals"}),T.jsx("option",{value:"price-low",children:"Price: Low to High"}),T.jsx("option",{value:"price-high",children:"Price: High to Low"})]})]})]})]}),T.jsx("div",{className:"four-cards-grid",children:m.map(_=>T.jsx("div",{className:"inv-card",children:T.jsx(Mx,{car:_,onClick:v=>{e(v),s("vehicle")}})},_.id))}),m.length===0&&T.jsxs("div",{className:"text-center py-24",children:[T.jsx("p",{className:"text-lg text-[var(--color-slate)]/60 font-medium",children:"No vehicles found matching your criteria."}),T.jsx("button",{onClick:()=>o("All"),className:"mt-4 text-[var(--color-champagne)] font-medium hover:underline",children:"Clear Filters"})]})]})}function ik({ id: s, setView: e }) {
+}const Jl=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];function nk({setView:s,setSelectedCar:e}){const[t,n]=Fe.useState(0),i=c7(),o=resolveActiveFeaturedCars(),u=["/images/hero_showroom.jpg","/images/2019-MERCEDES-BENZ-G-WAGON-G350d-FRESH-IMPORT-Experience-unmatched-luxury-power-and-presenc.jpg","/images/2023-LEXUS-LX600-ULTRA-LUXURY-THE-SUMMIT-OF-SOPHISTICATION-Every-detail-of-this-Graphite-Blac.jpg"];return T.jsxs("div",{style:{backgroundColor:"#ffffff",width:"100%"},children:[T.jsxs("section",{className:"hero-section-box",children:[T.jsx("img",{src:u[t%u.length],alt:"Mr Joseph Premium Showroom",className:"hero-bg-cover"}),T.jsx("div",{className:"hero-dark-vignette"}),T.jsxs("div",{style:{position:"absolute",top:16,left:32,zIndex:15,display:"flex",alignItems:"center",gap:8},className:"hidden sm:flex",children:[T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}}),T.jsx("span",{style:{color:"rgba(255,255,255,0.92)",fontFamily:"'Inter', sans-serif",fontSize:10,fontWeight:700,letterSpacing:"0.22em",textTransform:"uppercase"},children:"home of luxury and class"}),T.jsx("span",{style:{height:1.5,width:18,backgroundColor:"#C59B51"}})]}),T.jsx("div",{className:"hero-inner-content",children:T.jsxs("div",{className:"hero-text-wrapper",children:[T.jsx("p",{className:"hero-welcome-badge",children:"WELCOME TO"}),T.jsx("h1",{className:"hero-h1-white",children:"MR JOSEPH"}),T.jsx("h2",{className:"hero-h2-gold",children:"PREMIUM CARS"}),T.jsxs("p",{className:"hero-p-sub",children:["Luxury Vehicles. Exceptional Service.",T.jsx("br",{}),"Your Next Drive Starts Here."]}),T.jsxs("button",{onClick:()=>{const h=document.getElementById("our-cars-section");h?h.scrollIntoView({behavior:"smooth"}):s("inventory")},className:"hero-btn-cta",children:["BROWSE OUR CARS",T.jsx("span",{style:{fontSize:13,fontWeight:"bold"},children:"→"})]})]})}),T.jsxs("div",{className:"hero-arrow-controls",children:[T.jsx("button",{onClick:()=>n(h=>(h-1+u.length)%u.length),className:"hero-arrow-btn","aria-label":"Previous slide",children:T.jsx("span",{children:"‹"})}),T.jsx("button",{onClick:()=>n(h=>(h+1)%u.length),className:"hero-arrow-btn","aria-label":"Next slide",children:T.jsx("span",{children:"›"})})]})]}),T.jsxs("section",{id:"featured-vehicles",className:"featured-section-box",children:[T.jsxs("div",{className:"featured-header-row",children:[T.jsxs("div",{className:"featured-title-flex",children:[T.jsx("span",{className:"featured-gold-bar"}),T.jsx("h2",{className:"featured-title-text",children:"FEATURED VEHICLES"}),T.jsx("span",{className:"featured-gold-bar"})]})]}),T.jsx("div",{className:"six-cards-grid",children:o.map(h=>T.jsx(Mx,{car:h,onClick:d=>{try{window.history.pushState({},"","/?featured="+h.id)}catch(_){}window.location.hash="featured-"+h.id;window.dispatchEvent(new Event("popstate"));window.dispatchEvent(new Event("hashchange"));window.scrollTo(0,0)}},h.id))})]}),T.jsxs("section",{id:"our-cars-section",className:"py-14 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-[1680px] mx-auto bg-white border-t border-gray-100",children:[T.jsxs("div",{className:"text-center mb-10",children:[T.jsxs("div",{className:"flex items-center justify-center gap-4 mb-2",children:[T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"}),T.jsx("h2",{className:"text-2xl sm:text-3xl font-extrabold tracking-wider text-black uppercase",children:"OUR CARS"}),T.jsx("span",{className:"h-[2px] w-10 sm:w-16 bg-[#C59B51]"})]}),T.jsx("p",{className:"text-gray-500 text-sm sm:text-base",children:"Explore our complete showroom collection of prestige vehicles available in Kenya."})]}),T.jsx("div",{className:"four-cards-grid",children:i.slice(0,12).map(h=>T.jsx(Mx,{car:h,onClick:d=>{e(d),s("vehicle")}},h.id))}),i.length>12&&T.jsx("div",{className:"text-center mt-12 sm:mt-14",children:T.jsxs("button",{type:"button",onClick:()=>s("our-cars"),className:"inline-flex items-center justify-center gap-3 px-8 py-4 bg-black hover:bg-[#C59B51] hover:text-black text-white text-xs sm:text-sm font-extrabold uppercase tracking-[0.2em] rounded-xl transition-all duration-300 shadow-md cursor-pointer border border-black/10 group",children:["View All Available Cars",T.jsx("span",{className:"text-base font-bold transition-transform group-hover:translate-x-1",children:"→"})]})})]}),T.jsx("a",{href:"https://wa.me/254713583829?text=Hello%20Mr%20Joseph%2C%20I%20am%20interested%20in%20inquiring%20about%20your%20premium%20cars.",target:"_blank",rel:"noopener noreferrer",style:{position:"fixed",bottom:20,right:20,zIndex:40,display:"flex",alignItems:"center",justifyContent:"center",width:50,height:50,backgroundColor:"#25D366",color:"#ffffff",borderRadius:"50%",boxShadow:"0 4px 16px rgba(37,211,102,0.4)",textDecoration:"none"},"aria-label":"Contact on WhatsApp",children:T.jsx("svg",{viewBox:"0 0 24 24",style:{width:26,height:26,fill:"currentColor"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})})})]});}function rk({setView:s,setSelectedCar:e,initialFilter:t="All"}){const n=c7(),[i,o]=Fe.useState(t),[u,h]=Fe.useState("newest"),[srch,setSrch]=Fe.useState("");Fe.useEffect(()=>{o(t)},[t]),Fe.useEffect(()=>{window.scrollTo(0,0);const _=jn.context(()=>{jn.fromTo(".inv-header",{y:30,opacity:0},{y:0,opacity:1,duration:.8,ease:"power3.out"}),jn.fromTo(".inv-card",{y:40,opacity:0},{y:0,opacity:1,duration:.6,stagger:.1,ease:"power2.out",delay:.2})});return()=>_.revert()},[]);const d=["All","Our Cars","New Arrivals","Sedan","SUV","Coupe","GT"];let m=n.filter(_=>i==="All"||_.type===i?!0:(i==="Our Cars"||i==="Kenya")?(_.location==="Our Cars"||_.location==="Cars in Kenya"||_.status==="Kenya"||_.status==="Our Cars"):(i==="New Arrivals"||i==="Incoming")?(_.location==="New Arrivals"||_.location==="Incoming Cars"||_.status==="Incoming"||_.status==="New Arrivals"):!1).filter(_=>srch===""||_.make.toLowerCase().includes(srch.toLowerCase())||_.model.toLowerCase().includes(srch.toLowerCase())||(_.price&&_.price.toString().includes(srch)));return u==="price-low"&&m.sort((_,v)=>_.price-v.price),u==="price-high"&&m.sort((_,v)=>v.price-_.price),u==="newest"&&m.sort((_,v)=>v.year-_.year),T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full",children:[T.jsxs("div",{className:"inv-header flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6",children:[T.jsxs("div",{children:[T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-[var(--color-base)] mb-3",children:i==="Our Cars"?"Our Cars":i==="New Arrivals"?"New Arrivals":"The Collection"}),T.jsx("p",{className:"font-medium text-[var(--color-slate)]/70 max-w-md text-sm sm:text-base",children:i==="Our Cars"?"Explore our complete showroom collection of prestige vehicles available in Kenya.":i==="New Arrivals"?"Incoming luxury motorcars and newly arrived stock.":"Our current inventory of exceptional motorcars, available for immediate acquisition."})]}),T.jsxs("div",{className:"flex flex-col xl:flex-row gap-4 w-full md:w-auto",children:[T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-[var(--color-obsidian)] px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-64",children:[T.jsx("input",{type:"text",placeholder:"Search brand, model or price...",className:"bg-transparent text-sm font-medium outline-none text-[var(--color-base)] w-full placeholder:text-[var(--color-slate)]/50",value:srch,onChange:_=>setSrch(_.target.value)})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsxs("div",{className:"flex items-center gap-2",children:[T.jsx(Ty,{size:18,className:"text-[var(--color-champagne)]"}),T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Filter:"})]}),T.jsx("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:i,onChange:_=>o(_.target.value),children:d.map(_=>T.jsxs("option",{value:_,children:[_," Models"]},_))})]}),T.jsxs("div",{className:"flex items-center justify-between sm:justify-start gap-2 bg-transparent px-4 py-3 border border-[var(--color-base)]/20 w-full sm:w-auto",children:[T.jsx("span",{className:"text-sm font-medium text-[var(--color-slate)]",children:"Sort by:"}),T.jsxs("select",{className:"bg-[var(--color-obsidian)] text-sm font-medium outline-none text-[var(--color-base)] cursor-pointer pr-4",value:u,onChange:_=>h(_.target.value),children:[T.jsx("option",{value:"newest",children:"Newest Arrivals"}),T.jsx("option",{value:"price-low",children:"Price: Low to High"}),T.jsx("option",{value:"price-high",children:"Price: High to Low"})]})]})]})]}),T.jsx("div",{className:"four-cards-grid",children:m.map(_=>T.jsx("div",{className:"inv-card",children:T.jsx(Mx,{car:_,onClick:v=>{e(v),s("vehicle")}})},_.id))}),m.length===0&&T.jsxs("div",{className:"text-center py-24",children:[T.jsx("p",{className:"text-lg text-[var(--color-slate)]/60 font-medium",children:"No vehicles found matching your criteria."}),T.jsx("button",{onClick:()=>o("All"),className:"mt-4 text-[var(--color-champagne)] font-medium hover:underline",children:"Clear Filters"})]})]})}function ik({ id: s, setView: e }) {
   const allCars = c7();
   const n = allCars.find(S => S.id === s) || (typeof SIX_SCREENSHOT_CARS !== "undefined" ? SIX_SCREENSHOT_CARS.find(S => S.id === s) : null);
   
@@ -4678,12 +4702,1334 @@ function c7(){const[s,e]=Fe.useState(DEFAULT_PREVIOUS_CARS);return Fe.useEffect(
   }
   return { brand: e, models: [] };
 }
+
+const DEFAULT_FEATURE_EQUIPMENT_LIST = [
+  "Keyless Entry & Push-to-Start",
+  "Executive Nappa Leather Seats",
+  "360° Surround-View Camera",
+  "Front & Rear Ultrasonic Sensors",
+  "Adaptive Cruise Control",
+  "Electric Heated Memory Seats",
+  "Multi-Zone Climate Control",
+  "Panoramic Glass Sunroof",
+  "Intelligent LED Headlights",
+  "Factory Diamond-Cut Alloys",
+  "Touchscreen Navigation System",
+  "Intelligent All-Wheel Drive (AWD)",
+  "Blind Spot Monitoring System",
+  "Burmester / Premium Hi-Fi Audio",
+  "Power Operated Tailgate",
+  "Apple CarPlay & Android Auto"
+];
+
+function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
+  const [customCars, setCustomCars] = Fe.useState(() => getCustomFeaturedCars());
+  const [activeCarId, setActiveCarId] = Fe.useState(() => {
+    const initial = getCustomFeaturedCars();
+    return (initial && initial.length > 0) ? initial[0].id : null;
+  });
+  const [newFeatureText, setNewFeatureText] = Fe.useState("");
+  const [saveToast, setSaveToast] = Fe.useState(null);
+  const [deleteConfirmId, setDeleteConfirmId] = Fe.useState(null);
+  const [showInventoryModal, setShowInventoryModal] = Fe.useState(false);
+  const [inventorySearch, setInventorySearch] = Fe.useState("");
+  const [showArchivedDefaults, setShowArchivedDefaults] = Fe.useState(false);
+  const fileInputRef = Fe.useRef(null);
+  const slotFileInputRef = Fe.useRef(null);
+  const [targetUploadIndex, setTargetUploadIndex] = Fe.useState(0);
+
+  const activeCar = customCars.find(c => c.id === activeCarId) || customCars[0] || null;
+
+  const activeStyles = (activeCar && activeCar.styles) || {
+    featuresBg: "#000F1E",
+    titleBarBg: "#000F1E",
+    accentColor: "#C59B51"
+  };
+
+  const activeFeatures = (activeCar && activeCar.features && activeCar.features.length)
+    ? activeCar.features
+    : DEFAULT_FEATURE_EQUIPMENT_LIST;
+
+  const activeSpecs = (activeCar && activeCar.specifications) || {
+    drivetrain: "Intelligent All-Wheel Drive (AWD)",
+    exteriorPaint: "Metallic Factory Finish",
+    interiorTrim: "Full Premium Nappa Leather",
+    importStatus: "Duty & Clearance Settled",
+    extraInfo: (activeCar && activeCar.description) || ""
+  };
+
+  const updateActiveCar = (updater) => {
+    if (!activeCarId) return;
+    setCustomCars(prev => prev.map(c => {
+      if (c.id === activeCarId) {
+        return updater(c);
+      }
+      return c;
+    }));
+  };
+
+  const persistChanges = (updatedList, toastMsg = "Featured cars updated and applied to the live showroom!") => {
+    try {
+      localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(updatedList));
+      if (typeof resolveActiveFeaturedCars === "function") {
+        SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
+      }
+      setSaveToast(toastMsg);
+      setTimeout(() => setSaveToast(null), 4000);
+    } catch (e) {
+      alert("Error saving: " + e.message);
+    }
+  };
+
+  const handleSave = () => {
+    persistChanges(customCars, "All featured vehicle changes saved successfully!");
+  };
+
+  // 1. DELETE FEATURE (ZERO window.confirm to avoid iframe sandbox blocking!)
+  const handleDeleteCar = (idToDelete) => {
+    const carToDelete = customCars.find(c => c.id === idToDelete);
+    const carName = carToDelete ? (carToDelete.make + " " + carToDelete.model) : "Featured vehicle";
+    const updated = customCars.filter(c => c.id !== idToDelete);
+    setCustomCars(updated);
+    setActiveCarId(updated.length > 0 ? updated[0].id : null);
+    setDeleteConfirmId(null);
+    persistChanges(updated, carName + " deleted. Default vehicle restored to slot.");
+  };
+
+  // 2. ADD FROM INVENTORY / ADDED VEHICLES
+  const allInventoryList = (inventoryCars && inventoryCars.length > 0)
+    ? inventoryCars
+    : (typeof DEFAULT_PREVIOUS_CARS !== "undefined" ? DEFAULT_PREVIOUS_CARS : []);
+
+  const handleSelectFromInventory = (invCar) => {
+    const newId = "featured-" + (invCar.id || Date.now());
+    const existingImgs = (invCar.images && invCar.images.length > 0)
+      ? invCar.images
+      : (invCar.image ? [invCar.image] : ["/images/hero_showroom.jpg"]);
+    
+    // Ensure 6 studio images slots
+    let filledImgs = [...existingImgs];
+    while (filledImgs.length < 6) {
+      filledImgs.push(existingImgs[0] || "/images/hero_showroom.jpg");
+    }
+    filledImgs = filledImgs.slice(0, 6);
+
+    const newFeaturedCar = {
+      id: newId,
+      make: invCar.make || "Prestige",
+      model: invCar.model || "Edition",
+      year: invCar.year || 2023,
+      price: invCar.price || 0,
+      mileage: invCar.mileage || "35,000 km",
+      fuel: invCar.fuel || "Diesel",
+      transmission: invCar.transmission || "Automatic",
+      type: invCar.type || "Prestige SUV",
+      location: invCar.location || "Kiambu Road, Ridgeways",
+      status: invCar.status || "Available",
+      description: invCar.description || "",
+      image: filledImgs[0],
+      images: filledImgs,
+      features: (invCar.features && invCar.features.length) ? invCar.features : [...DEFAULT_FEATURE_EQUIPMENT_LIST],
+      styles: { featuresBg: "#000F1E", titleBarBg: "#000F1E", accentColor: "#C59B51" },
+      specifications: {
+        drivetrain: invCar.drivetrain || "Intelligent All-Wheel Drive (AWD)",
+        exteriorPaint: invCar.exteriorPaint || "Metallic Factory Finish",
+        interiorTrim: invCar.interiorTrim || "Full Premium Nappa Leather",
+        importStatus: invCar.importStatus || "Duty & Clearance Settled",
+        extraInfo: invCar.description || "Certified handpicked prestige import."
+      },
+      videoUrl: invCar.videoUrl || ""
+    };
+
+    const updated = [...customCars, newFeaturedCar];
+    setCustomCars(updated);
+    setActiveCarId(newId);
+    setShowInventoryModal(false);
+    persistChanges(updated, "Added " + invCar.make + " " + invCar.model + " to Featured Cars!");
+  };
+
+  // 3. ADD FROM SCRATCH / TEMPLATE
+  const handleAddNewCar = () => {
+    const newId = "featured-" + Date.now();
+    const slotNum = customCars.length + 1;
+    const templateCar = {
+      id: newId,
+      make: "Prestige",
+      model: "Custom Edition " + slotNum,
+      year: 2024,
+      price: 14500000,
+      mileage: "25,000 km",
+      fuel: "Diesel",
+      transmission: "Automatic",
+      type: "Prestige SUV",
+      location: "Kiambu Road, Ridgeways",
+      status: "Available",
+      description: "Elite prestige motorcar configured with bespoke craftsmanship.",
+      image: "/images/2019-Mercedes-Benz-GLE-450-4MATIC-WITH-EQ-BOOST-DEAL-OF-THE-WEEK-EXECUTIVE-PERFORMANCE-SUV.jpg",
+      images: [
+        "/images/2019-Mercedes-Benz-GLE-450-4MATIC-WITH-EQ-BOOST-DEAL-OF-THE-WEEK-EXECUTIVE-PERFORMANCE-SUV.jpg",
+        "/images/CLgKgL1M_2019-Mercedes-Benz-GLE-450-4MATIC-WITH-EQ-BOOST-DEAL-OF-THE-WEEK-EXECUTIVE-PERFORMANCE-SUV.jpg",
+        "/images/CLsxLTBh_2019-Mercedes-Benz-GLE-450-4MATIC-WITH-EQ-BOOST-DEAL-OF-THE-WEEK-EXECUTIVE-PERFORMANCE-SUV.jpg",
+        "/images/DyTzTyZv_2019-Mercedes-Benz-GLE-450-4MATIC-WITH-EQ-BOOST-DEAL-OF-THE-WEEK-EXECUTIVE-PERFORMANCE-SUV.jpg",
+        "/images/xT2d2TCk_2019-Mercedes-Benz-GLE-450-4MATIC-WITH-EQ-BOOST-DEAL-OF-THE-WEEK-EXECUTIVE-PERFORMANCE-SUV.jpg",
+        "/images/tCjgjCTJ_2019-Mercedes-Benz-GLE-450-4MATIC-WITH-EQ-BOOST-DEAL-OF-THE-WEEK-EXECUTIVE-PERFORMANCE-SUV.jpg"
+      ],
+      features: [...DEFAULT_FEATURE_EQUIPMENT_LIST],
+      styles: { featuresBg: "#000F1E", titleBarBg: "#000F1E", accentColor: "#C59B51" },
+      specifications: {
+        drivetrain: "Intelligent All-Wheel Drive (AWD)",
+        exteriorPaint: "Metallic Factory Finish",
+        interiorTrim: "Full Premium Nappa Leather",
+        importStatus: "Duty & Clearance Settled",
+        extraInfo: "Certified handpicked prestige import."
+      },
+      videoUrl: ""
+    };
+
+    const updated = [...customCars, templateCar];
+    setCustomCars(updated);
+    setActiveCarId(newId);
+    persistChanges(updated, "Created new featured car slot!");
+  };
+
+  // 4. LOCAL STORAGE / DEVICE IMAGE UPLOAD
+  const handleLocalImageUpload = (e, slotIdx = null) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0 || !activeCar) return;
+
+    files.forEach((file, fIdx) => {
+      const reader = new FileReader();
+      reader.onload = (loadEvent) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const maxDim = 1200;
+          let w = img.width;
+          let h = img.height;
+          if (w > h) {
+            if (w > maxDim) {
+              h = Math.round((h * maxDim) / w);
+              w = maxDim;
+            }
+          } else {
+            if (h > maxDim) {
+              w = Math.round((w * maxDim) / h);
+              h = maxDim;
+            }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL("image/webp", 0.8) || canvas.toDataURL("image/jpeg", 0.8);
+            updateActiveCar(c => {
+              const currentImgs = (c.images && c.images.length) ? [...c.images] : [];
+              while (currentImgs.length < 6) {
+                currentImgs.push(currentImgs[0] || dataUrl);
+              }
+              const targetSlot = (slotIdx !== null) ? slotIdx : Math.min(fIdx, 5);
+              currentImgs[targetSlot] = dataUrl;
+              return {
+                ...c,
+                images: currentImgs,
+                image: currentImgs[0] || c.image || dataUrl
+              };
+            });
+          }
+        };
+        img.src = loadEvent.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const addFeature = () => {
+    const text = newFeatureText.trim();
+    if (!text || !activeCar) return;
+    updateActiveCar(c => ({
+      ...c,
+      features: [...activeFeatures, text]
+    }));
+    setNewFeatureText("");
+  };
+
+  const removeFeature = (idx) => {
+    if (!activeCar) return;
+    updateActiveCar(c => ({
+      ...c,
+      features: activeFeatures.filter((_, i) => i !== idx)
+    }));
+  };
+
+  const presetColors = ["#000F1E", "#0D0D12", "#0A0A0F", "#0F1E36", "#161622", "#FFFFFF"];
+  const presetAccents = ["#C59B51", "#2563EB", "#FF0000", "#25D366", "#D97706", "#9333EA"];
+
+  const customCount = customCars.length;
+  const defaultRemaining = Math.max(0, 5 - customCount);
+
+  // Filtered inventory for modal
+  const filteredInventory = allInventoryList.filter(c => {
+    if (!inventorySearch) return true;
+    const term = inventorySearch.toLowerCase();
+    const fullName = ((c.make || "") + " " + (c.model || "")).toLowerCase();
+    return fullName.includes(term) || (c.year && c.year.toString().includes(term));
+  });
+
+  return T.jsxs("div", {
+    className: "animate-in fade-in slide-in-from-bottom-2 duration-500 space-y-8 relative",
+    children: [
+      /* Hidden File Input for Multiple Uploads */
+      T.jsx("input", {
+        ref: fileInputRef,
+        type: "file",
+        multiple: !0,
+        accept: "image/*",
+        style: { display: "none" },
+        onChange: (e) => handleLocalImageUpload(e)
+      }),
+      /* Hidden File Input for Single Slot Upload */
+      T.jsx("input", {
+        ref: slotFileInputRef,
+        type: "file",
+        accept: "image/*",
+        style: { display: "none" },
+        onChange: (e) => handleLocalImageUpload(e, targetUploadIndex)
+      }),
+
+      /* MODAL: SELECT FROM ADDED VEHICLES (INVENTORY) */
+      showInventoryModal && T.jsx("div", {
+        className: "fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4",
+        onClick: () => setShowInventoryModal(false),
+        children: T.jsxs("div", {
+          className: "bg-[#161620] border border-white/15 rounded-3xl w-full max-w-4xl max-h-[85vh] flex flex-col overflow-hidden shadow-2xl",
+          onClick: (e) => e.stopPropagation(),
+          children: [
+            /* Modal Header */
+            T.jsxs("div", {
+              className: "p-6 border-b border-white/10 flex items-center justify-between",
+              children: [
+                T.jsxs("div", {
+                  children: [
+                    T.jsx("h3", { className: "text-xl font-bold text-white", children: "Select from Added Vehicles" }),
+                    T.jsx("p", { className: "text-xs text-white/50", children: "Choose an existing vehicle from your showroom inventory to feature." })
+                  ]
+                }),
+                T.jsx("button", {
+                  type: "button",
+                  onClick: () => setShowInventoryModal(false),
+                  className: "w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm cursor-pointer",
+                  children: "✕"
+                })
+              ]
+            }),
+
+            /* Search Bar */
+            T.jsx("div", {
+              className: "p-4 border-b border-white/10 bg-black/20",
+              children: T.jsx("input", {
+                type: "text",
+                placeholder: "Search make, model, year in inventory...",
+                value: inventorySearch,
+                onChange: (e) => setInventorySearch(e.target.value),
+                className: "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm outline-none focus:border-[#C59B51]"
+              })
+            }),
+
+            /* Cars Grid in Modal */
+            T.jsx("div", {
+              className: "p-6 overflow-y-auto space-y-3 flex-1",
+              children: filteredInventory.length === 0 ? T.jsx("div", {
+                className: "text-center py-12 text-white/40 text-sm",
+                children: "No inventory vehicles found matching search."
+              }) : T.jsx("div", {
+                className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5",
+                children: filteredInventory.map(inv => {
+                  const cover = (inv.images && inv.images[0]) || inv.image || "/images/hero_showroom.jpg";
+                  const priceStr = inv.price ? "KSh " + Number(inv.price).toLocaleString() : "Price on App";
+                  return T.jsxs("div", {
+                    key: inv.id,
+                    className: "bg-white/5 border border-white/10 rounded-2xl p-3 flex flex-col justify-between gap-3 hover:border-[#C59B51] hover:bg-white/10 transition-all",
+                    children: [
+                      T.jsxs("div", {
+                        className: "space-y-2",
+                        children: [
+                          T.jsx("div", {
+                            className: "w-full aspect-[16/10] rounded-xl overflow-hidden bg-black/40",
+                            children: T.jsx("img", { src: cover, alt: inv.make, className: "w-full h-full object-cover" })
+                          }),
+                          T.jsxs("div", {
+                            children: [
+                              T.jsx("span", { className: "text-xs font-mono text-[#C59B51] font-bold block", children: inv.year || "2023" }),
+                              T.jsx("h4", { className: "text-sm font-bold text-white line-clamp-1", children: inv.make + " " + inv.model }),
+                              T.jsx("p", { className: "text-xs text-white/50 font-mono", children: priceStr })
+                            ]
+                          })
+                        ]
+                      }),
+                      T.jsxs("button", {
+                        type: "button",
+                        onClick: () => handleSelectFromInventory(inv),
+                        className: "w-full py-2 bg-[#C59B51] hover:bg-[#B38A40] text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm",
+                        children: ["Feature This Car", T.jsx("span", { children: "→" })]
+                      })
+                    ]
+                  });
+                })
+              })
+            })
+          ]
+        })
+      }),
+
+      /* Top Header & Slot Status Tracker */
+      T.jsxs("div", {
+        className: "flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/10 pb-6",
+        children: [
+          T.jsxs("div", {
+            children: [
+              T.jsxs("div", {
+                className: "flex items-center gap-3",
+                children: [
+                  T.jsx("div", { className: "w-2.5 h-7 bg-[#C59B51] rounded-xs" }),
+                  T.jsx("h3", {
+                    className: "text-2xl sm:text-3xl font-serif text-white tracking-tight",
+                    children: "Featured Cars Management"
+                  })
+                ]
+              }),
+              /* Slot Status Pill */
+              T.jsxs("div", {
+                className: "flex items-center gap-2 mt-2 flex-wrap",
+                children: [
+                  T.jsxs("span", {
+                    className: "text-xs font-mono px-3 py-1 rounded-full font-bold " + (
+                      customCount >= 5
+                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                        : customCount > 0
+                        ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                        : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                    ),
+                    children: [
+                      customCount >= 5
+                        ? "All 5 Custom Slots Active (Defaults Completely Replaced)"
+                        : customCount > 0
+                        ? customCount + " of 5 Custom Slots Active (" + defaultRemaining + " Default Fallback" + (defaultRemaining > 1 ? "s" : "") + " Visible)"
+                        : "0 of 5 Custom Slots Active (5 Default Fallbacks Visible)"
+                    ]
+                  }),
+                  T.jsx("span", {
+                    className: "text-xs text-white/40",
+                    children: "• Factory defaults archived from active list"
+                  })
+                ]
+              })
+            ]
+          }),
+
+          /* Action Buttons */
+          T.jsxs("div", {
+            className: "flex items-center gap-2.5 flex-wrap",
+            children: [
+              /* Button to select from added inventory vehicles */
+              T.jsxs("button", {
+                type: "button",
+                onClick: () => setShowInventoryModal(true),
+                className: "px-4 py-2.5 bg-[#C59B51] hover:bg-[#B38A40] text-black rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-1.5 cursor-pointer",
+                children: [
+                  T.jsx("span", { className: "text-sm", children: "🚗" }),
+                  "Select from Added Vehicles"
+                ]
+              }),
+              /* Button to create blank template car */
+              T.jsxs("button", {
+                type: "button",
+                onClick: handleAddNewCar,
+                className: "px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer border border-white/10",
+                children: [
+                  T.jsx("span", { className: "text-sm", children: "+" }),
+                  "Add Blank Car"
+                ]
+              }),
+              activeCar && T.jsx("button", {
+                type: "button",
+                onClick: () => {
+                  try {
+                    window.history.pushState({}, "", "/?featured=" + activeCarId);
+                  } catch (_) {}
+                  window.location.hash = "featured-" + activeCarId;
+                  window.dispatchEvent(new Event("popstate"));
+                  window.dispatchEvent(new Event("hashchange"));
+                  window.scrollTo(0, 0);
+                },
+                className: "px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer border border-white/10",
+                children: ["Preview", T.jsx("span", { children: "↗" })]
+              }),
+              customCars.length > 0 && T.jsx("button", {
+                type: "button",
+                onClick: handleSave,
+                className: "px-5 py-2.5 bg-white text-black hover:bg-gray-100 rounded-xl text-xs font-extrabold uppercase tracking-widest transition-all shadow-md cursor-pointer",
+                children: "Save Changes"
+              })
+            ]
+          })
+        ]
+      }),
+
+      /* Save Toast Alert */
+      saveToast && T.jsxs("div", {
+        className: "p-4 bg-emerald-500/20 border border-emerald-500/40 rounded-2xl flex items-center justify-between text-emerald-300 text-sm font-semibold animate-in fade-in",
+        children: [
+          T.jsxs("div", {
+            className: "flex items-center gap-3",
+            children: [
+              T.jsx("span", { className: "text-lg", children: "✓" }),
+              saveToast
+            ]
+          }),
+          T.jsx("button", {
+            onClick: () => setSaveToast(null),
+            className: "text-emerald-300 hover:text-white text-xs font-bold uppercase",
+            children: "Dismiss"
+          })
+        ]
+      }),
+
+      /* EMPTY STATE */
+      customCars.length === 0 ? T.jsxs("div", {
+        className: "bg-black/40 border border-white/10 p-10 sm:p-14 rounded-3xl text-center space-y-6 max-w-2xl mx-auto my-8",
+        children: [
+          T.jsx("div", {
+            className: "w-20 h-20 rounded-full bg-[#C59B51]/15 text-[#C59B51] flex items-center justify-center mx-auto text-3xl",
+            children: "★"
+          }),
+          T.jsxs("div", {
+            className: "space-y-2",
+            children: [
+              T.jsx("h4", {
+                className: "text-2xl font-serif text-white",
+                children: "No Custom Featured Cars Added Yet"
+              }),
+              T.jsx("p", {
+                className: "text-sm text-white/60 leading-relaxed max-w-lg mx-auto",
+                children: "The 5 factory default prestige vehicles are currently active as fallbacks on the public showroom. The default cars are archived from this list."
+              }),
+              T.jsx("p", {
+                className: "text-xs text-[#C59B51] font-mono font-semibold",
+                children: "Select any vehicle from your added inventory or add a fresh one. Each added car replaces one default vehicle."
+              })
+            ]
+          }),
+          T.jsxs("div", {
+            className: "flex items-center justify-center gap-3 flex-wrap pt-2",
+            children: [
+              T.jsxs("button", {
+                type: "button",
+                onClick: () => setShowInventoryModal(true),
+                className: "inline-flex items-center gap-2 px-6 py-3.5 bg-[#C59B51] hover:bg-[#B38A40] text-black font-extrabold text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg hover:shadow-xl cursor-pointer",
+                children: [
+                  T.jsx("span", { className: "text-base", children: "🚗" }),
+                  "Select from Added Vehicles"
+                ]
+              }),
+              T.jsxs("button", {
+                type: "button",
+                onClick: handleAddNewCar,
+                className: "inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs uppercase tracking-widest rounded-xl transition-all border border-white/10 cursor-pointer",
+                children: [
+                  T.jsx("span", { className: "text-base", children: "+" }),
+                  "Add Blank Car"
+                ]
+              })
+            ]
+          })
+        ]
+      }) :
+
+      /* CUSTOM CARS ACTIVE */
+      T.jsxs("div", {
+        className: "space-y-8",
+        children: [
+          /* Custom Cars Selector Strip */
+          T.jsxs("div", {
+            className: "space-y-3",
+            children: [
+              T.jsxs("div", {
+                className: "flex items-center justify-between",
+                children: [
+                  T.jsxs("span", {
+                    className: "text-xs font-mono uppercase tracking-widest text-white/50 font-bold",
+                    children: ["Active Featured Cars (", customCars.length, ")"]
+                  }),
+                  T.jsxs("div", {
+                    className: "flex items-center gap-3",
+                    children: [
+                      T.jsxs("button", {
+                        type: "button",
+                        onClick: () => setShowInventoryModal(true),
+                        className: "text-xs font-bold text-[#C59B51] hover:underline flex items-center gap-1 cursor-pointer",
+                        children: ["🚗 Select from Added Vehicles (Slot ", customCars.length + 1, ")"]
+                      }),
+                      T.jsxs("button", {
+                        type: "button",
+                        onClick: handleAddNewCar,
+                        className: "text-xs font-bold text-white/50 hover:text-white flex items-center gap-1 cursor-pointer",
+                        children: ["+ Blank"]
+                      })
+                    ]
+                  })
+                ]
+              }),
+
+              /* Selector Tabs */
+              T.jsxs("div", {
+                className: "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3",
+                children: [
+                  customCars.map((c, idx) => {
+                    const isSelected = c.id === activeCarId;
+                    const imgCover = (c.images && c.images[0]) || c.image || "";
+                    return T.jsxs("div", {
+                      key: c.id,
+                      onClick: () => setActiveCarId(c.id),
+                      className: "group relative p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2 " + (
+                        isSelected
+                          ? "bg-[#C59B51]/15 border-[#C59B51] text-white shadow-lg ring-1 ring-[#C59B51]"
+                          : "bg-black/30 border-white/5 text-white/60 hover:text-white hover:bg-white/5"
+                      ),
+                      children: [
+                        T.jsxs("div", {
+                          className: "relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-black/40",
+                          children: [
+                            T.jsx("img", {
+                              src: imgCover,
+                              alt: c.make,
+                              className: "w-full h-full object-cover"
+                            }),
+                            T.jsxs("span", {
+                              className: "absolute top-1.5 left-1.5 px-2 py-0.5 bg-black/75 backdrop-blur-md rounded-md text-[9px] font-mono text-[#C59B51] font-bold uppercase",
+                              children: ["Slot ", idx + 1]
+                            })
+                          ]
+                        }),
+                        T.jsxs("div", {
+                          className: "flex items-center justify-between gap-1",
+                          children: [
+                            T.jsxs("div", {
+                              className: "truncate",
+                              children: [
+                                T.jsx("span", {
+                                  className: "text-xs font-mono uppercase text-[#C59B51] font-bold block",
+                                  children: c.year || "2024"
+                                }),
+                                T.jsx("span", {
+                                  className: "text-xs font-bold text-white line-clamp-1 block truncate",
+                                  children: c.make + " " + c.model
+                                })
+                              ]
+                            }),
+                            /* Reliable Direct Delete Button on Tab */
+                            T.jsx("button", {
+                              type: "button",
+                              onClick: (e) => {
+                                e.stopPropagation();
+                                handleDeleteCar(c.id);
+                              },
+                              className: "p-1.5 text-white/40 hover:text-red-400 hover:bg-red-500/10 rounded-lg cursor-pointer transition-colors text-sm shrink-0",
+                              title: "Delete this featured car",
+                              children: "✕"
+                            })
+                          ]
+                        })
+                      ]
+                    });
+                  }),
+                  /* Add Button Slot */
+                  T.jsxs("button", {
+                    type: "button",
+                    onClick: () => setShowInventoryModal(true),
+                    className: "border border-dashed border-white/20 hover:border-[#C59B51] hover:bg-white/5 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-white/40 hover:text-[#C59B51] transition-all cursor-pointer min-h-[120px]",
+                    children: [
+                      T.jsx("span", { className: "text-2xl font-bold", children: "+" }),
+                      T.jsxs("span", { className: "text-xs font-bold uppercase tracking-wider text-center", children: ["Add Slot ", customCars.length + 1] })
+                    ]
+                  })
+                ]
+              })
+            ]
+          }),
+
+          /* ACTIVE CAR STUDIO EDITOR */
+          activeCar && T.jsxs("div", {
+            className: "space-y-6",
+            children: [
+              /* DELETE CONFIRMATION ALERT (INLINE, FOOLPROOF, ZERO window.confirm) */
+              deleteConfirmId === activeCar.id && T.jsxs("div", {
+                className: "p-5 bg-red-500/15 border border-red-500/40 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in",
+                children: [
+                  T.jsxs("div", {
+                    className: "space-y-1 text-center sm:text-left",
+                    children: [
+                      T.jsx("h5", { className: "text-sm font-bold text-red-300", children: "Confirm Deletion of this Featured Vehicle?" }),
+                      T.jsxs("p", {
+                        className: "text-xs text-white/60",
+                        children: [
+                          "Deleting \"", activeCar.make, " ", activeCar.model,
+                          "\" will remove it from featured slots and automatically restore the factory default vehicle."
+                        ]
+                      })
+                    ]
+                  }),
+                  T.jsxs("div", {
+                    className: "flex items-center gap-2.5 shrink-0",
+                    children: [
+                      T.jsx("button", {
+                        type: "button",
+                        onClick: () => handleDeleteCar(activeCar.id),
+                        className: "px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-extrabold uppercase tracking-wider shadow-md cursor-pointer transition-all",
+                        children: "Yes, Delete Now"
+                      }),
+                      T.jsx("button", {
+                        type: "button",
+                        onClick: () => setDeleteConfirmId(null),
+                        className: "px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer",
+                        children: "Cancel"
+                      })
+                    ]
+                  })
+                ]
+              }),
+
+              /* 1. STYLES & COLOR PALETTE */
+              T.jsxs("div", {
+                className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-5",
+                children: [
+                  T.jsxs("div", {
+                    className: "flex items-center justify-between",
+                    children: [
+                      T.jsxs("div", {
+                        children: [
+                          T.jsx("h4", { className: "text-lg font-bold text-white", children: "Theme & Section Colors" }),
+                          T.jsx("p", { className: "text-xs text-white/40", children: "Configure background colors and accent styling for this featured car." })
+                        ]
+                      }),
+                      T.jsxs("span", {
+                        className: "text-xs font-mono text-[#C59B51] font-bold",
+                        children: ["Editing: ", activeCar.make, " ", activeCar.model]
+                      })
+                    ]
+                  }),
+
+                  T.jsxs("div", {
+                    className: "grid grid-cols-1 md:grid-cols-3 gap-6",
+                    children: [
+                      /* Features Background */
+                      T.jsxs("div", {
+                        className: "space-y-2.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/60 font-bold block", children: "Features Section Background" }),
+                          T.jsxs("div", {
+                            className: "flex items-center gap-3",
+                            children: [
+                              T.jsx("input", {
+                                type: "color",
+                                value: activeStyles.featuresBg || "#000F1E",
+                                onChange: (e) => updateActiveCar(c => ({
+                                  ...c,
+                                  styles: { ...activeStyles, featuresBg: e.target.value }
+                                })),
+                                className: "w-10 h-10 rounded-xl cursor-pointer bg-transparent border-0"
+                              }),
+                              T.jsx("input", {
+                                type: "text",
+                                value: activeStyles.featuresBg || "#000F1E",
+                                onChange: (e) => updateActiveCar(c => ({
+                                  ...c,
+                                  styles: { ...activeStyles, featuresBg: e.target.value }
+                                })),
+                                className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white font-mono text-xs uppercase"
+                              })
+                            ]
+                          }),
+                          T.jsx("div", {
+                            className: "flex items-center gap-2 flex-wrap pt-1",
+                            children: presetColors.map(col => T.jsx("button", {
+                              key: col,
+                              type: "button",
+                              onClick: () => updateActiveCar(c => ({
+                                ...c,
+                                styles: { ...activeStyles, featuresBg: col }
+                              })),
+                              style: { backgroundColor: col },
+                              className: "w-6 h-6 rounded-full border border-white/20 hover:scale-110 transition-transform cursor-pointer",
+                              title: col
+                            }))
+                          })
+                        ]
+                      }),
+
+                      /* Title Bar Background */
+                      T.jsxs("div", {
+                        className: "space-y-2.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/60 font-bold block", children: "Title Bar Background" }),
+                          T.jsxs("div", {
+                            className: "flex items-center gap-3",
+                            children: [
+                              T.jsx("input", {
+                                type: "color",
+                                value: activeStyles.titleBarBg || "#000F1E",
+                                onChange: (e) => updateActiveCar(c => ({
+                                  ...c,
+                                  styles: { ...activeStyles, titleBarBg: e.target.value }
+                                })),
+                                className: "w-10 h-10 rounded-xl cursor-pointer bg-transparent border-0"
+                              }),
+                              T.jsx("input", {
+                                type: "text",
+                                value: activeStyles.titleBarBg || "#000F1E",
+                                onChange: (e) => updateActiveCar(c => ({
+                                  ...c,
+                                  styles: { ...activeStyles, titleBarBg: e.target.value }
+                                })),
+                                className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white font-mono text-xs uppercase"
+                              })
+                            ]
+                          }),
+                          T.jsx("div", {
+                            className: "flex items-center gap-2 flex-wrap pt-1",
+                            children: presetColors.map(col => T.jsx("button", {
+                              key: col,
+                              type: "button",
+                              onClick: () => updateActiveCar(c => ({
+                                ...c,
+                                styles: { ...activeStyles, titleBarBg: col }
+                              })),
+                              style: { backgroundColor: col },
+                              className: "w-6 h-6 rounded-full border border-white/20 hover:scale-110 transition-transform cursor-pointer",
+                              title: col
+                            }))
+                          })
+                        ]
+                      }),
+
+                      /* Accent Bar */
+                      T.jsxs("div", {
+                        className: "space-y-2.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/60 font-bold block", children: "Accent Highlight Color" }),
+                          T.jsxs("div", {
+                            className: "flex items-center gap-3",
+                            children: [
+                              T.jsx("input", {
+                                type: "color",
+                                value: activeStyles.accentColor || "#C59B51",
+                                onChange: (e) => updateActiveCar(c => ({
+                                  ...c,
+                                  styles: { ...activeStyles, accentColor: e.target.value }
+                                })),
+                                className: "w-10 h-10 rounded-xl cursor-pointer bg-transparent border-0"
+                              }),
+                              T.jsx("input", {
+                                type: "text",
+                                value: activeStyles.accentColor || "#C59B51",
+                                onChange: (e) => updateActiveCar(c => ({
+                                  ...c,
+                                  styles: { ...activeStyles, accentColor: e.target.value }
+                                })),
+                                className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white font-mono text-xs uppercase"
+                              })
+                            ]
+                          }),
+                          T.jsx("div", {
+                            className: "flex items-center gap-2 flex-wrap pt-1",
+                            children: presetAccents.map(col => T.jsx("button", {
+                              key: col,
+                              type: "button",
+                              onClick: () => updateActiveCar(c => ({
+                                ...c,
+                                styles: { ...activeStyles, accentColor: col }
+                              })),
+                              style: { backgroundColor: col },
+                              className: "w-6 h-6 rounded-full border border-white/20 hover:scale-110 transition-transform cursor-pointer",
+                              title: col
+                            }))
+                          })
+                        ]
+                      })
+                    ]
+                  })
+                ]
+              }),
+
+              /* 2. FEATURES & EQUIPMENT LIST */
+              T.jsxs("div", {
+                className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-5",
+                children: [
+                  T.jsxs("div", {
+                    className: "flex flex-col sm:flex-row justify-between sm:items-center gap-3",
+                    children: [
+                      T.jsxs("div", {
+                        children: [
+                          T.jsxs("h4", {
+                            className: "text-lg font-bold text-white flex items-center gap-2",
+                            children: [
+                              "Features & Equipment",
+                              T.jsxs("span", {
+                                className: "text-xs font-mono px-2.5 py-0.5 bg-white/10 rounded-full text-[#C59B51] font-bold",
+                                children: [activeFeatures.length, " items"]
+                              })
+                            ]
+                          }),
+                          T.jsx("p", { className: "text-xs text-white/40", children: "Add or remove equipment badges." })
+                        ]
+                      }),
+                      T.jsx("button", {
+                        type: "button",
+                        onClick: () => updateActiveCar(c => ({ ...c, features: [...DEFAULT_FEATURE_EQUIPMENT_LIST] })),
+                        className: "text-xs font-mono text-[#C59B51] hover:underline cursor-pointer",
+                        children: "Reset to 16 Default Features"
+                      })
+                    ]
+                  }),
+
+                  /* Add Feature Bar */
+                  T.jsxs("form", {
+                    onSubmit: (e) => { e.preventDefault(); addFeature(); },
+                    className: "flex gap-2.5",
+                    children: [
+                      T.jsx("input", {
+                        type: "text",
+                        placeholder: "Add new feature (e.g. Bang & Olufsen 3D Sound, Night Vision Assist...)",
+                        value: newFeatureText,
+                        onChange: (e) => setNewFeatureText(e.target.value),
+                        className: "flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm outline-none focus:border-[#C59B51]"
+                      }),
+                      T.jsx("button", {
+                        type: "submit",
+                        className: "px-5 py-2.5 bg-[#C59B51] hover:bg-[#B38A40] text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer shrink-0",
+                        children: "Add Feature"
+                      })
+                    ]
+                  }),
+
+                  /* Active Features Grid */
+                  T.jsx("div", {
+                    className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 pt-2",
+                    children: activeFeatures.map((feat, idx) => T.jsxs("div", {
+                      key: idx,
+                      className: "flex items-center justify-between gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all group",
+                      children: [
+                        T.jsxs("div", {
+                          className: "flex items-center gap-2.5 truncate",
+                          children: [
+                            T.jsx("div", {
+                              className: "w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 text-[10px]",
+                              children: "✓"
+                            }),
+                            T.jsx("span", { className: "text-xs text-white font-medium truncate", children: feat })
+                          ]
+                        }),
+                        T.jsx("button", {
+                          type: "button",
+                          onClick: () => removeFeature(idx),
+                          className: "text-white/40 hover:text-red-400 p-1 cursor-pointer transition-colors shrink-0 text-sm",
+                          title: "Remove feature",
+                          children: "✕"
+                        })
+                      ]
+                    }))
+                  })
+                ]
+              }),
+
+              /* 3. TECHNICAL DOSSIER & EXTRA INFORMATION */
+              T.jsxs("div", {
+                className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-5",
+                children: [
+                  T.jsxs("div", {
+                    children: [
+                      T.jsx("h4", { className: "text-lg font-bold text-white", children: "Technical Specifications & Extra Information" }),
+                      T.jsx("p", { className: "text-xs text-white/40", children: "Core technical parameters and bespoke provenance notes." })
+                    ]
+                  }),
+
+                  T.jsxs("div", {
+                    className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4",
+                    children: [
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Make & Model" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: (activeCar.make || "") + " " + (activeCar.model || ""),
+                            onChange: (e) => {
+                              const parts = e.target.value.split(" ");
+                              const mk = parts[0] || "";
+                              const mdl = parts.slice(1).join(" ") || "";
+                              updateActiveCar(c => ({ ...c, make: mk, model: mdl }));
+                            },
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Production Year" }),
+                          T.jsx("input", {
+                            type: "number",
+                            value: activeCar.year || 2024,
+                            onChange: (e) => updateActiveCar(c => ({ ...c, year: Number(e.target.value) })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Price (KSh)" }),
+                          T.jsx("input", {
+                            type: "number",
+                            value: activeCar.price || 0,
+                            onChange: (e) => updateActiveCar(c => ({ ...c, price: Number(e.target.value) })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Body Classification" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: activeCar.type || "Prestige SUV",
+                            onChange: (e) => updateActiveCar(c => ({ ...c, type: e.target.value })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Fuel Type" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: activeCar.fuel || "Diesel",
+                            onChange: (e) => updateActiveCar(c => ({ ...c, fuel: e.target.value })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Transmission" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: activeCar.transmission || "Automatic",
+                            onChange: (e) => updateActiveCar(c => ({ ...c, transmission: e.target.value })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Drivetrain" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: activeSpecs.drivetrain || "All-Wheel Drive (AWD / 4WD)",
+                            onChange: (e) => updateActiveCar(c => ({
+                              ...c,
+                              specifications: { ...activeSpecs, drivetrain: e.target.value }
+                            })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Exterior Paint" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: activeSpecs.exteriorPaint || "Metallic Factory Finish",
+                            onChange: (e) => updateActiveCar(c => ({
+                              ...c,
+                              specifications: { ...activeSpecs, exteriorPaint: e.target.value }
+                            })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Interior Trim" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: activeSpecs.interiorTrim || "Full Premium Nappa Leather",
+                            onChange: (e) => updateActiveCar(c => ({
+                              ...c,
+                              specifications: { ...activeSpecs, interiorTrim: e.target.value }
+                            })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5 sm:col-span-2 lg:col-span-3",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50", children: "Import & Duty Status" }),
+                          T.jsx("input", {
+                            type: "text",
+                            value: activeSpecs.importStatus || "Duty & Clearance Settled",
+                            onChange: (e) => updateActiveCar(c => ({
+                              ...c,
+                              specifications: { ...activeSpecs, importStatus: e.target.value }
+                            })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs"
+                          })
+                        ]
+                      }),
+                      /* EXTRA INFORMATION / PROVENANCE HIGHLIGHTS FIELD */
+                      T.jsxs("div", {
+                        className: "space-y-1.5 sm:col-span-2 lg:col-span-3",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-[#C59B51] font-bold", children: "Extra Information & Executive Provenance Notes" }),
+                          T.jsx("textarea", {
+                            rows: 2,
+                            placeholder: "e.g. Single owner from new, full dealership service records, ceramic paint protection, clean customs clearance...",
+                            value: activeSpecs.extraInfo || "",
+                            onChange: (e) => updateActiveCar(c => ({
+                              ...c,
+                              specifications: { ...activeSpecs, extraInfo: e.target.value }
+                            })),
+                            className: "w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 text-white text-xs outline-none focus:border-[#C59B51]"
+                          })
+                        ]
+                      })
+                    ]
+                  })
+                ]
+              }),
+
+              /* 4. STUDIO PHOTOGRAPHS & LOCAL STORAGE UPLOAD */
+              T.jsxs("div", {
+                className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-5",
+                children: [
+                  T.jsxs("div", {
+                    className: "flex flex-col sm:flex-row justify-between sm:items-center gap-3",
+                    children: [
+                      T.jsxs("div", {
+                        children: [
+                          T.jsx("h4", { className: "text-lg font-bold text-white", children: "Studio Angles & Photographs (6 Images)" }),
+                          T.jsx("p", { className: "text-xs text-white/40", children: "Upload photos from your local storage / device, or provide image URLs." })
+                        ]
+                      }),
+                      /* LOCAL DEVICE STORAGE UPLOAD BUTTON */
+                      T.jsxs("button", {
+                        type: "button",
+                        onClick: () => fileInputRef.current && fileInputRef.current.click(),
+                        className: "px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer border border-white/15",
+                        children: [
+                          T.jsx("span", { className: "text-sm", children: "📁" }),
+                          "Upload Photos from Local Storage"
+                        ]
+                      })
+                    ]
+                  }),
+
+                  /* 6 Photos Grid with Individual Upload Buttons */
+                  T.jsx("div", {
+                    className: "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3",
+                    children: [0, 1, 2, 3, 4, 5].map(idx => {
+                      const currentImgs = (activeCar.images && activeCar.images.length) ? [...activeCar.images] : [];
+                      const val = currentImgs[idx] || "";
+                      return T.jsxs("div", {
+                        key: idx,
+                        className: "space-y-2 bg-white/5 p-3 rounded-2xl border border-white/10 flex flex-col justify-between",
+                        children: [
+                          T.jsxs("div", {
+                            className: "space-y-1.5",
+                            children: [
+                              T.jsx("div", {
+                                className: "w-full aspect-[16/10] bg-black/50 rounded-xl overflow-hidden",
+                                children: val ? T.jsx("img", { src: val, alt: "Angle " + (idx + 1), className: "w-full h-full object-cover" }) : T.jsx("div", { className: "w-full h-full flex items-center justify-center text-white/30 text-xs", children: "Empty" })
+                              }),
+                              T.jsxs("div", {
+                                className: "flex items-center justify-between",
+                                children: [
+                                  T.jsxs("span", {
+                                    className: "text-[10px] font-mono text-white/50 uppercase font-bold",
+                                    children: [idx === 0 ? "1. Hero Image" : "Photo " + (idx + 1)]
+                                  }),
+                                  /* Slot individual upload */
+                                  T.jsx("button", {
+                                    type: "button",
+                                    onClick: () => {
+                                      setTargetUploadIndex(idx);
+                                      if (slotFileInputRef.current) slotFileInputRef.current.click();
+                                    },
+                                    className: "text-[10px] font-mono text-[#C59B51] hover:underline cursor-pointer",
+                                    title: "Upload from device",
+                                    children: "Upload"
+                                  })
+                                ]
+                              })
+                            ]
+                          }),
+                          T.jsx("input", {
+                            type: "text",
+                            placeholder: "/images/... or data:image",
+                            value: val,
+                            onChange: (e) => {
+                              const newImgs = [...currentImgs];
+                              newImgs[idx] = e.target.value;
+                              updateActiveCar(c => ({
+                                ...c,
+                                images: newImgs,
+                                image: newImgs[0] || c.image || ""
+                              }));
+                            },
+                            className: "w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-white font-mono text-[9px] truncate"
+                          })
+                        ]
+                      });
+                    })
+                  })
+                ]
+              }),
+
+              /* 5. YOUTUBE VIDEO WALKAROUND URL */
+              T.jsxs("div", {
+                className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-4",
+                children: [
+                  T.jsxs("div", {
+                    className: "flex flex-col sm:flex-row justify-between sm:items-center gap-2",
+                    children: [
+                      T.jsxs("div", {
+                        children: [
+                          T.jsx("h4", { className: "text-lg font-bold text-white", children: "YouTube Walkaround Video URL" }),
+                          T.jsx("p", { className: "text-xs text-white/40", children: "Direct YouTube link opened when users click the red YouTube icon on the showcase." })
+                        ]
+                      }),
+                      activeCar.videoUrl && T.jsxs("a", {
+                        href: activeCar.videoUrl,
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        className: "text-xs font-mono text-[#FF0000] hover:underline flex items-center gap-1 shrink-0",
+                        children: ["▶ Test Video Link", T.jsx("span", { children: "↗" })]
+                      })
+                    ]
+                  }),
+                  T.jsx("input", {
+                    type: "text",
+                    placeholder: "https://www.youtube.com/watch?v=... or https://youtu.be/...",
+                    value: activeCar.videoUrl || "",
+                    onChange: (e) => updateActiveCar(c => ({ ...c, videoUrl: e.target.value })),
+                    className: "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-[#C59B51]"
+                  })
+                ]
+              }),
+
+              /* BOTTOM ACTION FOOTER */
+              T.jsxs("div", {
+                className: "flex items-center justify-between gap-4 pt-4 border-t border-white/10 flex-wrap",
+                children: [
+                  /* WORKING DELETE BUTTON (triggers clean state-based confirmation) */
+                  T.jsx("button", {
+                    type: "button",
+                    onClick: () => setDeleteConfirmId(activeCar.id),
+                    className: "px-5 py-3 border border-red-500/30 hover:border-red-500 hover:bg-red-500/10 text-red-400 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors",
+                    children: "Delete This Featured Car"
+                  }),
+                  T.jsxs("div", {
+                    className: "flex items-center gap-3",
+                    children: [
+                      T.jsxs("button", {
+                        type: "button",
+                        onClick: () => setShowInventoryModal(true),
+                        className: "px-5 py-3 border border-white/20 hover:border-white text-white rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors flex items-center gap-2",
+                        children: [
+                          T.jsx("span", { children: "🚗" }),
+                          "Select from Added Vehicles"
+                        ]
+                      }),
+                      T.jsx("button", {
+                        type: "button",
+                        onClick: handleSave,
+                        className: "px-8 py-3 bg-[#C59B51] hover:bg-[#B38A40] text-black rounded-xl text-xs font-extrabold uppercase tracking-widest shadow-lg cursor-pointer transition-all",
+                        children: "Save All Changes"
+                      })
+                    ]
+                  })
+                ]
+              })
+            ]
+          }),
+
+          /* ARCHIVED FACTORY DEFAULTS */
+          T.jsxs("div", {
+            className: "pt-6 border-t border-white/5",
+            children: [
+              T.jsxs("button", {
+                type: "button",
+                onClick: () => setShowArchivedDefaults(!showArchivedDefaults),
+                className: "text-xs font-mono text-white/40 hover:text-white flex items-center gap-2 cursor-pointer transition-colors",
+                children: [
+                  T.jsx("span", { children: showArchivedDefaults ? "▼" : "▶" }),
+                  "View 5 Archived Factory Default Vehicles (Preserved in System)"
+                ]
+              }),
+              showArchivedDefaults && T.jsxs("div", {
+                className: "mt-4 p-5 bg-black/20 border border-white/5 rounded-2xl space-y-3",
+                children: [
+                  T.jsx("p", {
+                    className: "text-xs text-white/50",
+                    children: "These 5 original prestige cars are archived from active admin editing and serve as automatic fallbacks when fewer than 5 custom cars are present:"
+                  }),
+                  T.jsx("div", {
+                    className: "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3",
+                    children: DEFAULT_FEATURED_CARS.map((dc, i) => T.jsxs("div", {
+                      key: dc.id,
+                      className: "p-3 bg-white/5 rounded-xl border border-white/5 space-y-1 text-xs",
+                      children: [
+                        T.jsxs("span", {
+                          className: "text-[10px] font-mono text-[#C59B51] uppercase font-bold block",
+                          children: ["Default Slot ", i + 1]
+                        }),
+                        T.jsx("span", {
+                          className: "font-bold text-white line-clamp-1 block",
+                          children: dc.make + " " + dc.model
+                        }),
+                        T.jsx("span", {
+                          className: "text-[10px] text-white/40 block",
+                          children: i < customCount ? "(Currently Replaced)" : "(Currently Active Fallback)"
+                        })
+                      ]
+                    }))
+                  })
+                ]
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+}
+
+
 function ok({setView:pw,onBack:pb}={}){var X,le,ye;const[s,e]=Fe.useState(null),[t,n]=Fe.useState(""),[i,o]=Fe.useState(""),[u,h]=Fe.useState(!1),[d,m]=Fe.useState(""),[_,v]=Fe.useState("dashboard"),[x,A]=Fe.useState([]),[S,R]=Fe.useState(!1),[k,G]=Fe.useState(null),[Y,J]=Fe.useState(!1),[W,re]=Fe.useState(""),[te,C]=Fe.useState({make:"",model:"",year:new Date().getFullYear(),price:0,spec:"",features:[],location:"Our Cars",status:"Available",image:"",images:[],videoUrl:""}),{brand:matchedBrand,models:matchedModels}=getModelsAndBrand(te.make);Fe.useEffect(()=>{s&&I()},[s]);const I=async()=>{try{const ae=await jM(vg(wh,"cars"));A(ae.docs.map(B=>({id:B.id,...B.data()})))}catch(ae){console.error("Error fetching inventory",ae)}},O=async ae=>{ae.preventDefault(),h(!0),m(""),(t==="mrjoseph@afzet.co.ke"||t==="admin@mrjoseph.com")&&i==="JOSe1phkr@4#3"?e({email:"mrjoseph@afzet.co.ke",uid:"hardcoded-admin"}):m("Invalid credentials."),h(!1)},M=async()=>{e(null)},U=ae=>{const B=Array.from(ae.target.files||[]);if(B.length!==0){if(te.images.length+B.length>10){alert("You can only upload up to 10 images per car.");return}B.forEach(j=>{if(j.size>10*1024*1024){alert(`Image ${j.name} is too large. Please select images under 10MB.`);return}const oe=new FileReader;oe.onload=_e=>{var Se;const ge=new Image;ge.onload=()=>{const Ne=document.createElement("canvas"),De=600,ct=600;let Ye=ge.width,pn=ge.height;Ye>pn?Ye>De&&(pn*=De/Ye,Ye=De):pn>ct&&(Ye*=ct/pn,pn=ct),Ne.width=Ye,Ne.height=pn;const un=Ne.getContext("2d");if(un){un.drawImage(ge,0,0,Ye,pn);const mn=Ne.toDataURL("image/webp",.3);C(Je=>{const At=[...Je.images,mn].slice(0,10);return{...Je,images:At,image:At[0]||""}})}},(Se=_e.target)!=null&&Se.result&&(ge.src=_e.target.result)},oe.readAsDataURL(j)})}},L=ae=>{C(B=>{const j=B.images.filter((oe,_e)=>_e!==ae);return{...B,images:j,image:j[0]||""}})},
 makeCover=ae=>{C(B=>{const j=[...B.images];const[oe]=j.splice(ae,1);j.unshift(oe);return{...B,images:j,image:j[0]||""}})},
 swapImages=(ae,B)=>{if(B<0||B>=te.images.length)return;C(j=>{const oe=[...j.images];const _e=oe[ae];oe[ae]=oe[B];oe[B]=_e;return{...j,images:oe,image:oe[0]||""}})},
 reorderImage=(ae,B)=>{if(ae===B||ae<0||B<0||ae>=te.images.length||B>=te.images.length)return;C(j=>{const oe=[...j.images];const[_e]=oe.splice(ae,1);oe.splice(B,0,_e);return{...j,images:oe,image:oe[0]||""}})},V=ae=>{C({make:ae.make||"",model:ae.model||"",year:ae.year||new Date().getFullYear(),price:ae.price||0,spec:ae.spec||"",features:ae.features||[],location:(ae.location==="Cars in Kenya"?"Our Cars":ae.location==="Incoming Cars"?"New Arrivals":(ae.location||"Our Cars")),status:ae.status||"Available",image:ae.image||"",images:ae.images||[],videoUrl:ae.videoUrl||""}),re(ae.features?ae.features.join(`
 `):""),G(ae.id),R(!0)},we=async ae=>{if(ae.preventDefault(),!te.make||!te.model||!te.image&&(!te.images||te.images.length===0)){alert("Make, Model, and Image are required!");return}J(!0);const B=W.split(`
-`).map(j=>j.trim()).filter(j=>j!=="");try{const finalImgs=te.images&&te.images.length>0?te.images:(te.image?[te.image]:[]);const coverImg=finalImgs[0]||"";const payload={...te,images:finalImgs,image:coverImg,features:B};k?await zM(Eg(wh,"cars",k),payload):await HM(vg(wh,"cars"),{...payload,createdAt:jI()}),R(!1),G(null),C({make:"",model:"",year:new Date().getFullYear(),price:0,spec:"",features:[],location:"Our Cars",status:"Available",image:"",images:[],videoUrl:""}),re(""),I()}catch(j){console.error(j),alert("Error saving vehicle."+(j==null?void 0:j.message))}finally{J(!1)}},Le=async ae=>{try{await BM(Eg(wh,"cars",ae)),I()}catch(B){console.error("Error deleting",B)}};return s?T.jsx("div",{className:"admin-black-portal min-h-screen relative z-10 pt-16 pb-20 px-4 sm:px-6 flex justify-center",style:{backgroundColor:"#0A0A0F",color:"#FFFFFF",minHeight:"100vh",width:"100%"},children:T.jsxs("div",{className:"w-full max-w-7xl flex flex-col md:flex-row gap-6 md:gap-8",children:[T.jsxs("aside",{className:"w-full md:w-64 shrink-0 flex flex-col gap-4 bg-black/20 md:bg-transparent p-4 sm:p-6 md:p-0 rounded-2xl border border-white/5 md:border-0",children:[T.jsxs("div",{className:"px-2",children:[T.jsx("h2",{className:"font-serif tracking-tight text-xl text-white",children:"Dashboard"}),T.jsx("p",{className:"text-xs text-white/40 truncate",children:s.email})]}),T.jsxs("div",{className:"flex flex-row md:flex-col gap-2 w-full",children:[T.jsxs("button",{onClick:()=>v("dashboard"),className:`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${_==="dashboard"?"bg-white/10 text-white":"text-white/60 hover:text-white hover:bg-white/5"}`,children:[T.jsx(qb,{size:18}),T.jsx("span",{children:"Metrics"})]}),T.jsxs("button",{onClick:()=>v("vehicles"),className:`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${_==="vehicles"?"bg-white/10 text-white":"text-white/60 hover:text-white hover:bg-white/5"}`,children:[T.jsx(Ob,{size:18}),T.jsx("span",{children:"Vehicles"})]})]}),T.jsx("div",{className:"mt-2 md:mt-auto border-t border-white/5 pt-4 md:pt-6",children:T.jsxs("button",{onClick:M,className:"flex w-full items-center justify-center md:justify-start gap-3 border border-white/20 text-white px-4 py-3 rounded-lg text-sm font-medium hover:bg-white/5 transition-colors",children:[T.jsx(Yb,{size:18}),T.jsx("span",{children:"Sign Out"})]})})]}),T.jsxs("div",{className:"admin-main-panel flex-1 bg-[#121218] rounded-3xl border border-white/10 p-4 sm:p-8 shadow-2xl relative overflow-hidden",style:{backgroundColor:"#121218",color:"#FFFFFF"},children:[_==="dashboard"&&T.jsxs("div",{className:"animate-in fade-in slide-in-from-bottom-2 duration-500",children:[T.jsx("h3",{className:"text-2xl font-serif text-white mb-6",children:"Overview"}),T.jsx("div",{className:"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",children:T.jsxs("div",{className:"bg-black/40 border border-white/5 p-6 rounded-2xl",children:[T.jsx("p",{className:"text-sm text-white/50 uppercase tracking-wider mb-2",children:"Total Vehicles"}),T.jsx("p",{className:"text-4xl font-mono text-white",children:x.length})]})})]}),_==="vehicles"&&T.jsxs("div",{className:"animate-in fade-in slide-in-from-bottom-2 duration-500",children:[T.jsxs("div",{className:"flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6",children:[T.jsx("h3",{className:"text-2xl font-serif text-white",children:"Inventory Management"}),!S&&T.jsxs("button",{onClick:()=>R(!0),className:"flex items-center gap-2 bg-white text-black px-4 py-2.5 rounded-lg font-medium hover:bg-white/90 transition-colors text-sm w-full sm:w-auto justify-center",children:[T.jsx(rw,{size:16})," Add Vehicle"]})]}),S?T.jsxs("div",{className:"bg-black/40 p-4 sm:p-8 rounded-2xl border border-white/5",children:[T.jsxs("div",{className:"flex justify-between items-center mb-6",children:[T.jsx("h4",{className:"text-xl font-serif text-white",children:k?"Edit Listing":"Create Listing"}),T.jsx("button",{onClick:()=>{R(!1),G(null)},className:"text-white/50 hover:text-white transition-colors text-sm",children:"Discard"})]}),T.jsxs("form",{onSubmit:we,className:"space-y-6",children:[T.jsxs("div",{className:"grid grid-cols-1 sm:grid-cols-2 gap-4",children:[T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Make"}),T.jsx("input",{type:"text",required:!0,list:"admin-makes-datalist",value:te.make,onChange:ae=>C({...te,make:ae.target.value}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",placeholder:"e.g. Mercedes-Benz, Toyota, Nissan, Mazda..."}),T.jsx("datalist",{id:"admin-makes-datalist",children:Object.keys(CAR_DATABASE).map(ae=>T.jsx("option",{value:ae},ae))})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Model"}),T.jsx("input",{type:"text",required:!0,list:"admin-models-datalist",value:te.model,onChange:ae=>C({...te,model:ae.target.value}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",placeholder:matchedModels.length>0?`e.g. ${matchedModels.slice(0,3).join(", ")}...`:"e.g. CX-5, Atenza, Prado..."}),matchedModels.length>0&&T.jsx("datalist",{id:"admin-models-datalist",children:matchedModels.map(ae=>T.jsx("option",{value:ae},ae))})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Year"}),T.jsx("input",{type:"number",required:!0,value:te.year,onChange:ae=>C({...te,year:parseInt(ae.target.value)}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm"})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Price (Ksh)"}),T.jsx("input",{type:"text",required:!0,value:te.price?te.price.toLocaleString():"",onChange:ae=>{const B=ae.target.value.replace(/,/g,"");C({...te,price:B?parseInt(B,10):0})},className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm"})]})]}),T.jsxs("div",{className:"grid grid-cols-1 sm:grid-cols-3 gap-4",children:[T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Location"}),T.jsxs("select",{value:te.location,onChange:ae=>C({...te,location:ae.target.value}),className:"w-full bg-black/55 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",children:[T.jsx("option",{value:"Our Cars",children:"Our Cars"}),T.jsx("option",{value:"New Arrivals",children:"New Arrivals"})]})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Status"}),T.jsxs("select",{value:te.status,onChange:ae=>C({...te,status:ae.target.value}),className:"w-full bg-black/55 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",children:[T.jsx("option",{value:"Available",children:"Available"}),T.jsx("option",{value:"Sold",children:"Sold"}),T.jsx("option",{value:"Reserved",children:"Reserved"})]})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Video URL (Optional)"}),T.jsx("input",{type:"url",value:te.videoUrl,onChange:ae=>C({...te,videoUrl:ae.target.value}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",placeholder:"e.g. https://youtube.com/..."})]})]}),T.jsxs("div",{children:[T.jsxs("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 flex items-center gap-2 font-medium",children:[T.jsx(H9,{size:14})," Specs (Enter each on a new line)"]}),T.jsx("textarea",{rows:4,value:te.spec,onChange:ae=>C({...te,spec:ae.target.value}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm"})]}),T.jsxs("div",{children:[T.jsxs("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 flex items-center gap-2 font-medium",children:[T.jsx(H9,{size:14})," Features (Enter each on a new line)"]}),T.jsx("textarea",{rows:6,value:W,onChange:ae=>re(ae.target.value),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",placeholder:`e.g. Full Leather Interior
+`).map(j=>j.trim()).filter(j=>j!=="");try{const finalImgs=te.images&&te.images.length>0?te.images:(te.image?[te.image]:[]);const coverImg=finalImgs[0]||"";const payload={...te,images:finalImgs,image:coverImg,features:B};k?await zM(Eg(wh,"cars",k),payload):await HM(vg(wh,"cars"),{...payload,createdAt:jI()}),R(!1),G(null),C({make:"",model:"",year:new Date().getFullYear(),price:0,spec:"",features:[],location:"Our Cars",status:"Available",image:"",images:[],videoUrl:""}),re(""),I()}catch(j){console.error(j),alert("Error saving vehicle."+(j==null?void 0:j.message))}finally{J(!1)}},Le=async ae=>{try{await BM(Eg(wh,"cars",ae)),I()}catch(B){console.error("Error deleting",B)}};return s?T.jsx("div",{className:"admin-black-portal min-h-screen relative z-10 pt-16 pb-20 px-4 sm:px-6 flex justify-center",style:{backgroundColor:"#0A0A0F",color:"#FFFFFF",minHeight:"100vh",width:"100%"},children:T.jsxs("div",{className:"w-full max-w-7xl flex flex-col md:flex-row gap-6 md:gap-8",children:[T.jsxs("aside",{className:"w-full md:w-64 shrink-0 flex flex-col gap-4 bg-black/20 md:bg-transparent p-4 sm:p-6 md:p-0 rounded-2xl border border-white/5 md:border-0",children:[T.jsxs("div",{className:"px-2",children:[T.jsx("h2",{className:"font-serif tracking-tight text-xl text-white",children:"Dashboard"}),T.jsx("p",{className:"text-xs text-white/40 truncate",children:s.email})]}),T.jsxs("div",{className:"flex flex-row md:flex-col gap-2 w-full",children:[T.jsxs("button",{onClick:()=>v("dashboard"),className:`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${_==="dashboard"?"bg-white/10 text-white":"text-white/60 hover:text-white hover:bg-white/5"}`,children:[T.jsx(qb,{size:18}),T.jsx("span",{children:"Metrics"})]}),T.jsxs("button",{onClick:()=>v("vehicles"),className:`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${_==="vehicles"?"bg-white/10 text-white":"text-white/60 hover:text-white hover:bg-white/5"}`,children:[T.jsx(Ob,{size:18}),T.jsx("span",{children:"Vehicles"})]}),
+T.jsxs("button",{onClick:()=>v("featured-cars"),className:`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${_==="featured-cars"?"bg-[#C59B51] text-black font-extrabold shadow-md":"text-white/60 hover:text-white hover:bg-white/5"}`,children:[T.jsx("svg",{viewBox:"0 0 24 24",width:18,height:18,fill:_==="featured-cars"?"#000":"none",stroke:"currentColor",strokeWidth:2,children:T.jsx("polygon",{points:"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"})}),T.jsx("span",{children:"Featured Cars"})]})]}),T.jsx("div",{className:"mt-2 md:mt-auto border-t border-white/5 pt-4 md:pt-6",children:T.jsxs("button",{onClick:M,className:"flex w-full items-center justify-center md:justify-start gap-3 border border-white/20 text-white px-4 py-3 rounded-lg text-sm font-medium hover:bg-white/5 transition-colors",children:[T.jsx(Yb,{size:18}),T.jsx("span",{children:"Sign Out"})]})})]}),T.jsxs("div",{className:"admin-main-panel flex-1 bg-[#121218] rounded-3xl border border-white/10 p-4 sm:p-8 shadow-2xl relative overflow-hidden",style:{backgroundColor:"#121218",color:"#FFFFFF"},children:[_==="dashboard"&&T.jsxs("div",{className:"animate-in fade-in slide-in-from-bottom-2 duration-500",children:[T.jsx("h3",{className:"text-2xl font-serif text-white mb-6",children:"Overview"}),T.jsx("div",{className:"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",children:T.jsxs("div",{className:"bg-black/40 border border-white/5 p-6 rounded-2xl",children:[T.jsx("p",{className:"text-sm text-white/50 uppercase tracking-wider mb-2",children:"Total Vehicles"}),T.jsx("p",{className:"text-4xl font-mono text-white",children:x.length})]})})]}),_==="featured-cars"&&T.jsx(FeaturedCarsAdminStudio,{onPreview:pb,inventoryCars:x}),
+_==="vehicles"&&T.jsxs("div",{className:"animate-in fade-in slide-in-from-bottom-2 duration-500",children:[T.jsxs("div",{className:"flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6",children:[T.jsx("h3",{className:"text-2xl font-serif text-white",children:"Inventory Management"}),!S&&T.jsxs("button",{onClick:()=>R(!0),className:"flex items-center gap-2 bg-white text-black px-4 py-2.5 rounded-lg font-medium hover:bg-white/90 transition-colors text-sm w-full sm:w-auto justify-center",children:[T.jsx(rw,{size:16})," Add Vehicle"]})]}),S?T.jsxs("div",{className:"bg-black/40 p-4 sm:p-8 rounded-2xl border border-white/5",children:[T.jsxs("div",{className:"flex justify-between items-center mb-6",children:[T.jsx("h4",{className:"text-xl font-serif text-white",children:k?"Edit Listing":"Create Listing"}),T.jsx("button",{onClick:()=>{R(!1),G(null)},className:"text-white/50 hover:text-white transition-colors text-sm",children:"Discard"})]}),T.jsxs("form",{onSubmit:we,className:"space-y-6",children:[T.jsxs("div",{className:"grid grid-cols-1 sm:grid-cols-2 gap-4",children:[T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Make"}),T.jsx("input",{type:"text",required:!0,list:"admin-makes-datalist",value:te.make,onChange:ae=>C({...te,make:ae.target.value}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",placeholder:"e.g. Mercedes-Benz, Toyota, Nissan, Mazda..."}),T.jsx("datalist",{id:"admin-makes-datalist",children:Object.keys(CAR_DATABASE).map(ae=>T.jsx("option",{value:ae},ae))})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Model"}),T.jsx("input",{type:"text",required:!0,list:"admin-models-datalist",value:te.model,onChange:ae=>C({...te,model:ae.target.value}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",placeholder:matchedModels.length>0?`e.g. ${matchedModels.slice(0,3).join(", ")}...`:"e.g. CX-5, Atenza, Prado..."}),matchedModels.length>0&&T.jsx("datalist",{id:"admin-models-datalist",children:matchedModels.map(ae=>T.jsx("option",{value:ae},ae))})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Year"}),T.jsx("input",{type:"number",required:!0,value:te.year,onChange:ae=>C({...te,year:parseInt(ae.target.value)}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm"})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Price (Ksh)"}),T.jsx("input",{type:"text",required:!0,value:te.price?te.price.toLocaleString():"",onChange:ae=>{const B=ae.target.value.replace(/,/g,"");C({...te,price:B?parseInt(B,10):0})},className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm"})]})]}),T.jsxs("div",{className:"grid grid-cols-1 sm:grid-cols-3 gap-4",children:[T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Location"}),T.jsxs("select",{value:te.location,onChange:ae=>C({...te,location:ae.target.value}),className:"w-full bg-black/55 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",children:[T.jsx("option",{value:"Our Cars",children:"Our Cars"}),T.jsx("option",{value:"New Arrivals",children:"New Arrivals"})]})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Status"}),T.jsxs("select",{value:te.status,onChange:ae=>C({...te,status:ae.target.value}),className:"w-full bg-black/55 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",children:[T.jsx("option",{value:"Available",children:"Available"}),T.jsx("option",{value:"Sold",children:"Sold"}),T.jsx("option",{value:"Reserved",children:"Reserved"})]})]}),T.jsxs("div",{children:[T.jsx("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 font-medium",children:"Video URL (Optional)"}),T.jsx("input",{type:"url",value:te.videoUrl,onChange:ae=>C({...te,videoUrl:ae.target.value}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",placeholder:"e.g. https://youtube.com/..."})]})]}),T.jsxs("div",{children:[T.jsxs("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 flex items-center gap-2 font-medium",children:[T.jsx(H9,{size:14})," Specs (Enter each on a new line)"]}),T.jsx("textarea",{rows:4,value:te.spec,onChange:ae=>C({...te,spec:ae.target.value}),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm"})]}),T.jsxs("div",{children:[T.jsxs("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 flex items-center gap-2 font-medium",children:[T.jsx(H9,{size:14})," Features (Enter each on a new line)"]}),T.jsx("textarea",{rows:6,value:W,onChange:ae=>re(ae.target.value),className:"w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/30 text-sm",placeholder:`e.g. Full Leather Interior
 Panoramic Sunroof
 Heated Seats`})]}),T.jsxs("div",{children:[T.jsxs("label",{className:"block text-xs uppercase tracking-wider text-white/50 mb-2 flex items-center justify-between font-medium",children:[T.jsxs("span",{className:"flex items-center gap-2",children:[T.jsx(zb,{size:14})," Photographs (Max 10)"]}),T.jsxs("span",{className:"text-[10px] bg-white/10 px-2 py-0.5 rounded",children:[((X=te.images)==null?void 0:X.length)||0,"/10 uploaded"]})]}),T.jsxs("div",{className:"border-2 border-dashed border-white/20 rounded-xl p-6 sm:p-8 flex flex-col items-center relative hover:bg-white/5 transition-colors mb-4 cursor-pointer",children:[T.jsx("input",{type:"file",multiple:!0,accept:"image/*",onChange:U,className:"absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20",disabled:(((le=te.images)==null?void 0:le.length)||0)>=10}),T.jsx("span",{className:"text-white/40 text-sm pointer-events-none",children:"Click to upload photos"})]}),(((ye=te.images)==null?void 0:ye.length)||0)>0&&T.jsxs("div",{className:"mt-4 space-y-3",children:[
   T.jsxs("div",{className:"p-3 bg-white/5 border border-white/10 rounded-xl flex flex-wrap items-center justify-between text-xs gap-2",children:[
@@ -4750,7 +6096,7 @@ Heated Seats`})]}),T.jsxs("div",{children:[T.jsxs("label",{className:"block text
 function Yk({setView:s,setSelectedCar:e}){Fe.useEffect(()=>{window.scrollTo(0,0)},[]);const t=SIX_SCREENSHOT_CARS;return T.jsxs("div",{className:"min-h-screen pt-6 sm:pt-8 px-4 sm:px-6 pb-20 max-w-7xl mx-auto w-full bg-white text-black",children:[T.jsxs("button",{onClick:()=>s("home"),className:"flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-black hover:opacity-70 transition-colors mb-8 cursor-pointer",children:[T.jsx(_y,{size:15})," Back to Home"]}),T.jsxs("div",{className:"mb-10 text-left",children:[T.jsx("p",{className:"font-mono text-xs uppercase tracking-[0.25em] font-bold mb-2",style:{color:"#C59B51"},children:"SHOWROOM ARRIVALS"}),T.jsx("h1",{className:"font-serif italic text-4xl sm:text-5xl md:text-6xl text-black mb-3 font-bold",children:"New Arrivals"}),T.jsx("p",{className:"font-normal text-gray-600 text-sm sm:text-base max-w-xl",children:"Explore our latest handpicked prestige vehicles, featuring the premier motorcars from our showroom collection."})]}),T.jsx("div",{className:"six-cards-grid",children:t.map(n=>T.jsx(Mx,{car:n,onClick:i=>{e(i),s("vehicle")}},n.id))})]});}
 function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.useState(!1),[u,h]=Fe.useState("home"),d=m=>{m!==s&&(o(!0),jn.to(".main-content-area",{opacity:0,y:10,duration:.3,ease:"power2.inOut",onComplete:()=>{e(m),h(m),m!=="vehicle"&&m!=="financing"&&n(null),jn.fromTo(".main-content-area",{opacity:0,y:-10},{opacity:1,y:0,duration:.4,ease:"power2.out"}),o(!1)}}))};return T.jsxs(T.Fragment,{children:[T.jsx(cw,{currentView:u,setView:d}),T.jsxs("main",{className:"main-content-area w-full",children:[s==="home"&&T.jsx(nk,{setView:d,setSelectedCar:n}),s==="our-cars"&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="new-arrivals"&&T.jsx(Yk,{setView:d,setSelectedCar:n}),s==="inventory-incoming"||s==="inventory-new"?T.jsx(Yk,{setView:d,setSelectedCar:n}):s.startsWith("inventory")&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="vehicle"&&t&&T.jsx(ik,{id:t,setView:d}),s==="about"&&T.jsx(zk,{setView:d}),s==="contact"&&T.jsx(sk,{}),s==="financing"&&T.jsx(ak,{setView:d,carId:t})]}),T.jsx(hw,{setView:d})]})}function FLPage({ carId: sId, onBack: backFn }) {
   const allCars = c7();
-  const car = (typeof SIX_SCREENSHOT_CARS !== "undefined" ? SIX_SCREENSHOT_CARS.find(c => c.id === sId) : null) ||
+  const car = ((resolveActiveFeaturedCars().find(c => c.id === sId) || DEFAULT_FEATURED_CARS.find(c => c.id === sId))) ||
               allCars.find(c => c.id === sId) ||
               (typeof DEFAULT_PREVIOUS_CARS !== "undefined" ? DEFAULT_PREVIOUS_CARS.find(c => c.id === sId) : null) ||
               (typeof SIX_SCREENSHOT_CARS !== "undefined" ? SIX_SCREENSHOT_CARS[0] : null);
@@ -4806,7 +6152,7 @@ function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.us
       T.jsx("nav", {
         className: "sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 px-4 sm:px-8 py-3.5 shadow-xs",
         children: T.jsxs("div", {
-          className: "max-w-7xl mx-auto flex items-center justify-between",
+          className: "max-w-[1440px] mx-auto flex items-center justify-between",
           children: [
             /* Logo & Brand Name */
             T.jsxs("div", {
@@ -4866,7 +6212,7 @@ function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.us
       /* SECTION 1: HERO SECTION MATCHING HOME HERO EXACT MEASUREMENTS & SINGLE IMAGE (CLEAN, NO TEXT OVERLAY) */
       T.jsx("section", {
         className: "hero-section-box",
-        style: { cursor: "pointer" },
+        style: { cursor: "pointer", height: "54vh", minHeight: "420px", maxHeight: "560px", width: "100%" },
         onClick: () => setLightboxImg(heroImage),
         children: T.jsx("img", {
           src: heroImage,
@@ -4876,129 +6222,232 @@ function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.us
         })
       }),
 
-      /* Vehicle Title Bar */      T.jsx("div", {        className: "w-full bg-[#000F1E] py-8 sm:py-10 px-4 sm:px-6 lg:px-8 border-0 shadow-xs",        children: T.jsx("div", {          className: "max-w-7xl mx-auto text-center border-0",          children: T.jsx("h1", {            className: "text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase text-center",            children: fullName          })        })      }),      /* SECTION 2: SHOWCASE GALLERY - THE REST OF THE IMAGES POPULATED */      T.jsx("section", {        id: "gallery-dossier",        className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8",        children: T.jsxs("div", {          className: "space-y-4",          children: [            /* Section Header */            T.jsx("div", {              className: "border-0 pb-1",              children: T.jsxs("div", {                className: "flex items-center gap-2.5",                children: [                  T.jsx("div", { className: "w-1.5 h-5 bg-[#C59B51] rounded-xs" }),                  T.jsx("h2", {                    className: "text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight uppercase",                    children: "Vehicle Gallery & Perspectives"                  })                ]              })            }),            /* Populated Images & Information Cards Grid (Strictly Compact Sizing) */            T.jsx("div", {              className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5",              children: [                /* Card 1: Exterior Perspective & Stance - Strictly Reduced Size */                T.jsxs("div", {                  onClick: () => setLightboxImg(rawImages[1] || rawImages[0]),                  className: "group relative h-[160px] sm:h-[175px] rounded-xl overflow-hidden border-0 shadow-xs hover:shadow-md transition-all cursor-pointer bg-gray-50",                  children: [                    T.jsx("img", {                      src: rawImages[1] || rawImages[0],                      alt: fullName + " Perspective",                      className: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"                    }),                    T.jsx("div", {                      className: "absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3",                      children: T.jsxs("div", {                        className: "flex items-center justify-between w-full text-white text-[11px] font-bold",                        children: [                          T.jsx("span", { children: "Exterior Perspective & Stance" }),                          T.jsx("span", { className: "px-2 py-0.5 bg-white/20 backdrop-blur-md rounded-full text-[9px] uppercase font-mono", children: "Zoom" })                        ]                      })                    })                  ]                }),                /* Card 2: Powertrain & Agility - Strictly Reduced Size */                T.jsxs("div", {                  className: "h-[160px] sm:h-[175px] rounded-xl border-0 bg-[#F8F9FA] p-3.5 flex flex-col justify-between shadow-xs relative overflow-hidden",                  children: [                    T.jsxs("div", {                      className: "space-y-1",                      children: [                        T.jsxs("div", {                          className: "flex items-center justify-between",                          children: [                            T.jsxs("div", {                              className: "flex items-center gap-1.5",                              children: [                                T.jsx("span", { className: "w-2 h-2 rounded-full bg-[#C59B51]" }),                                T.jsx("span", {                                  className: "text-[10px] font-mono uppercase tracking-widest text-[#C59B51] font-bold",                                  children: "POWERTRAIN & AGILITY"                                })                              ]                            }),                            T.jsx("span", {                              className: "text-[9px] font-mono uppercase text-gray-400 font-semibold tracking-wider",                              children: "PERFORMANCE"                            })                          ]                        }),                        T.jsx("h3", {                          className: "text-xs sm:text-sm font-extrabold text-gray-900 tracking-tight leading-snug uppercase",                          children: "Dynamic Suspension & All-Terrain Composure"                        }),                        T.jsx("p", {                          className: "text-[11px] text-gray-600 font-medium leading-relaxed line-clamp-2",                          children: "Engineered with intelligent terrain response and responsive all-wheel drive, delivering seamless torque and stability."                        })                      ]                    }),                    T.jsxs("div", {                      className: "pt-1 border-0 flex items-center justify-between text-[10px]",                      children: [                        T.jsxs("div", {                          className: "flex items-center gap-1 text-gray-500 font-medium text-[10px]",                          children: [                            T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: "MR JOSEPH" }),                            T.jsx("span", { children: "•" }),                            T.jsx("span", { children: "Specialist Certified" })                          ]                        }),                        T.jsx("span", {                          className: "text-[9px] font-bold text-[#C59B51] tracking-wider uppercase font-mono",                          children: "VERIFIED"                        })                      ]                    })                  ]                }),                /* Card 3: Cabin & Comfort - Strictly Reduced Size */                T.jsxs("div", {                  className: "h-[160px] sm:h-[175px] rounded-xl border-0 bg-[#F8F9FA] p-3.5 flex flex-col justify-between shadow-xs relative overflow-hidden",                  children: [                    T.jsxs("div", {                      className: "space-y-1",                      children: [                        T.jsxs("div", {                          className: "flex items-center justify-between",                          children: [                            T.jsxs("div", {                              className: "flex items-center gap-1.5",                              children: [                                T.jsx("span", { className: "w-2 h-2 rounded-full bg-[#2563EB]" }),                                T.jsx("span", {                                  className: "text-[10px] font-mono uppercase tracking-widest text-[#2563EB] font-bold",                                  children: "CABIN & COMFORT"                                })                              ]                            }),                            T.jsx("span", {                              className: "text-[9px] font-mono uppercase text-gray-400 font-semibold tracking-wider",                              children: "APPOINTMENTS"                            })                          ]                        }),                        T.jsx("h3", {                          className: "text-xs sm:text-sm font-extrabold text-gray-900 tracking-tight leading-snug uppercase",                          children: "Acoustic Serenity & Bespoke Comfort"                        }),                        T.jsx("p", {                          className: "text-[11px] text-gray-600 font-medium leading-relaxed line-clamp-2",                          children: "An executive sanctuary enveloped in pristine upholstery, multi-zone climate insulation, and immersive acoustics."                        })                      ]                    }),                    T.jsxs("div", {                      className: "pt-1 border-0 flex items-center justify-between text-[10px]",                      children: [                        T.jsxs("div", {                          className: "flex items-center gap-1 text-gray-500 font-medium text-[10px]",                          children: [                            T.jsx("span", { className: "font-bold text-gray-900 font-mono", children: "MR JOSEPH" }),                            T.jsx("span", { children: "•" }),                            T.jsx("span", { children: "Luxury Inspected" })                          ]                        }),                        T.jsx("span", {                          className: "text-[9px] font-bold text-[#2563EB] tracking-wider uppercase font-mono",                          children: "EXECUTIVE"                        })                      ]                    })                  ]                }),                /* Card 4: Detail Perspective & Craftsmanship - Strictly Reduced Size */                T.jsxs("div", {                  onClick: () => setLightboxImg(rawImages[rawImages.length - 1] || rawImages[0]),                  className: "group relative h-[160px] sm:h-[175px] rounded-xl overflow-hidden border-0 shadow-xs hover:shadow-md transition-all cursor-pointer bg-gray-50",                  children: [                    T.jsx("img", {                      src: rawImages[rawImages.length - 1] || rawImages[0],                      alt: fullName + " Detail Perspective",                      className: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"                    }),                    T.jsx("div", {                      className: "absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3",                      children: T.jsxs("div", {                        className: "flex items-center justify-between w-full text-white text-[11px] font-bold",                        children: [                          T.jsx("span", { children: "Detail Perspective & Craftsmanship" }),                          T.jsx("span", { className: "px-2 py-0.5 bg-white/20 backdrop-blur-md rounded-full text-[9px] uppercase font-mono", children: "Zoom" })                        ]                      })                    })                  ]                })              ]            })          ]        })      }),      /* SECTION 3: SPECIFICATIONS & VERIFIED PROVENANCE */      T.jsx("section", {        id: "specifications-dossier",        className: "bg-[#F8F9FA] py-14 sm:py-16 border-0",        children: T.jsx("div", {          className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",          children: T.jsxs("div", {            className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch",            children: [              /* Left Column: Another High-Resolution Image of the Car */              T.jsxs("div", {                onClick: () => setLightboxImg(rawImages[2] || rawImages[0]),                className: "lg:col-span-5 group relative rounded-3xl overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all cursor-pointer bg-gray-100 flex flex-col h-[260px] sm:h-[300px] lg:h-full lg:max-h-[360px]",                children: [                  T.jsx("img", {                    src: rawImages[2] || rawImages[0],                    alt: fullName + " Technical Profile",                    className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"                  }),                  T.jsx("div", {                    className: "absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5",                    children: T.jsxs("div", {                      className: "flex items-center justify-between w-full text-white text-xs font-bold",                      children: [                        T.jsx("span", { children: fullName + " Technical Profile" }),                        T.jsx("span", { className: "px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase font-mono", children: "Zoom" })                      ]                    })                  })                ]              }),              /* Right Column: Technical Dossier & Provenance Heading + Specifications */              T.jsxs("div", {                className: "lg:col-span-7 flex flex-col justify-between space-y-6",                children: [                  /* Header */                  T.jsxs("div", {                    className: "flex items-center gap-3",                    children: [                      T.jsx("div", { className: "w-1.5 h-6 bg-[#C59B51] rounded-xs" }),                      T.jsx("h2", {                        className: "text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight uppercase",                        children: "Technical Dossier & Provenance"                      })                    ]                  }),                  /* Specifications Grid */                  T.jsx("div", {                    className: "grid grid-cols-1 sm:grid-cols-2 gap-3.5",                    children: [                      { label: "Make & Model", val: fullName },                      { label: "Production Year", val: car.year || "2021" },                      { label: "Body Classification", val: bodyType },                      { label: "Fuel Type", val: car.fuel || "Diesel" },                      { label: "Transmission", val: car.transmission || "Automatic" },                      { label: "Drivetrain", val: "All-Wheel Drive (AWD / 4WD)" },                      { label: "Exterior Paint", val: "Metallic Factory Finish" },                      { label: "Interior Trim", val: "Full Premium Nappa Leather" },                      { label: "Import Status", val: "Duty & Clearance Settled" }                    ].map((item, idx) => T.jsxs("div", {                      key: idx,                      className: "bg-white p-4.5 rounded-2xl border-0 flex flex-col justify-between shadow-xs " + (idx === 8 ? "sm:col-span-2" : ""),                      children: [                        T.jsx("span", { className: "text-xs font-mono uppercase font-bold text-gray-400 mb-1", children: item.label }),                        T.jsx("span", { className: "text-sm sm:text-base font-extrabold text-gray-900 leading-snug", children: item.val })                      ]                    }))                  })                ]              })            ]          })        })      }),      /* SECTION 4: FEATURES & EQUIPMENT (WITH RIGHT-SIDE CAR IMAGE) */      T.jsx("section", {        id: "features-equipment",        className: "bg-white py-14 sm:py-16 border-0",        children: T.jsx("div", {          className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",          children: T.jsxs("div", {            className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch",            children: [              /* Left Column: Heading + Features List (7 cols on lg) */              T.jsxs("div", {                className: "lg:col-span-7 flex flex-col justify-between space-y-6",                children: [                  /* Header */                  T.jsxs("div", {                    className: "flex items-center gap-3",                    children: [                      T.jsx("div", { className: "w-1.5 h-6 bg-[#2563EB] rounded-xs" }),                      T.jsx("h2", {                        className: "text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight uppercase",                        children: "Features & Equipment"                      })                    ]                  }),                  /* 16 Features in 2 columns */                  T.jsx("div", {                    className: "grid grid-cols-1 sm:grid-cols-2 gap-3",                    children: [                      "Keyless Entry & Push-to-Start",                      "Executive Nappa Leather Seats",                      "360° Surround-View Camera",                      "Front & Rear Ultrasonic Sensors",                      "Adaptive Cruise Control",                      "Electric Heated Memory Seats",                      "Multi-Zone Climate Control",                      "Panoramic Glass Sunroof",                      "Intelligent LED Headlights",                      "Factory Diamond-Cut Alloys",                      "Touchscreen Navigation System",                      "Intelligent All-Wheel Drive (AWD)",                      "Blind Spot Monitoring System",                      "Burmester / Premium Hi-Fi Audio",                      "Power Operated Tailgate",                      "Apple CarPlay & Android Auto"                    ].map((feat, idx) => T.jsxs("div", {                      key: idx,                      className: "flex items-center gap-3 p-3.5 bg-[#F8F9FA] rounded-xl border-0 transition-colors shadow-2xs",                      children: [                        T.jsx("div", {                          className: "w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center shrink-0",                          children: T.jsx("svg", {                            viewBox: "0 0 24 24",                            width: 12,                            height: 12,                            fill: "none",                            stroke: "#2563EB",                            strokeWidth: 3.5,                            children: T.jsx("polyline", { points: "20 6 9 17 4 12" })                          })                        }),                        T.jsx("span", {                          className: "text-sm font-semibold text-gray-800",                          children: feat                        })                      ]                    }))                  })                ]              }),              /* Right Column: Another High-Resolution Image of the Car (5 cols on lg) */              T.jsxs("div", {                onClick: () => setLightboxImg(rawImages[3] || rawImages[0]),                className: "lg:col-span-5 group relative rounded-3xl overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all cursor-pointer bg-gray-100 flex flex-col h-[260px] sm:h-[300px] lg:h-full lg:max-h-[360px]",                children: [                  T.jsx("img", {                    src: rawImages[3] || rawImages[0],                    alt: fullName + " Features & Craftsmanship",                    className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"                  }),                  T.jsx("div", {                    className: "absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5",                    children: T.jsxs("div", {                      className: "flex items-center justify-between w-full text-white text-xs font-bold",                      children: [                        T.jsx("span", { children: fullName + " Craftsmanship" }),                        T.jsx("span", { className: "px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase font-mono", children: "Zoom" })                      ]                    })                  })                ]              })            ]          })        })      }),      /* SECTION 5: YOUTUBE VIDEO REVIEW BUTTON */
+      /* Vehicle Title Bar */      T.jsx("div", {        className: "w-full py-8 sm:py-10 px-4 sm:px-6 lg:px-8 border-0 shadow-xs",        style: { backgroundColor: (car.styles && car.styles.titleBarBg) || "#000F1E", color: "#FFFFFF" },        children: T.jsx("div", {          className: "max-w-[1440px] mx-auto text-center border-0",          children: T.jsx("h1", {            className: "text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight uppercase text-center",            style: { color: "#FFFFFF" },            children: fullName          })        })      }),      /* SECTION 3: SPECIFICATIONS & VERIFIED PROVENANCE */      T.jsx("section", {        id: "specifications-dossier",        className: "bg-[#F8F9FA] py-14 sm:py-16 border-0",        children: T.jsx("div", {          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8",          children: T.jsxs("div", {            className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch",            children: [              /* Left Column: Another High-Resolution Image of the Car */              T.jsxs("div", {                onClick: () => setLightboxImg(rawImages[2] || rawImages[0]),                className: "lg:col-span-5 group relative rounded-3xl overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all cursor-pointer bg-gray-100 flex flex-col min-h-[380px] sm:min-h-[440px] lg:h-full",                children: [                  T.jsx("img", {                    src: rawImages[2] || rawImages[0],                    alt: fullName + " Technical Profile",                    className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"                  }),                  T.jsx("div", {                    className: "absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5",                    children: T.jsxs("div", {                      className: "flex items-center justify-between w-full text-white text-xs font-bold",                      children: [                        T.jsx("span", { children: fullName + " Technical Profile" }),                        T.jsx("span", { className: "px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase font-mono", children: "Zoom" })                      ]                    })                  })                ]              }),              /* Right Column: Technical Dossier & Provenance Heading + Specifications */              T.jsxs("div", {                className: "lg:col-span-7 flex flex-col justify-start space-y-4",                children: [                  /* Header */                  T.jsxs("div", {                    className: "flex items-center gap-3",                    children: [                      T.jsx("div", { className: "w-1.5 h-6 bg-[#C59B51] rounded-xs" }),                      T.jsx("h2", {                        className: "text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight uppercase",                        children: "Technical Dossier & Provenance"                      })                    ]                  }),                  /* Specifications Grid */                  T.jsx("div", {                    className: "grid grid-cols-1 sm:grid-cols-2 gap-3.5",                    children: [                      { label: "Make & Model", val: fullName },                      { label: "Production Year", val: car.year || "2021" },                      { label: "Body Classification", val: bodyType },                      { label: "Fuel Type", val: car.fuel || "Diesel" },                      { label: "Transmission", val: car.transmission || "Automatic" },                      { label: "Drivetrain", val: (car.specifications && car.specifications.drivetrain) || "All-Wheel Drive (AWD / 4WD)" },                      { label: "Exterior Paint", val: (car.specifications && car.specifications.exteriorPaint) || "Metallic Factory Finish" },                      { label: "Interior Trim", val: (car.specifications && car.specifications.interiorTrim) || "Full Premium Nappa Leather" },                      { label: "Import Status", val: (car.specifications && car.specifications.importStatus) || "Duty & Clearance Settled" }                    ].map((item, idx) => T.jsxs("div", {                      key: idx,                      className: "bg-white p-4.5 rounded-2xl border-0 flex flex-col justify-between shadow-xs " + (idx === 8 ? "sm:col-span-2" : ""),                      children: [                        T.jsx("span", { className: "text-xs font-mono uppercase font-bold text-gray-400 mb-1", children: item.label }),                        T.jsx("span", { className: "text-sm sm:text-base font-extrabold text-gray-900 leading-snug", children: item.val })                      ]                    }))                  }),
+                  /* Extra Provenance Information Note if provided */
+                  ((car.specifications && car.specifications.extraInfo) || car.extraInfo || car.description) && T.jsxs("div", {
+                    className: "p-4.5 bg-white rounded-2xl border-0 shadow-xs space-y-1",
+                    children: [
+                      T.jsx("span", { className: "text-xs font-mono uppercase font-bold text-[#C59B51] block", children: "Executive Provenance & Special Highlights" }),
+                      T.jsx("p", { className: "text-xs sm:text-sm text-gray-700 font-medium leading-relaxed", children: (car.specifications && car.specifications.extraInfo) || car.extraInfo || car.description })
+                    ]
+                  })                ]              })            ]          })        })      }),      /* SECTION 4: FEATURES & EQUIPMENT (WITH RIGHT-SIDE CAR IMAGE & NAVY BLUE BACKGROUND) */
+      T.jsx("section", {
+        id: "features-equipment",
+        className: "py-14 sm:py-16 border-0",
+        style: { backgroundColor: (car.styles && car.styles.featuresBg) || "#000F1E", color: "#FFFFFF" },
+        children: T.jsx("div", {
+          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8",
+          children: T.jsxs("div", {
+            className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch",
+            children: [
+              /* Left Column: Heading + Features List (7 cols on lg) */
+              T.jsxs("div", {
+                className: "lg:col-span-7 flex flex-col justify-start space-y-4",
+                children: [
+                  /* Header */
+                  T.jsxs("div", {
+                    className: "flex items-center gap-3",
+                    children: [
+                      T.jsx("div", { className: "w-1.5 h-6 bg-[#C59B51] rounded-xs" }),
+                      T.jsx("h2", {
+                        className: "text-2xl sm:text-3xl font-extrabold tracking-tight uppercase",
+                        style: { color: "#FFFFFF" },
+                        children: "Features & Equipment"
+                      })
+                    ]
+                  }),
+                  /* 16 Features in 2 columns */
+                  T.jsx("div", {
+                    className: "grid grid-cols-1 sm:grid-cols-2 gap-3",
+                    children: ((car.features && car.features.length) ? car.features : [
+                      "Keyless Entry & Push-to-Start",
+                      "Executive Nappa Leather Seats",
+                      "360° Surround-View Camera",
+                      "Front & Rear Ultrasonic Sensors",
+                      "Adaptive Cruise Control",
+                      "Electric Heated Memory Seats",
+                      "Multi-Zone Climate Control",
+                      "Panoramic Glass Sunroof",
+                      "Intelligent LED Headlights",
+                      "Factory Diamond-Cut Alloys",
+                      "Touchscreen Navigation System",
+                      "Intelligent All-Wheel Drive (AWD)",
+                      "Blind Spot Monitoring System",
+                      "Burmester / Premium Hi-Fi Audio",
+                      "Power Operated Tailgate",
+                      "Apple CarPlay & Android Auto"
+                    ]).map((feat, idx) => T.jsxs("div", {
+                      key: idx,
+                      className: "flex items-center gap-3 p-3.5 rounded-xl transition-all shadow-2xs hover:bg-white/15",
+                      style: {
+                        backgroundColor: "rgba(255, 255, 255, 0.08)",
+                        border: "1px solid rgba(255, 255, 255, 0.12)"
+                      },
+                      children: [
+                        T.jsx("div", {
+                          className: "w-6 h-6 rounded-full flex items-center justify-center shrink-0",
+                          style: { backgroundColor: "rgba(37, 99, 235, 0.3)" },
+                          children: T.jsx("svg", {
+                            viewBox: "0 0 24 24",
+                            width: 13,
+                            height: 13,
+                            fill: "none",
+                            stroke: "#60A5FA",
+                            strokeWidth: 3.5,
+                            children: T.jsx("polyline", { points: "20 6 9 17 4 12" })
+                          })
+                        }),
+                        T.jsx("span", {
+                          className: "text-sm font-semibold tracking-wide",
+                          style: { color: "#FFFFFF" },
+                          children: feat
+                        })
+                      ]
+                    }))
+                  })
+                ]
+              }),
+              /* Right Column: Another High-Resolution Image of the Car (5 cols on lg) */
+              T.jsxs("div", {
+                onClick: () => setLightboxImg(rawImages[3] || rawImages[0]),
+                className: "lg:col-span-5 group relative rounded-3xl overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all cursor-pointer flex flex-col min-h-[380px] sm:min-h-[440px] lg:h-full",
+                style: { backgroundColor: "rgba(0, 0, 0, 0.4)" },
+                children: [
+                  T.jsx("img", {
+                    src: rawImages[3] || rawImages[0],
+                    alt: fullName + " Features & Craftsmanship",
+                    className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  }),
+                  T.jsx("div", {
+                    className: "absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5",
+                    children: T.jsxs("div", {
+                      className: "flex items-center justify-between w-full text-white text-xs font-bold",
+                      children: [
+                        T.jsx("span", { style: { color: "#FFFFFF" }, children: fullName + " Craftsmanship" }),
+                        T.jsx("span", {
+                          className: "px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase font-mono",
+                          style: { color: "#FFFFFF" },
+                          children: "Zoom"
+                        })
+                      ]
+                    })
+                  })
+                ]
+              })
+            ]
+          })
+        })
+      }),
+      /* SECTION 4B: FIVE COMPACT PHOTOS GALLERY (MATCHING FEATURED VEHICLES EXACT CARD SIZE) */
+      T.jsx("section", {
+        id: "car-photos-gallery",
+        className: "bg-[#F8F9FA] py-12 sm:py-14 border-0",
+        children: T.jsxs("div", {
+          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-5",
+          children: [
+            T.jsxs("div", {
+              className: "flex flex-col sm:flex-row sm:items-center justify-between gap-2",
+              children: [
+                T.jsxs("div", {
+                  className: "flex items-center gap-3",
+                  children: [
+                    T.jsx("div", { className: "w-1.5 h-6 bg-[#C59B51] rounded-xs" }),
+                    T.jsx("h2", {
+                      className: "text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight uppercase",
+                      children: fullName + " Perspectives"
+                    })
+                  ]
+                }),
+                T.jsx("span", {
+                  className: "text-xs font-mono uppercase tracking-widest text-gray-500 font-bold",
+                  children: "5 Studio Perspectives • Click to Enlarge"
+                })
+              ]
+            }),
+            T.jsx("div", {
+              className: "six-cards-grid",
+              children: [
+                rawImages[1] || rawImages[0],
+                rawImages[2] || rawImages[0],
+                rawImages[3] || rawImages[0],
+                rawImages[4] || rawImages[0],
+                rawImages[5] || rawImages[0]
+              ].map((imgUrl, idx) => T.jsxs("div", {
+                key: idx,
+                onClick: () => setLightboxImg(imgUrl),
+                className: "compact-car-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-xs hover:shadow-lg transition-all border-0",
+                style: { margin: 0 },
+                children: [
+                  T.jsx("div", {
+                    className: "compact-card-image-wrap",
+                    children: T.jsx("img", {
+                      src: imgUrl,
+                      alt: fullName + " Angle " + (idx + 1),
+                      className: "compact-card-img group-hover:scale-108 transition-transform duration-500",
+                      loading: "lazy"
+                    })
+                  }),
+                  T.jsx("div", {
+                    className: "absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none",
+                    children: T.jsx("span", {
+                      className: "px-2.5 py-1 bg-white/25 backdrop-blur-md text-white text-[10px] font-mono uppercase font-bold rounded-full",
+                      children: "Zoom"
+                    })
+                  })
+                ]
+              }))
+            })
+          ]
+        })
+      }),
+      /* SECTION 5: YOUTUBE VIDEO REVIEW BUTTON (CENTERED TITLE & AUTHENTIC YOUTUBE ICON) */
       T.jsx("section", {
         id: "video-review",
         className: "bg-[#F8F9FA] py-14 sm:py-16 border-0",
         children: T.jsxs("div", {
-          className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6",
+          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center space-y-5",
           children: [
-            T.jsxs("div", {
-              className: "flex items-center gap-3",
-              children: [
-                T.jsx("div", { className: "w-1.5 h-6 bg-[#FF0000] rounded-xs" }),
-                T.jsx("h2", {
-                  className: "text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight uppercase",
-                  children: "Video Review & Walkaround"
-                })
-              ]
+            /* Centered Title */
+            T.jsx("h2", {
+              className: "text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight uppercase text-center",
+              children: "Video Review & Walkaround"
             }),
-            T.jsxs("div", {
-              className: "p-6 sm:p-8 bg-white rounded-3xl border-0 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6",
-              children: [
-                T.jsxs("div", {
-                  className: "flex items-center gap-5",
-                  children: [
-                    T.jsx("div", {
-                      className: "w-16 h-16 rounded-2xl bg-[#FF0000] text-white flex items-center justify-center shrink-0 shadow-lg",
-                      children: T.jsx("svg", {
-                        viewBox: "0 0 24 24",
-                        width: 32,
-                        height: 32,
-                        fill: "currentColor",
-                        children: T.jsx("path", { d: "M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" })
-                      })
-                    }),
-                    T.jsxs("div", {
-                      className: "space-y-1",
-                      children: [
-                        T.jsx("h3", {
-                          className: "text-lg sm:text-2xl font-bold text-gray-900",
-                          children: "Watch " + fullName + " In-Depth Review"
-                        }),
-                        T.jsx("p", {
-                          className: "text-xs sm:text-sm text-gray-500 font-medium",
-                          children: "Experience the exhaust tone, interior craftsmanship, dynamic road performance, and complete feature walkthrough."
-                        })
-                      ]
-                    })
-                  ]
-                }),
-                T.jsxs("a", {
-                  href: youtubeUrl,
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                  className: "px-7 py-4 bg-[#FF0000] hover:bg-[#CC0000] text-white text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-md cursor-pointer shrink-0 flex items-center gap-2.5 hover:shadow-lg hover:scale-102",
-                  children: [
-                    T.jsx("svg", {
-                      viewBox: "0 0 24 24",
-                      width: 18,
-                      height: 18,
-                      fill: "currentColor",
-                      children: T.jsx("path", { d: "M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" })
-                    }),
-                    "Watch on YouTube"
-                  ]
-                })
-              ]
+            /* Highly Visible Authentic Red YouTube Badge with White Play Icon */
+            T.jsx("a", {
+              href: youtubeUrl,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              style: {
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                transition: "transform 0.25s ease, filter 0.25s ease",
+                textDecoration: "none"
+              },
+              className: "hover:scale-110",
+              title: "Watch " + fullName + " Review on YouTube",
+              "aria-label": "Watch " + fullName + " Review on YouTube",
+              children: T.jsxs("svg", {
+                viewBox: "0 0 68 48",
+                width: 72,
+                height: 50,
+                style: { width: "72px", height: "50px", display: "block", filter: "drop-shadow(0 8px 16px rgba(255, 0, 0, 0.35))" },
+                children: [
+                  T.jsx("path", {
+                    d: "M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z",
+                    fill: "#FF0000"
+                  }),
+                  T.jsx("polygon", {
+                    points: "45,24 27,14 27,34",
+                    fill: "#FFFFFF"
+                  })
+                ]
+              })
             })
           ]
         })
       }),
-
-      /* SECTION 6: CONCIERGE & ACQUISITION CTA */
-      T.jsx("section", {
-        className: "bg-white py-12 sm:py-16",
-        children: T.jsxs("div", {
-          className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#0D0D12] text-white p-8 sm:p-12 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-8",
-          children: [
-            T.jsxs("div", {
-              className: "space-y-2 text-center md:text-left",
-              children: [
-                T.jsx("p", {
-                  className: "text-xs font-mono uppercase tracking-widest text-[#C59B51] font-bold",
-                  children: "PRIVATE VIEWINGS & CONCIERGE"
-                }),
-                T.jsxs("h3", {
-                  className: "text-2xl sm:text-3xl font-extrabold text-white tracking-tight",
-                  children: ["Interested in Acquiring the ", fullName, "?"]
-                }),
-                T.jsx("p", {
-                  className: "text-sm text-gray-300 font-medium max-w-xl",
-                  children: "Direct communication with Mr. Joseph. Arrange private showroom viewings, bespoke trade-ins, or nationwide direct delivery."
-                })
-              ]
-            }),
-            T.jsxs("div", {
-              className: "flex flex-col sm:flex-row items-center gap-3 shrink-0",
-              children: [
-                T.jsxs("a", {
-                  href: whatsappCarUrl,
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                  className: "px-8 py-4 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-extrabold uppercase tracking-widest rounded-xl transition-all shadow-md cursor-pointer flex items-center gap-2.5 hover:shadow-lg hover:scale-102",
-                  children: [
-                    T.jsx("svg", {
-                      viewBox: "0 0 24 24",
-                      width: 18,
-                      height: 18,
-                      fill: "currentColor",
-                      children: T.jsx("path", { d: "M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.79 14.11c-.24.68-1.4 1.25-1.92 1.33-.49.07-1.12.1-3.23-.77-2.69-1.12-4.41-3.86-4.54-4.04-.13-.18-1.08-1.44-1.08-2.75 0-1.31.69-1.96.93-2.22.24-.26.53-.33.71-.33.18 0 .36 0 .51.01.16.01.38-.06.6.46.22.53.77 1.87.84 2.01.07.14.11.31.02.49-.09.18-.13.29-.27.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.16.27.69 1.14 1.48 1.84 1.02.9 1.88 1.18 2.14 1.31.27.13.42.11.58-.07.16-.18.67-.78.85-1.05.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.27.13.44.2.51.31.06.12.06.7-.18 1.38z" })
-                    }),
-                    "Connect on WhatsApp"
-                  ]
-                }),
-                T.jsx("button", {
-                  onClick: backFn,
-                  className: "px-6 py-4 border border-white/20 hover:border-white text-white text-xs font-bold uppercase tracking-widest rounded-xl transition-all cursor-pointer",
-                  children: "View Full Showroom"
-                })
-              ]
-            })
-          ]
-        })
-      }),
-
       /* FULLSCREEN LIGHTBOX MODAL */
       lightboxImg && T.jsxs("div", {
         className: "fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4",
@@ -5084,11 +6533,7 @@ function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.us
     }) :
     (activeFeaturedId ? T.jsx(FLPage, {
       carId: activeFeaturedId,
-      onBack: () => {
-        window.history.pushState({}, "", "/");
-        setCurrSearch("");
-        setCurrHash("");
-      }
+      onBack: () => { try{window.history.pushState({}, "", "/");}catch(_){} window.location.hash = ""; window.dispatchEvent(new Event("popstate")); window.dispatchEvent(new Event("hashchange")); setCurrSearch(""); setCurrHash(""); window.scrollTo(0, 0); }
     }) : T.jsx(lk, {}))
   });
 }Tb.createRoot(document.getElementById("root")).render(T.jsx(Fe.StrictMode,{children:T.jsx(uk,{})}));
