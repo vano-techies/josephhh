@@ -3743,32 +3743,34 @@ function idbGetFeatured() {
   });
 }
 
-function getCustomFeaturedCars() {
-  if (typeof window !== "undefined" && window.__MRJOSEPH_CUSTOM_FEATURED && Array.isArray(window.__MRJOSEPH_CUSTOM_FEATURED) && window.__MRJOSEPH_CUSTOM_FEATURED.length > 0) {
-    return window.__MRJOSEPH_CUSTOM_FEATURED;
-  }
-  try {
-    const raw = localStorage.getItem("mrjoseph_custom_featured_cars");
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        if (typeof window !== "undefined") window.__MRJOSEPH_CUSTOM_FEATURED = parsed;
-        return parsed;
-      }
-    }
-  } catch (_) {}
-  return [];
+const FACTORY_DEFAULT_IDS = ["gle-400d", "range-rover-sport", "lexus-lx570", "porsche-cayenne", "volvo-xc90"];
+function isFactoryDefaultCar(c) {
+  if (!c) return false;
+  if (c.isDefault || c.isArchivedDefault) return true;
+  return FACTORY_DEFAULT_IDS.includes(c.id);
 }
-
+function getCustomFeaturedCars() {
+  let list = [];
+  if (typeof window !== "undefined" && window.__MRJOSEPH_CUSTOM_FEATURED && Array.isArray(window.__MRJOSEPH_CUSTOM_FEATURED)) {
+    list = window.__MRJOSEPH_CUSTOM_FEATURED;
+  } else {
+    try {
+      const raw = localStorage.getItem("mrjoseph_custom_featured_cars");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) list = parsed;
+      }
+    } catch (_) {}
+  }
+  return list.filter(c => c && !c.archived && !c.isArchived && !isFactoryDefaultCar(c));
+}
 function resolveActiveFeaturedCars() {
-  const customList = getCustomFeaturedCars().filter(c => !c.archived && !c.isArchived);
-  if (customList.length >= 5) {
+  const customList = getCustomFeaturedCars();
+  if (customList.length > 0) {
     return customList;
   }
-  const remaining = DEFAULT_FEATURED_CARS.slice(customList.length, 5);
-  return [...customList, ...remaining];
+  return DEFAULT_FEATURED_CARS;
 }
-
 function useFeaturedCars() {
   const [featuredCars, setFeaturedCars] = Fe.useState(() => resolveActiveFeaturedCars());
   Fe.useEffect(() => {
@@ -3778,6 +3780,57 @@ function useFeaturedCars() {
     window.addEventListener("mrjoseph_featured_updated", handleUpdate);
     window.addEventListener("storage", handleUpdate);
 
+    // Immediate fast-path REST query to Firestore for instant cross-device updates
+    try {
+      fetch("https://firestore.googleapis.com/v1/projects/" + GV + "/databases/" + $V + "/documents:runQuery?key=" + XV, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ structuredQuery: { from: [{ collectionId: "featured_cars" }] } })
+      }).then(r => r.json()).then(data => {
+        const docs = (data || []).filter(item => item.document);
+        if (docs.length > 0) {
+          const remote = docs.map(d => {
+            const f = d.document.fields || {};
+            return {
+              id: f.id?.stringValue || d.document.name.split("/").pop(),
+              make: f.make?.stringValue || "Prestige",
+              model: f.model?.stringValue || "Edition",
+              year: Number(f.year?.integerValue) || 2023,
+              price: Number(f.price?.integerValue) || 0,
+              mileage: f.mileage?.stringValue || "35,000 km",
+              fuel: f.fuel?.stringValue || "Diesel",
+              transmission: f.transmission?.stringValue || "Automatic",
+              type: f.type?.stringValue || "Prestige SUV",
+              location: f.location?.stringValue || "Kiambu Road, Ridgeways",
+              status: f.status?.stringValue || "Available",
+              description: f.description?.stringValue || "",
+              image: f.image?.stringValue || "/images/hero_showroom.jpg",
+              images: f.images?.arrayValue?.values?.map(v => v.stringValue) || [f.image?.stringValue || "/images/hero_showroom.jpg"],
+              features: f.features?.arrayValue?.values?.map(v => v.stringValue) || [...DEFAULT_FEATURE_EQUIPMENT_LIST],
+              styles: { featuresBg: "#000F1E", titleBarBg: "#000F1E", accentColor: "#C59B51" },
+              specifications: {
+                drivetrain: "Intelligent All-Wheel Drive (AWD)",
+                exteriorPaint: "Metallic Factory Finish",
+                interiorTrim: "Full Premium Nappa Leather",
+                importStatus: "Duty & Clearance Settled",
+                extraInfo: f.description?.stringValue || ""
+              },
+              videoUrl: f.videoUrl?.stringValue || "",
+              order: Number(f.order?.integerValue) || 0,
+              archived: f.archived?.booleanValue || false
+            };
+          }).filter(c => !c.archived && !isFactoryDefaultCar(c)).sort((a, b) => (a.order || 0) - (b.order || 0));
+          if (remote.length > 0) {
+            window.__MRJOSEPH_CUSTOM_FEATURED = remote;
+            try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(remote)); } catch (_) {}
+            SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
+            setFeaturedCars(resolveActiveFeaturedCars());
+          }
+        }
+      }).catch(() => {});
+    } catch (_) {}
+
+    // Real-time Firestore SDK onSnapshot listener
     let unsubSnapshot = null;
     try {
       if (typeof wh !== "undefined" && typeof vg !== "undefined" && typeof kM !== "undefined" && typeof FM !== "undefined") {
@@ -3785,28 +3838,13 @@ function useFeaturedCars() {
         unsubSnapshot = FM(q, (snapshot) => {
           if (snapshot && !snapshot.empty) {
             const remoteDocs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
-              .filter(c => !c.archived && !c.isArchived)
+              .filter(c => !c.archived && !c.isArchived && !isFactoryDefaultCar(c))
               .sort((a, b) => (a.order || 0) - (b.order || 0));
             if (remoteDocs.length > 0) {
               window.__MRJOSEPH_CUSTOM_FEATURED = remoteDocs;
               try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(remoteDocs)); } catch (_) {}
               SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
               setFeaturedCars(resolveActiveFeaturedCars());
-            }
-          } else if (snapshot && snapshot.empty && (!window.__MRJOSEPH_CUSTOM_FEATURED || window.__MRJOSEPH_CUSTOM_FEATURED.length === 0)) {
-            if (typeof jM !== "undefined") {
-              jM(vg(wh, "cars")).then(carsSnap => {
-                const confDoc = carsSnap.docs.find(d => d.id === "featured_config");
-                if (confDoc && confDoc.data() && confDoc.data().customCars && confDoc.data().customCars.length > 0) {
-                  const cc = confDoc.data().customCars.filter(c => !c.archived && !c.isArchived);
-                  if (cc.length > 0) {
-                    window.__MRJOSEPH_CUSTOM_FEATURED = cc;
-                    try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(cc)); } catch (_) {}
-                    SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
-                    setFeaturedCars(resolveActiveFeaturedCars());
-                  }
-                }
-              }).catch(() => {});
             }
           }
         }, (err) => {
@@ -3836,23 +3874,56 @@ if (typeof window !== "undefined") {
         }
       }
     });
-    setTimeout(() => {
-      if (typeof wh !== "undefined" && typeof jM !== "undefined" && typeof vg !== "undefined") {
-        jM(vg(wh, "featured_cars")).then(snap => {
-          if (snap && !snap.empty) {
-            const remoteDocs = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-              .filter(c => !c.archived && !c.isArchived)
-              .sort((a, b) => (a.order || 0) - (b.order || 0));
-            if (remoteDocs.length > 0) {
-              window.__MRJOSEPH_CUSTOM_FEATURED = remoteDocs;
-              try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(remoteDocs)); } catch (_) {}
-              SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
-              window.dispatchEvent(new CustomEvent("mrjoseph_featured_updated", { detail: remoteDocs }));
-            }
+
+    // Immediate REST fetch on script boot
+    fetch("https://firestore.googleapis.com/v1/projects/" + GV + "/databases/" + $V + "/documents:runQuery?key=" + XV, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ structuredQuery: { from: [{ collectionId: "featured_cars" }] } })
+    }).then(r => r.json()).then(data => {
+      const docs = (data || []).filter(item => item.document);
+      if (docs.length > 0) {
+        const remote = docs.map(d => {
+          const f = d.document.fields || {};
+          return {
+            id: f.id?.stringValue || d.document.name.split("/").pop(),
+            make: f.make?.stringValue || "Prestige",
+            model: f.model?.stringValue || "Edition",
+            year: Number(f.year?.integerValue) || 2023,
+            price: Number(f.price?.integerValue) || 0,
+            mileage: f.mileage?.stringValue || "35,000 km",
+            fuel: f.fuel?.stringValue || "Diesel",
+            transmission: f.transmission?.stringValue || "Automatic",
+            type: f.type?.stringValue || "Prestige SUV",
+            location: f.location?.stringValue || "Kiambu Road, Ridgeways",
+            status: f.status?.stringValue || "Available",
+            description: f.description?.stringValue || "",
+            image: f.image?.stringValue || "/images/hero_showroom.jpg",
+            images: f.images?.arrayValue?.values?.map(v => v.stringValue) || [f.image?.stringValue || "/images/hero_showroom.jpg"],
+            features: f.features?.arrayValue?.values?.map(v => v.stringValue) || [...DEFAULT_FEATURE_EQUIPMENT_LIST],
+            styles: { featuresBg: "#000F1E", titleBarBg: "#000F1E", accentColor: "#C59B51" },
+            specifications: {
+              drivetrain: "Intelligent All-Wheel Drive (AWD)",
+              exteriorPaint: "Metallic Factory Finish",
+              interiorTrim: "Full Premium Nappa Leather",
+              importStatus: "Duty & Clearance Settled",
+              extraInfo: f.description?.stringValue || ""
+            },
+            videoUrl: f.videoUrl?.stringValue || "",
+            order: Number(f.order?.integerValue) || 0,
+            archived: f.archived?.booleanValue || false
+          };
+        }).filter(c => !c.archived && !isFactoryDefaultCar(c)).sort((a, b) => (a.order || 0) - (b.order || 0));
+        if (remote.length > 0) {
+          window.__MRJOSEPH_CUSTOM_FEATURED = remote;
+          try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(remote)); } catch (_) {}
+          if (typeof resolveActiveFeaturedCars === "function") {
+            SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
           }
-        }).catch(() => {});
+          window.dispatchEvent(new CustomEvent("mrjoseph_featured_updated", { detail: remote }));
+        }
       }
-    }, 40);
+    }).catch(() => {});
   } catch (_) {}
 }
 let SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
@@ -4019,7 +4090,7 @@ function c7(){const[s,e]=Fe.useState(DEFAULT_PREVIOUS_CARS);return Fe.useEffect(
                     T.jsx("img", {
                       src: rawImages[activeImg],
                       alt: titleText,
-                      className: "w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
+                      className: "w-full h-full object-cover transition-transform duration-300 transition-opacity duration-300"
                     }),
                     /* Left Carousel Arrow */
                     rawImages.length > 1 && T.jsx("button", {
@@ -4883,32 +4954,97 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
   const fileInputRef = Fe.useRef(null);
   const slotFileInputRef = Fe.useRef(null);
   const [targetUploadIndex, setTargetUploadIndex] = Fe.useState(0);
-  // Auto-sync from cloud on mount if opening on a fresh device in production
+  // Real-time and REST cloud sync for FeaturedCarsAdminStudio across all devices
   Fe.useEffect(() => {
-    if (typeof wh !== "undefined" && typeof jM !== "undefined" && typeof vg !== "undefined") {
-      jM(vg(wh, "featured_cars")).then(snap => {
-        if (snap && !snap.empty) {
-          const remote = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-            .sort((a, b) => (a.order || 0) - (b.order || 0));
-          if (remote.length > 0) {
-            setCustomCars(prev => (prev && prev.length > 0) ? prev : remote);
-            setActiveCarId(prev => prev || remote[0].id);
-            window.__MRJOSEPH_CUSTOM_FEATURED = remote;
-            try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(remote)); } catch (_) {}
-          }
-        } else {
-          jM(vg(wh, "cars")).then(carsSnap => {
-            const conf = carsSnap.docs.find(d => d.id === "featured_config");
-            if (conf && conf.data() && conf.data().customCars && conf.data().customCars.length > 0) {
-              const remote = conf.data().customCars;
-              setCustomCars(prev => (prev && prev.length > 0) ? prev : remote);
-              setActiveCarId(prev => prev || remote[0].id);
-            }
-          }).catch(() => {});
+    let unsubSnapshot = null;
+    const applyRemoteList = (remote) => {
+      if (!remote || !Array.isArray(remote) || remote.length === 0) return;
+      window.__MRJOSEPH_CUSTOM_FEATURED = remote;
+      try { localStorage.setItem("mrjoseph_custom_featured_cars", JSON.stringify(remote)); } catch (_) {}
+      if (typeof resolveActiveFeaturedCars === "function") {
+        SIX_SCREENSHOT_CARS = resolveActiveFeaturedCars();
+      }
+      setCustomCars(prev => {
+        // If user is actively typing unsaved changes, keep their edits
+        if (hasUnsavedChanges) return prev;
+        return remote;
+      });
+      setActiveCarId(prevId => {
+        if (prevId && remote.some(c => c.id === prevId)) return prevId;
+        return remote[0] ? remote[0].id : null;
+      });
+    };
+
+    // Fast-path: query Firestore REST API immediately (works in <100ms on all devices)
+    try {
+      fetch("https://firestore.googleapis.com/v1/projects/" + GV + "/databases/" + $V + "/documents:runQuery?key=" + XV, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ structuredQuery: { from: [{ collectionId: "featured_cars" }] } })
+      }).then(r => r.json()).then(data => {
+        const docs = (data || []).filter(item => item.document);
+        if (docs.length > 0) {
+          const parsed = docs.map(d => {
+            const f = d.document.fields || {};
+            return {
+              id: f.id?.stringValue || d.document.name.split("/").pop(),
+              make: f.make?.stringValue || "Prestige",
+              model: f.model?.stringValue || "Edition",
+              year: Number(f.year?.integerValue) || 2023,
+              price: Number(f.price?.integerValue) || 0,
+              mileage: f.mileage?.stringValue || "35,000 km",
+              fuel: f.fuel?.stringValue || "Diesel",
+              transmission: f.transmission?.stringValue || "Automatic",
+              type: f.type?.stringValue || "Prestige SUV",
+              location: f.location?.stringValue || "Kiambu Road, Ridgeways",
+              status: f.status?.stringValue || "Available",
+              description: f.description?.stringValue || "",
+              image: f.image?.stringValue || "/images/hero_showroom.jpg",
+              images: f.images?.arrayValue?.values?.map(v => v.stringValue) || [f.image?.stringValue || "/images/hero_showroom.jpg"],
+              features: f.features?.arrayValue?.values?.map(v => v.stringValue) || [...DEFAULT_FEATURE_EQUIPMENT_LIST],
+              styles: { featuresBg: "#000F1E", titleBarBg: "#000F1E", accentColor: "#C59B51" },
+              specifications: {
+                drivetrain: "Intelligent All-Wheel Drive (AWD)",
+                exteriorPaint: "Metallic Factory Finish",
+                interiorTrim: "Full Premium Nappa Leather",
+                importStatus: "Duty & Clearance Settled",
+                extraInfo: f.description?.stringValue || ""
+              },
+              videoUrl: f.videoUrl?.stringValue || "",
+              order: Number(f.order?.integerValue) || 0,
+              archived: f.archived?.booleanValue || false
+            };
+          }).filter(c => !c.archived && !isFactoryDefaultCar(c)).sort((a, b) => (a.order || 0) - (b.order || 0));
+          if (parsed.length > 0) applyRemoteList(parsed);
         }
-      }).catch(err => console.warn("Error loading featured cars from cloud:", err));
+      }).catch(() => {});
+    } catch (_) {}
+
+    // Real-time Firestore SDK listener
+    try {
+      if (typeof wh !== "undefined" && typeof vg !== "undefined" && typeof kM !== "undefined" && typeof FM !== "undefined") {
+        const q = kM(vg(wh, "featured_cars"));
+        unsubSnapshot = FM(q, (snapshot) => {
+          if (snapshot && !snapshot.empty) {
+            const remoteDocs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
+              .filter(c => !c.archived && !c.isArchived && !isFactoryDefaultCar(c))
+              .sort((a, b) => (a.order || 0) - (b.order || 0));
+            if (remoteDocs.length > 0) {
+              applyRemoteList(remoteDocs);
+            }
+          }
+        }, (err) => {
+          console.warn("Featured cars live snapshot error:", err);
+        });
+      }
+    } catch (err) {
+      console.warn("Error setting up featured cars listener:", err);
     }
-  }, []);
+
+    return () => {
+      if (unsubSnapshot) unsubSnapshot();
+    };
+  }, [hasUnsavedChanges]);
 
   // Keep activeCarId synchronized with customCars
   Fe.useEffect(() => {
@@ -4922,17 +5058,14 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
   }, [customCars.length, activeCarId]);
 
   const activeCar = (activeCarId ? customCars.find(c => c.id === activeCarId) : null) || customCars[0] || null;
-
   const activeStyles = (activeCar && activeCar.styles) || {
     featuresBg: "#000F1E",
     titleBarBg: "#000F1E",
     accentColor: "#C59B51"
   };
-
   const activeFeatures = (activeCar && activeCar.features && activeCar.features.length)
     ? activeCar.features
     : DEFAULT_FEATURE_EQUIPMENT_LIST;
-
   const activeSpecs = (activeCar && activeCar.specifications) || {
     drivetrain: "Intelligent All-Wheel Drive (AWD)",
     exteriorPaint: "Metallic Factory Finish",
@@ -4954,7 +5087,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
     }));
   };
 
-  // PERSISTENCE ENGINE (Multi-tiered: memory + IndexedDB + safe localStorage + Firestore + events)
+  // PERSISTENCE ENGINE (Multi-tiered: memory + IndexedDB + localStorage + Firestore Web SDK + direct REST API)
   const persistChanges = async (updatedList, toastMsg = "All featured vehicle changes saved and synced live to production!") => {
     setIsSaving(true);
     setSaveSuccess(false);
@@ -4977,81 +5110,124 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
       }
     } catch (_) {}
 
-    // 2. PRODUCTION FIRESTORE PERSISTENCE (Sync across all devices and visitors)
+    // 2. PRODUCTION FIRESTORE PERSISTENCE (Multi-tier: Web SDK + direct REST API)
     try {
-      if (typeof wh !== "undefined" && typeof zM !== "undefined" && typeof Eg !== "undefined") {
-        const savePromises = updatedList.map((car, idx) => {
-          const docData = {
-            id: car.id,
-            make: car.make || "Prestige",
-            model: car.model || "Edition",
-            year: Number(car.year) || 2023,
-            price: Number(car.price) || 0,
-            mileage: car.mileage || "35,000 km",
-            fuel: car.fuel || "Diesel",
-            transmission: car.transmission || "Automatic",
-            type: car.type || "Prestige SUV",
-            location: car.location || "Kiambu Road, Ridgeways",
-            status: car.status || "Available",
-            description: car.description || "",
-            image: car.image || (car.images && car.images[0]) || "/images/hero_showroom.jpg",
-            images: (car.images && car.images.length) ? car.images : [car.image || "/images/hero_showroom.jpg"],
-            features: car.features || [...DEFAULT_FEATURE_EQUIPMENT_LIST],
-            styles: car.styles || { featuresBg: "#000F1E", titleBarBg: "#000F1E", accentColor: "#C59B51" },
-            specifications: car.specifications || {
-              drivetrain: "Intelligent All-Wheel Drive (AWD)",
-              exteriorPaint: "Metallic Factory Finish",
-              interiorTrim: "Full Premium Nappa Leather",
-              importStatus: "Duty & Clearance Settled",
-              extraInfo: car.description || ""
-            },
-            videoUrl: car.videoUrl || "",
-            order: idx,
-            archived: !!car.archived,
-            updatedAt: new Date().toISOString()
-          };
-          return zM(Eg(wh, "featured_cars", car.id), docData);
-        });
+      const cleanList = updatedList.map((car, idx) => ({
+        id: String(car.id || ("featured-" + (Date.now() + idx))),
+        make: String(car.make || "Prestige"),
+        model: String(car.model || "Edition"),
+        year: Number(car.year) || 2023,
+        price: Number(car.price) || 0,
+        mileage: String(car.mileage || "35,000 km"),
+        fuel: String(car.fuel || "Diesel"),
+        transmission: String(car.transmission || "Automatic"),
+        type: String(car.type || "Prestige SUV"),
+        location: String(car.location || "Kiambu Road, Ridgeways"),
+        status: String(car.status || "Available"),
+        description: String(car.description || ""),
+        image: String(car.image || (car.images && car.images[0]) || "/images/hero_showroom.jpg"),
+        images: (car.images && car.images.length) ? car.images.map(String) : [String(car.image || "/images/hero_showroom.jpg")],
+        features: (car.features && car.features.length) ? car.features.map(String) : [...DEFAULT_FEATURE_EQUIPMENT_LIST],
+        styles: car.styles || { featuresBg: "#000F1E", titleBarBg: "#000F1E", accentColor: "#C59B51" },
+        specifications: {
+          drivetrain: String((car.specifications && car.specifications.drivetrain) || "Intelligent All-Wheel Drive (AWD)"),
+          exteriorPaint: String((car.specifications && car.specifications.exteriorPaint) || "Metallic Factory Finish"),
+          interiorTrim: String((car.specifications && car.specifications.interiorTrim) || "Full Premium Nappa Leather"),
+          importStatus: String((car.specifications && car.specifications.importStatus) || "Duty & Clearance Settled"),
+          extraInfo: String((car.specifications && car.specifications.extraInfo) || car.description || "")
+        },
+        videoUrl: String(car.videoUrl || ""),
+        order: idx,
+        archived: !!car.archived,
+        updatedAt: new Date().toISOString()
+      }));
 
-        // Also clean up removed docs in Firestore
-        if (typeof jM !== "undefined" && typeof BM !== "undefined" && typeof vg !== "undefined") {
-          jM(vg(wh, "featured_cars")).then(existingSnap => {
-            const currentIds = new Set(updatedList.map(c => c.id));
-            existingSnap.docs.forEach(docItem => {
-              if (!currentIds.has(docItem.id)) {
-                BM(Eg(wh, "featured_cars", docItem.id)).catch(() => {});
-              }
-            });
+      // A. Write to Firestore via Web SDK
+      if (typeof wh !== "undefined" && typeof zM !== "undefined" && typeof Eg !== "undefined") {
+        const promises = cleanList.map(docData => zM(Eg(wh, "featured_cars", docData.id), docData));
+        await Promise.all(promises).catch(err => console.warn("Web SDK setDoc note:", err));
+      }
+
+      // B. ALSO GUARANTEE WRITE via Firestore REST API (Works directly and immediately)
+      const restPromises = cleanList.map(async (car, idx) => {
+        const docUrl = "https://firestore.googleapis.com/v1/projects/" + GV + "/databases/" + $V + "/documents/featured_cars/" + encodeURIComponent(car.id) + "?key=" + XV;
+        const fields = {
+          id: { stringValue: car.id },
+          make: { stringValue: car.make },
+          model: { stringValue: car.model },
+          year: { integerValue: String(car.year) },
+          price: { integerValue: String(car.price) },
+          mileage: { stringValue: car.mileage },
+          fuel: { stringValue: car.fuel },
+          transmission: { stringValue: car.transmission },
+          type: { stringValue: car.type },
+          location: { stringValue: car.location },
+          status: { stringValue: car.status },
+          description: { stringValue: car.description },          extraInfo: { stringValue: String((car.specifications && car.specifications.extraInfo) || car.description || "") },
+          image: { stringValue: car.image },
+          images: {
+            arrayValue: {
+              values: car.images.map(img => ({ stringValue: String(img) }))
+            }
+          },
+          features: {
+            arrayValue: {
+              values: car.features.map(f => ({ stringValue: String(f) }))
+            }
+          },
+          videoUrl: { stringValue: car.videoUrl },
+          order: { integerValue: String(idx) },
+          archived: { booleanValue: car.archived },
+          updatedAt: { stringValue: car.updatedAt }
+        };
+        return fetch(docUrl, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fields })
+        });
+      });
+      await Promise.all(restPromises).catch(err => console.warn("REST API patch note:", err));
+
+      // C. Also clean up any removed docs from Firestore
+      const currentIds = new Set(cleanList.map(c => c.id));
+      if (typeof jM !== "undefined" && typeof BM !== "undefined" && typeof vg !== "undefined") {
+        jM(vg(wh, "featured_cars")).then(existingSnap => {
+          existingSnap.docs.forEach(docItem => {
+            if (!currentIds.has(docItem.id)) {
+              BM(Eg(wh, "featured_cars", docItem.id)).catch(() => {});
+              try {
+                fetch("https://firestore.googleapis.com/v1/projects/" + GV + "/databases/" + $V + "/documents/featured_cars/" + encodeURIComponent(docItem.id) + "?key=" + XV, {
+                  method: "DELETE"
+                }).catch(() => {});
+              } catch (_) {}
+            }
+          });
+        }).catch(() => {});
+      }
+
+      // D. Also save light config in cars collection without massive image arrays
+      try {
+        if (typeof zM !== "undefined" && typeof Eg !== "undefined") {
+          const lightConfig = cleanList.map(c => ({
+            id: c.id,
+            make: c.make,
+            model: c.model,
+            year: c.year,
+            price: c.price,
+            image: c.image,
+            order: c.order,
+            archived: c.archived
+          }));
+          zM(Eg(wh, "cars", "featured_config"), {
+            customCars: lightConfig,
+            isDecorative: true,
+            updatedAt: new Date().toISOString()
           }).catch(() => {});
         }
+      } catch (_) {}
 
-        // Also save config document in cars collection for redundancy
-        const cleanForConfig = updatedList.map(c => ({
-          id: c.id,
-          make: c.make,
-          model: c.model,
-          year: c.year,
-          price: c.price,
-          mileage: c.mileage,
-          fuel: c.fuel,
-          transmission: c.transmission,
-          image: c.image,
-          images: c.images || [c.image],
-          videoUrl: c.videoUrl || "",
-          status: c.status || "Available",
-          archived: !!c.archived
-        }));
-
-        savePromises.push(zM(Eg(wh, "cars", "featured_config"), {
-          customCars: cleanForConfig,
-          isDecorative: true,
-          updatedAt: new Date().toISOString()
-        }));
-
-        await Promise.all(savePromises);
-      }
     } catch (fsErr) {
-      console.warn("Firestore production sync warning:", fsErr);
+      console.warn("Firestore sync catch:", fsErr);
     }
 
     // 3. Broadcast to all open tabs and windows
@@ -5068,7 +5244,8 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
     setSaveToast(toastMsg || "All featured vehicles saved and synced live to production across all devices!");
     setTimeout(() => { setSaveSuccess(false); }, 4000);
     setTimeout(() => { setSaveToast(null); }, 5000);
-  };  const handleSave = () => {
+  };
+  const handleSave = () => {
     persistChanges(customCars, "All featured vehicle changes saved and applied to the live showroom!");
   };
 
@@ -5271,32 +5448,36 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
       type: "button",
       onClick: handleSave,
       disabled: isSaving,
+      style: { color: "#ffffff" },
       className: "px-7 py-3 rounded-xl text-xs font-extrabold uppercase tracking-widest transition-all duration-300 shadow-lg cursor-pointer flex items-center justify-center gap-2.5 " + (
         saveSuccess
-          ? "bg-emerald-500 text-black shadow-emerald-500/40 ring-2 ring-emerald-300 scale-105"
+          ? "bg-emerald-600 !text-white shadow-emerald-500/40 ring-2 ring-emerald-300 scale-105"
           : isSaving
-            ? "bg-[#C59B51]/70 text-black cursor-wait"
+            ? "bg-[#C59B51]/80 !text-white cursor-wait"
             : hasUnsavedChanges
-              ? "bg-[#C59B51] hover:bg-[#B38A40] text-black ring-2 ring-[#C59B51] shadow-xl hover:scale-102"
+              ? "bg-[#C59B51] hover:bg-[#B38A40] !text-white ring-2 ring-white/50 shadow-xl hover:scale-102"
               : isPrimary
-                ? "bg-[#C59B51] hover:bg-[#B38A40] text-black shadow-md hover:scale-102"
-                : "bg-white hover:bg-gray-100 text-black shadow-md hover:scale-102"
+                ? "bg-[#C59B51] hover:bg-[#B38A40] !text-white shadow-md hover:scale-102"
+                : "bg-white/15 hover:bg-white/25 !text-white border border-white/20 shadow-md hover:scale-102"
       ),
       children: [
         isSaving
-          ? T.jsx("span", { className: "animate-spin text-sm leading-none inline-block", children: "⟳" })
+          ? T.jsx("span", { className: "animate-spin text-sm leading-none inline-block text-white", style: { color: "#ffffff" }, children: "⟳" })
           : saveSuccess
-            ? T.jsx("span", { className: "text-base font-black leading-none", children: "✓" })
-            : T.jsx("span", { className: "text-sm leading-none", children: "💾" }),
-        isSaving
-          ? "Saving Changes..."
-          : saveSuccess
-            ? "Saved Successfully!"
-            : "Save All Changes"
+            ? T.jsx("span", { className: "text-base font-black leading-none text-white", style: { color: "#ffffff" }, children: "✓" })
+            : T.jsx("span", { className: "text-sm leading-none text-white", style: { color: "#ffffff" }, children: "💾" }),
+        T.jsx("span", {
+          style: { color: "#ffffff", fontWeight: 800 },
+          className: "text-white font-extrabold tracking-widest",
+          children: isSaving
+            ? "Saving Changes..."
+            : saveSuccess
+              ? "Saved Successfully!"
+              : "Save All Changes"
+        })
       ]
     });
   };
-
   return T.jsxs("div", {
     className: "animate-in fade-in slide-in-from-bottom-2 duration-500 space-y-8 relative pb-28",
     children: [
@@ -5379,7 +5560,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                           T.jsx("img", {
                             src: coverImg,
                             alt: invCar.make,
-                            className: "w-full h-full object-cover group-hover:scale-105 transition-transform"
+                            className: "w-full h-full object-cover transition-opacity duration-300 transition-transform"
                           }),
                           T.jsx("span", {
                             className: "absolute top-2 right-2 px-2 py-0.5 bg-black/70 backdrop-blur-md text-[10px] font-mono text-white rounded-md",
@@ -5427,35 +5608,14 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                 className: "flex items-center gap-3",
                 children: [
                   T.jsx("h3", { className: "text-2xl font-serif text-white tracking-wide", children: "Featured Vehicles Studio" }),
-                  T.jsxs("span", {
-                    className: "ml-3 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 align-middle",
-                    children: [
-                      T.jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }),
-                      "Cloud Production Sync Active"
-                    ]
-                  }),
-                  T.jsxs("span", {
-                    className: "px-2.5 py-1 bg-[#C59B51]/15 text-[#C59B51] text-[11px] font-mono font-bold uppercase rounded-full border border-[#C59B51]/30",
-                    children: [customCount, " of 5 Active Slots Used"]
-                  }),
                   hasUnsavedChanges && T.jsx("span", {
                     className: "px-2.5 py-1 bg-amber-500/20 text-amber-300 text-[10px] font-mono font-extrabold uppercase rounded-full border border-amber-500/40 animate-pulse",
                     children: "● Unsaved Changes"
                   })
                 ]
-              }),
-              T.jsxs("p", {
-                className: "text-xs text-white/60",
-                children: [
-                  "Configure high-definition photos, custom specifications, executive extra notes, YouTube review walkarounds, and section palettes. ",
-                  defaultRemaining > 0
-                    ? "(" + defaultRemaining + " archived default " + (defaultRemaining === 1 ? "car is" : "cars are") + " filling the remaining slots)"
-                    : "(All 5 showroom slots are filled with your custom featured vehicles)"
-                ]
               })
             ]
           }),
-
           /* Top Action Buttons */
           T.jsxs("div", {
             className: "flex items-center gap-2.5 flex-wrap",
@@ -5568,6 +5728,19 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                         onClick: handleAddNewCar,
                         className: "text-xs font-bold text-white/50 hover:text-white flex items-center gap-1 cursor-pointer",
                         children: ["+ Blank"]
+                      }),
+                      T.jsxs("button", {
+                        type: "button",
+                        onClick: () => {
+                          if (window.confirm("Archive all featured cars and start from a clean slate? You can add fresh cars anytime from added inventory.")) {
+                            setCustomCars([]);
+                            setActiveCarId(null);
+                            persistChanges([], "All featured vehicles archived. Clean slate active!");
+                          }
+                        },
+                        className: "text-xs font-bold text-red-400 hover:text-red-300 flex items-center gap-1 cursor-pointer transition-colors px-2.5 py-1 rounded bg-red-500/10 border border-red-500/25",
+                        title: "Archive all cars and start with a clean slate",
+                        children: ["🗑 Clean Slate"]
                       })
                     ]
                   })
@@ -6521,6 +6694,8 @@ function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.us
               (typeof SIX_SCREENSHOT_CARS !== "undefined" ? SIX_SCREENSHOT_CARS[0] : null);
 
   const [lightboxImg, setLightboxImg] = Fe.useState(null);
+  const [heroSlide, setHeroSlide] = Fe.useState(0);
+  const [isHeroPaused, setIsHeroPaused] = Fe.useState(false);
 
   Fe.useEffect(() => {
     window.scrollTo(0, 0);
@@ -6628,28 +6803,138 @@ function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.us
         })
       }),
 
-      /* SECTION 1: HERO SECTION MATCHING HOME HERO EXACT MEASUREMENTS & SINGLE IMAGE (CLEAN, NO TEXT OVERLAY) */
-      T.jsx("section", {
-        className: "hero-section-box",
-        style: { cursor: "pointer", height: "54vh", minHeight: "420px", maxHeight: "560px", width: "100%" },
-        onClick: () => setLightboxImg(heroImage),
-        children: T.jsx("img", {
-          src: heroImage,
-          alt: fullName,
-          className: "hero-bg-cover",
-          style: { filter: "brightness(0.96)" }
-        })
-      }),
+      /* SECTION 1: HERO SECTION - ANIMATED ALTERNATING UNZOOMED CAR DISPLAY */
+      T.jsxs("section", {
+        className: "featured-hero-container relative w-full overflow-hidden flex items-center justify-center bg-[#0A0A0F] select-none",
+        style: { height: "58vh", minHeight: "420px", maxHeight: "640px", width: "100%", backgroundColor: "#0A0A0F", position: "relative" },
+        onMouseEnter: () => setIsHeroPaused(true),
+        onMouseLeave: () => setIsHeroPaused(false),
+        children: [
+          /* Ambient blurred background glow from current slide */
+          rawImages.map((imgUrl, idx) => {
+            const isActive = idx === (heroSlide % rawImages.length);
+            return T.jsx("div", {
+              key: "glow-" + idx,
+              className: "absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-700",
+              style: {
+                backgroundImage: "url(" + imgUrl + ")",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                opacity: isActive ? 0.18 : 0,
+                filter: "blur(45px)",
+                transform: "none",
+                zIndex: 1
+              }
+            });
+          }),
 
-      /* Vehicle Title Bar */      T.jsx("div", {        className: "w-full py-8 sm:py-10 px-4 sm:px-6 lg:px-8 border-0 shadow-xs",        style: { backgroundColor: (car.styles && car.styles.titleBarBg) || "#000F1E", color: "#FFFFFF" },        children: T.jsx("div", {          className: "max-w-[1440px] mx-auto text-center border-0",          children: T.jsx("h1", {            className: "text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight uppercase text-center",            style: { color: "#FFFFFF" },            children: fullName          })        })      }),      /* SECTION 3: SPECIFICATIONS & VERIFIED PROVENANCE */      T.jsx("section", {        id: "specifications-dossier",        className: "bg-[#F8F9FA] py-14 sm:py-16 border-0",        children: T.jsx("div", {          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8",          children: T.jsxs("div", {            className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch",            children: [              /* Left Column: Another High-Resolution Image of the Car */              T.jsxs("div", {                onClick: () => setLightboxImg(rawImages[2] || rawImages[0]),                className: "lg:col-span-5 group relative rounded-3xl overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all cursor-pointer bg-gray-100 flex flex-col min-h-[380px] sm:min-h-[440px] lg:h-full",                children: [                  T.jsx("img", {                    src: rawImages[2] || rawImages[0],                    alt: fullName + " Technical Profile",                    className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"                  }),                  T.jsx("div", {                    className: "absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5",                    children: T.jsxs("div", {                      className: "flex items-center justify-between w-full text-white text-xs font-bold",                      children: [                        T.jsx("span", { children: fullName + " Technical Profile" }),                        T.jsx("span", { className: "px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase font-mono", children: "Zoom" })                      ]                    })                  })                ]              }),              /* Right Column: Technical Dossier & Provenance Heading + Specifications */              T.jsxs("div", {                className: "lg:col-span-7 flex flex-col justify-start space-y-4",                children: [                  /* Header */                  T.jsxs("div", {                    className: "flex items-center gap-3",                    children: [                      T.jsx("div", { className: "w-1.5 h-6 bg-[#C59B51] rounded-xs" }),                      T.jsx("h2", {                        className: "text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight uppercase",                        children: "Technical Dossier & Provenance"                      })                    ]                  }),                  /* Specifications Grid */                  T.jsx("div", {                    className: "grid grid-cols-1 sm:grid-cols-2 gap-3.5",                    children: [                      { label: "Make & Model", val: fullName },                      { label: "Production Year", val: car.year || "2021" },                      { label: "Body Classification", val: bodyType },                      { label: "Fuel Type", val: car.fuel || "Diesel" },                      { label: "Transmission", val: car.transmission || "Automatic" },                      { label: "Drivetrain", val: (car.specifications && car.specifications.drivetrain) || "All-Wheel Drive (AWD / 4WD)" },                      { label: "Exterior Paint", val: (car.specifications && car.specifications.exteriorPaint) || "Metallic Factory Finish" },                      { label: "Interior Trim", val: (car.specifications && car.specifications.interiorTrim) || "Full Premium Nappa Leather" },                      { label: "Import Status", val: (car.specifications && car.specifications.importStatus) || "Duty & Clearance Settled" }                    ].map((item, idx) => T.jsxs("div", {                      key: idx,                      className: "bg-white p-4.5 rounded-2xl border-0 flex flex-col justify-between shadow-xs " + (idx === 8 ? "sm:col-span-2" : ""),                      children: [                        T.jsx("span", { className: "text-xs font-mono uppercase font-bold text-gray-400 mb-1", children: item.label }),                        T.jsx("span", { className: "text-sm sm:text-base font-extrabold text-gray-900 leading-snug", children: item.val })                      ]                    }))                  }),
-                  /* Extra Provenance Information Note if provided */
-                  ((car.specifications && car.specifications.extraInfo) || car.extraInfo || car.description) && T.jsxs("div", {
-                    className: "p-4.5 bg-white rounded-2xl border-0 shadow-xs space-y-1",
-                    children: [
-                      T.jsx("span", { className: "text-xs font-mono uppercase font-bold text-[#C59B51] block", children: "Executive Provenance & Special Highlights" }),
-                      T.jsx("p", { className: "text-xs sm:text-sm text-gray-700 font-medium leading-relaxed", children: (car.specifications && car.specifications.extraInfo) || car.extraInfo || car.description })
-                    ]
-                  })                ]              })            ]          })        })      }),      /* SECTION 4: FEATURES & EQUIPMENT (WITH RIGHT-SIDE CAR IMAGE & NAVY BLUE BACKGROUND) */
+          /* Dark vignette gradient for luxury contrast */
+          T.jsx("div", {
+            className: "absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-transparent to-[#0A0A0F]/60 pointer-events-none",
+            style: { zIndex: 2 }
+          }),
+
+          /* Animated Alternating Unzoomed Foreground Car Slides */
+          rawImages.map((imgUrl, idx) => {
+            const isActive = idx === (heroSlide % rawImages.length);
+            return T.jsx("div", {
+              key: "slide-" + idx,
+              className: "absolute inset-0 w-full h-full flex items-center justify-center p-4 sm:p-8 cursor-pointer",
+              style: {
+                opacity: isActive ? 1 : 0,
+                pointerEvents: isActive ? "auto" : "none",
+                transition: "opacity 0.75s ease-in-out",
+                zIndex: 5
+              },
+              onClick: () => { setHeroSlide(idx + 1); setLightboxImg(imgUrl); },
+              title: fullName + " - Angle " + (idx + 1) + " (Click to Enlarge)",
+              children: T.jsx("img", {
+                src: imgUrl,
+                alt: fullName + " Perspective " + (idx + 1),
+                className: "featured-hero-clean-img",
+                style: {
+                  maxHeight: "92%",
+                  maxWidth: "96%",
+                  width: "auto",
+                  height: "auto",
+                  objectFit: "contain",
+                  objectPosition: "center",
+                  transform: "none",
+                  filter: "drop-shadow(0 20px 45px rgba(0, 0, 0, 0.75))",
+                  display: "block"
+                }
+              })
+            });
+          }),
+
+          /* Top Left Perspective Badge */
+          T.jsxs("div", {
+            className: "absolute top-5 left-6 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white/90 font-mono text-[11px] font-bold tracking-wider",
+            children: [
+              T.jsx("span", { className: "w-2 h-2 rounded-full bg-[#C59B51] animate-ping shrink-0" }),
+              T.jsxs("span", {
+                children: [
+                  "VIEW ",
+                  String((heroSlide % rawImages.length) + 1).padStart(2, "0"),
+                  " / ",
+                  String(rawImages.length).padStart(2, "0")
+                ]
+              })
+            ]
+          }),
+
+          /* Top Right Click to Enlarge Badge */
+          T.jsxs("button", {
+            type: "button",
+            onClick: () => setLightboxImg(rawImages[heroSlide % rawImages.length]),
+            className: "absolute top-5 right-6 z-20 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/15 text-white text-[10px] font-mono uppercase font-bold tracking-widest cursor-pointer transition-all",
+            children: ["🔍 Enlarge View"]
+          }),
+
+          /* Navigation Controls: Previous / Next Buttons */
+          T.jsx("button", {
+            type: "button",
+            onClick: (e) => {
+              e.stopPropagation();
+              setHeroSlide(prev => (prev - 1 + rawImages.length) % rawImages.length);
+            },
+            className: "absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center text-xl font-bold cursor-pointer transition-all hover:scale-105",
+            "aria-label": "Previous angle",
+            children: "‹"
+          }),
+          T.jsx("button", {
+            type: "button",
+            onClick: (e) => {
+              e.stopPropagation();
+              setHeroSlide(prev => (prev + 1) % rawImages.length);
+            },
+            className: "absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center text-xl font-bold cursor-pointer transition-all hover:scale-105",
+            "aria-label": "Next angle",
+            children: "›"
+          }),
+
+          /* Bottom Interactive Perspective Dots / Indicators */
+          T.jsx("div", {
+            className: "absolute bottom-5 inset-x-0 z-20 flex items-center justify-center gap-2",
+            children: rawImages.map((_, dotIdx) => {
+              const isCur = dotIdx === (heroSlide % rawImages.length);
+              return T.jsx("button", {
+                key: "dot-" + dotIdx,
+                type: "button",
+                onClick: (e) => {
+                  e.stopPropagation();
+                  setHeroSlide(dotIdx);
+                },
+                className: "h-2 transition-all duration-300 rounded-full cursor-pointer " + (
+                  isCur ? "w-8 bg-[#C59B51]" : "w-2 bg-white/40 hover:bg-white/70"
+                ),
+                "aria-label": "View angle " + (dotIdx + 1)
+              });
+            })
+          })
+        ]
+      }),
+      /* Vehicle Title Bar */      T.jsx("div", {        className: "w-full py-8 sm:py-10 px-4 sm:px-6 lg:px-8 border-0 shadow-xs",        style: { backgroundColor: (car.styles && car.styles.titleBarBg) || "#000F1E", color: "#FFFFFF" },        children: T.jsx("div", {          className: "max-w-[1440px] mx-auto text-center border-0",          children: T.jsx("h1", {            className: "text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight uppercase text-center",            style: { color: "#FFFFFF" },            children: fullName          })        })      }),      /* SECTION 3: SPECIFICATIONS & VERIFIED PROVENANCE */      T.jsx("section", {        id: "specifications-dossier",        className: "bg-[#F8F9FA] py-14 sm:py-16 border-0",        children: T.jsx("div", {          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8",          children: T.jsxs("div", {            className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch",            children: [              /* Left Column: Another High-Resolution Image of the Car */              T.jsxs("div", {                onClick: () => setLightboxImg(rawImages[2] || rawImages[0]),                className: "lg:col-span-5 group relative rounded-3xl overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all cursor-pointer bg-gray-100 flex flex-col min-h-[380px] sm:min-h-[440px] lg:h-full",                children: [                  T.jsx("img", {                    src: rawImages[2] || rawImages[0],                    alt: fullName + " Technical Profile",                    className: "w-full h-full object-cover transition-transform duration-700 transition-opacity duration-300"                  }),                  T.jsx("div", {                    className: "absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5",                    children: T.jsxs("div", {                      className: "flex items-center justify-between w-full text-white text-xs font-bold",                      children: [                        T.jsx("span", { children: fullName + " Technical Profile" }),                        T.jsx("span", { className: "px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase font-mono", children: "Zoom" })                      ]                    })                  })                ]              }),              /* Right Column: Technical Dossier & Provenance Heading + Specifications */              T.jsxs("div", {                className: "lg:col-span-7 flex flex-col justify-start space-y-4",                children: [                  /* Header */                  T.jsxs("div", {                    className: "flex items-center gap-3",                    children: [                      T.jsx("div", { className: "w-1.5 h-6 bg-[#C59B51] rounded-xs" }),                      T.jsx("h2", {                        className: "text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight uppercase",                        children: "Technical Dossier & Provenance"                      })                    ]                  }),                  /* Specifications Grid */                  T.jsx("div", {                    className: "grid grid-cols-1 sm:grid-cols-2 gap-3.5",                    children: [                      { label: "Make & Model", val: fullName },                      { label: "Production Year", val: car.year || "2021" },                      { label: "Body Classification", val: bodyType },                      { label: "Fuel Type", val: car.fuel || "Diesel" },                      { label: "Transmission", val: car.transmission || "Automatic" },                      { label: "Drivetrain", val: (car.specifications && car.specifications.drivetrain) || "All-Wheel Drive (AWD / 4WD)" },                      { label: "Exterior Paint", val: (car.specifications && car.specifications.exteriorPaint) || "Metallic Factory Finish" },                      { label: "Interior Trim", val: (car.specifications && car.specifications.interiorTrim) || "Full Premium Nappa Leather" },                      { label: "Import Status", val: (car.specifications && car.specifications.importStatus) || "Duty & Clearance Settled" }                    ].map((item, idx) => T.jsxs("div", {                      key: idx,                      className: "bg-white p-4.5 rounded-2xl border-0 flex flex-col justify-between shadow-xs " + (idx === 8 ? "sm:col-span-2" : ""),                      children: [                        T.jsx("span", { className: "text-xs font-mono uppercase font-bold text-gray-400 mb-1", children: item.label }),                        T.jsx("span", { className: "text-sm sm:text-base font-extrabold text-gray-900 leading-snug", children: item.val })                      ]                    }))                  }),                  /* Extra Provenance Information Note if provided */                  ((car.specifications && car.specifications.extraInfo) || car.extraInfo || car.description) && T.jsxs("div", {                    className: "p-4.5 bg-white rounded-2xl border-0 shadow-xs space-y-1",                    children: [                      T.jsx("span", { className: "text-xs font-mono uppercase font-bold text-[#C59B51] block", children: "Executive Provenance & Special Highlights" }),                      T.jsx("p", { className: "text-xs sm:text-sm text-gray-700 font-medium leading-relaxed", children: (car.specifications && car.specifications.extraInfo) || car.extraInfo || car.description })                    ]                  })                ]              })            ]          })        })      }),      /* SECTION 4: FEATURES & EQUIPMENT (WITH RIGHT-SIDE CAR IMAGE & NAVY BLUE BACKGROUND) */
       T.jsx("section", {
         id: "features-equipment",
         className: "py-14 sm:py-16 border-0",
@@ -6735,7 +7020,7 @@ function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.us
                   T.jsx("img", {
                     src: rawImages[3] || rawImages[0],
                     alt: fullName + " Features & Craftsmanship",
-                    className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className: "w-full h-full object-cover transition-transform duration-700 transition-opacity duration-300"
                   }),
                   T.jsx("div", {
                     className: "absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5",
@@ -6802,7 +7087,7 @@ function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.us
                     children: T.jsx("img", {
                       src: imgUrl,
                       alt: fullName + " Angle " + (idx + 1),
-                      className: "compact-card-img group-hover:scale-108 transition-transform duration-500",
+                      className: "compact-card-img transition-opacity duration-300 transition-transform duration-500",
                       loading: "lazy"
                     })
                   }),

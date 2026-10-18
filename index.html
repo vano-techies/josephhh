@@ -58,13 +58,13 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&family=Alex+Brush&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/assets/index-BIZlWqQ7.js?v=20261016-prod-sync-1792148435560"></script>
+    <script type="module" crossorigin src="/assets/index-BIZlWqQ7.js?v=20261018-revert-section3-1792151000000"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-C8QovHjD.css">
   
     <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="preload" as="image" href="/logo.png" />
     <link rel="preload" href="/assets/index-C8QovHjD.css" as="style" />
-    <link rel="modulepreload" href="/assets/index-BIZlWqQ7.js?v=20261016-prod-sync-1792148435560" />
+    <link rel="modulepreload" href="/assets/index-BIZlWqQ7.js?v=20261018-revert-section3-1792151000000" />
 <style id="exact-pixel-perfect-styles">
 /* STRICT REDUCTION OF GALLERY PERSPECTIVE IMAGES */
 #gallery-dossier img,
@@ -845,6 +845,55 @@ section#features-equipment {
   color: #FFFFFF !important;
 }
 #features-equipment span {
+  color: #FFFFFF !important;
+}
+</style>
+<style id="unzoom-featured-hero-styles">
+/* CRISP UNZOOMED FEATURED VEHICLE DETAIL PAGE HERO */
+.featured-hero-container {
+  position: relative;
+  width: 100%;
+  height: 58vh;
+  min-height: 420px;
+  max-height: 640px;
+  background-color: #0A0A0F !important;
+  overflow: hidden;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.featured-hero-clean-img {
+  max-width: 96% !important;
+  max-height: 92% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block !important;
+  transform: none !important;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.75)) !important;
+}
+@media (max-width: 640px) {
+  .featured-hero-container {
+    height: 46vh;
+    min-height: 310px;
+  }
+}
+
+/* ZERO ZOOM ON HOVER ACROSS ALL CAR IMAGES */
+.compact-card-img,
+.compact-car-card:hover .compact-card-img,
+#specifications-dossier img,
+#features-equipment img,
+#car-photos-gallery img,
+.featured-hero-clean-img {
+  transform: none !important;
+}
+
+/* SAVE ALL CHANGES BUTTON - BRIGHT WHITE ENFORCEMENT */
+button span.text-white,
+button[style*="#ffffff"] span,
+button:has(span:contains("Save All Changes")) span {
   color: #FFFFFF !important;
 }
 </style>
