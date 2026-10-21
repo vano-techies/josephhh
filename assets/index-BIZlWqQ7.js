@@ -181,7 +181,7 @@ Error generating stack: `+c.message+`
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const uw=[["path",{d:"M18 6 6 18",key:"1bl5f8"}],["path",{d:"m6 6 12 12",key:"d8bk6v"}]],Dg=Rn("x",uw);function cw({currentView:s,setView:e}){const[t,n]=Fe.useState(!1),[i,o]=Fe.useState(!1),[u,h]=Fe.useState("");const d=[{label:"Home",value:"home"},{label:"Our Cars",value:"our-cars"},{label:"New Arrivals",value:"new-arrivals"},{label:"Financing",value:"financing"},{label:"About Us",value:"about"},{label:"Contact",value:"contact"}];return T.jsxs("header",{className:"header-container",children:[T.jsx("div",{className:"header-inner",children:T.jsxs("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",width:"100%"},children:[T.jsxs("button",{onClick:()=>e("home"),className:"logo-lockup-wrap",style:{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",background:"none",border:"none",padding:0,cursor:"pointer",textDecoration:"none"},children:[T.jsx("img",{src:"/logo.png",alt:"Mr. Joseph",style:{height:52,width:"auto",objectFit:"contain",display:"block"}}),T.jsx("span",{style:{fontFamily:"'Inter', sans-serif",fontWeight:800,fontSize:11,letterSpacing:"0.32em",color:"#000000",textTransform:"uppercase",marginTop:5,lineHeight:1.2,display:"block"},children:"PREMIUM CARS"})]}),T.jsx("nav",{className:"nav-menu",children:d.map(m=>{const _=s===m.value||s==="home"&&m.value==="home";return T.jsx("button",{key:m.value,onClick:()=>{m.value==="about"?e("about"):m.value==="our-cars"?e("our-cars"):m.value==="new-arrivals"?e("new-arrivals"):e(m.value)},className:`nav-link ${_?"active":""}`,children:m.label})})}),T.jsxs("div",{className:"header-actions",children:[T.jsx("button",{onClick:()=>n(!t),className:"header-icon-btn","aria-label":"Search",children:T.jsx("svg",{style:{width:20,height:20},viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2.2,strokeLinecap:"round",strokeLinejoin:"round",children:[T.jsx("circle",{cx:11,cy:11,r:8}),T.jsx("line",{x1:21,y1:21,x2:16.65,y2:16.65})]})}),T.jsx("button",{onClick:()=>o(!i),className:"header-icon-btn","aria-label":"Toggle menu",children:i?T.jsx(Dg,{size:24,style:{color:"#111111"}}):T.jsx("svg",{style:{width:24,height:24},viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2.2,strokeLinecap:"round",strokeLinejoin:"round",children:[T.jsx("line",{x1:4,y1:6,x2:20,y2:6}),T.jsx("line",{x1:4,y1:12,x2:20,y2:12}),T.jsx("line",{x1:4,y1:18,x2:20,y2:18})]})})]})]})}),t&&T.jsx("div",{style:{borderTop:"1px solid #e5e7eb",backgroundColor:"#f9fafb",padding:"16px 24px"},children:T.jsxs("div",{style:{maxWidth:600,margin:"0 auto",display:"flex",gap:12},children:[T.jsx("input",{type:"text",value:u,onChange:m=>h(m.target.value),onKeyDown:m=>{m.key==="Enter"&&u.trim()&&(e("inventory"),n(!1))},placeholder:"Search vehicles...",style:{flex:1,padding:"10px 16px",backgroundColor:"#ffffff",border:"1px solid #d1d5db",borderRadius:6,fontSize:14,outline:"none"},autoFocus:!0}),T.jsx("button",{onClick:()=>{e("inventory"),n(!1)},style:{padding:"10px 20px",backgroundColor:"#C59B51",color:"#000000",fontWeight:700,fontSize:12,borderRadius:6,textTransform:"uppercase",letterSpacing:"0.1em",border:"none",cursor:"pointer"},children:"Search"})]})}),i&&T.jsxs("div",{style:{borderTop:"1px solid #e5e7eb",backgroundColor:"#ffffff",padding:24,display:"flex",flexDirection:"column",gap:16},children:[d.map(m=>T.jsx("button",{key:m.value,onClick:()=>{e(m.value),o(!1)},style:{textAlign:"left",fontSize:16,fontWeight:600,color:"#1f2937",background:"none",border:"none",cursor:"pointer"},children:m.label})),T.jsx("button",{onClick:()=>{e("contact"),o(!1)},style:{width:"100%",marginTop:16,padding:"12px 16px",backgroundColor:"#B88E44",color:"#ffffff",fontWeight:700,fontSize:12,textTransform:"uppercase",letterSpacing:"0.1em",borderRadius:6,border:"none",cursor:"pointer"},children:"Schedule Viewing"})]})]});}function hw({setView:s}){const[e,t]=Fe.useState(null);return T.jsxs("footer",{className:"luxury-footer pt-14 pb-12 px-6 mt-12 relative border-t-0",style:{borderTop:"none"},children:[T.jsxs("div",{className:"max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 pb-8",children:[T.jsxs("div",{className:"md:col-span-1 space-y-5",children:[T.jsx("div",{className:"flex flex-col items-start mb-2",children:T.jsx("img",{src:"/logo.png",alt:"Mr Joseph",className:"h-20 object-contain pb-1 pr-2 ml-[-8px]"})}),T.jsx("p",{className:"text-sm font-medium leading-relaxed max-w-sm text-gray-700",children:"Prestige vehicles. A highly curated selection of the world's most luxurious vehicles, tailored for the discerning few."})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2 mb-6",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Explore"]}),T.jsxs("ul",{className:"space-y-6 text-sm font-semibold",children:[T.jsx("li",{children:T.jsx("button",{onClick:()=>s("our-cars"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Our Cars Collection"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>s("financing"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Valuation & Finance"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>s("contact"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Private Concierge"})})]})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2 mb-6",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Contact"]}),T.jsxs("ul",{className:"space-y-4 text-sm font-semibold",children:[T.jsx("li",{children:T.jsxs("a",{href:"tel:0713583829",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsx(Ey,{className:"w-4 h-4",style:{color:"#C59B51"}}),"0713583829"]})}),T.jsx("li",{children:T.jsxs("a",{href:"https://wa.me/254713583829",target:"_blank",rel:"noopener noreferrer",className:"text-gray-800 hover:text-[#25D366] transition-colors flex items-center gap-2.5",children:[T.jsx("svg",{viewBox:"0 0 24 24",style:{width:18,height:18,fill:"#25D366"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})}),T.jsx("span",{style:{color:"#25D366"},children:"WhatsApp"})]})}),T.jsx("li",{children:T.jsxs("a",{href:"mailto:mrjoseph@afzet.co.ke",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsx(yy,{className:"w-4 h-4",style:{color:"#C59B51"}}),"mrjoseph@afzet.co.ke"]})}),T.jsx("li",{children:T.jsxs("a",{href:"https://maps.app.goo.gl/SpauXr9qh66Ws8v3A",target:"_blank",rel:"noopener noreferrer",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsxs("svg",{viewBox:"0 0 24 24",className:"w-4 h-4 shrink-0",style:{color:"#C59B51"},fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("path",{d:"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"}),T.jsx("circle",{cx:12,cy:10,r:3})]}),"Kiambu Road Ridgeways"]})})]})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2 mb-6",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Legal"]}),T.jsxs("ul",{className:"space-y-6 text-sm font-semibold",children:[T.jsx("li",{children:T.jsx("button",{onClick:()=>t("privacy"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Privacy Policy"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>t("terms"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Terms of Service"})})]})]})]}),T.jsxs("div",{className:"max-w-7xl mx-auto flex flex-col mt-4 pt-6 border-t border-[#C59B51]/30 text-xs font-mono gap-4",children:[T.jsxs("div",{className:"flex flex-col md:flex-row justify-between items-center w-full",children:[T.jsxs("p",{className:"text-center md:text-left font-semibold text-gray-700",children:["© ",new Date().getFullYear()," Mr Joseph all rights reserved"]}),T.jsxs("div",{className:"flex gap-4 mt-4 md:mt-0 items-center",children:[T.jsx("a",{href:"https://www.facebook.com/MrJosephPremiumCars/",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"Facebook","aria-label":"Facebook",children:T.jsx("svg",{viewBox:"0 0 24 24",className:"social-fb-svg",style:{fill:"#1877F2"},children:T.jsx("path",{d:"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"})})}),T.jsxs("a",{href:"https://www.instagram.com/mrjoseph_premiumcars/",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"Instagram","aria-label":"Instagram",children:[T.jsx("svg",{style:{width:0,height:0,position:"absolute"},children:T.jsx("defs",{children:T.jsxs("linearGradient",{id:"ig-gradient-fill",x1:"0%",y1:"100%",x2:"100%",y2:"0%",children:[T.jsx("stop",{offset:"0%",stopColor:"#FFD600"}),T.jsx("stop",{offset:"50%",stopColor:"#FF0069"}),T.jsx("stop",{offset:"100%",stopColor:"#7638FA"})]})})}),T.jsx("svg",{viewBox:"0 0 24 24",className:"social-ig-svg",children:T.jsx("path",{fill:"url(#ig-gradient-fill)",d:"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"})})]}),T.jsx("a",{href:"https://www.tiktok.com/tag/mrjosephpremiumcars",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"TikTok","aria-label":"TikTok",children:T.jsx("svg",{viewBox:"0 0 24 24",className:"social-tt-svg",children:T.jsx("path",{d:"M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 15.68a6.34 6.34 0 0 0 6.35 6.32 6.32 6.32 0 0 0 6.22-6.22v-5.6a8.27 8.27 0 0 0 4.74 1.53v-3.45a5.06 5.06 0 0 1-2.72-.57z"})})})]})]}),T.jsxs("p",{className:"w-full text-center mt-6 text-xs font-semibold text-gray-600 flex items-center justify-center gap-2",children:[T.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-[#C59B51]"}),"site created by Vano-Techies",T.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-[#C59B51]"})]})]}),e&&T.jsx("div",{className:"fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm",children:T.jsxs("div",{className:"relative w-full max-w-2xl bg-white border border-gray-200 p-8 rounded-xl shadow-2xl max-h-[85vh] overflow-y-auto text-black",children:[T.jsx("button",{onClick:()=>t(null),className:"absolute top-6 right-6 text-black hover:opacity-70 transition-opacity cursor-pointer",children:T.jsx(Dg,{size:24})}),e==="privacy"?T.jsxs("div",{className:"space-y-6 text-black",children:[T.jsx("h2",{className:"font-serif italic text-3xl text-black mb-2",children:"Privacy Policy"}),T.jsx("p",{className:"text-xs text-[#C59B51] uppercase tracking-widest font-mono font-bold",children:"Effective Date: July 17, 2026"}),T.jsxs("div",{className:"space-y-4 text-sm text-black leading-relaxed font-normal",children:[T.jsx("p",{children:"At Mr Joseph Premium Cars, accessible from mrjoseph.co.ke, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Mr Joseph and how we use it."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"1. Information We Collect"}),T.jsx("p",{children:"We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about us or our products, such as your name, phone number, email address, and vehicle preferences."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"2. How We Use Your Information"}),T.jsx("p",{children:"We use the information we collect to:"}),T.jsxs("ul",{className:"list-disc list-inside space-y-2 pl-2",children:[T.jsx("li",{children:"Provide, operate, and maintain our premium auto services."}),T.jsx("li",{children:"Process vehicle valuation, finance estimations, and private inquiries."}),T.jsx("li",{children:"Communicate with you directly to schedule viewing appointments."}),T.jsx("li",{children:"Ensure optimal system integrity and prevent unauthorized activity."})]}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"3. Log Files"}),T.jsx("p",{children:"Mr Joseph Premium Cars follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"4. Cookies and Tracking"}),T.jsx("p",{children:"Like any other professional website, Mr Joseph uses 'cookies' to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"5. Personal Consent"}),T.jsx("p",{children:"By using our website, you hereby consent to our Privacy Policy and agree to all of its terms and conditions."})]})]}):T.jsxs("div",{className:"space-y-6 text-black",children:[T.jsx("h2",{className:"font-serif italic text-3xl text-black mb-2",children:"Terms of Service"}),T.jsx("p",{className:"text-xs text-[#C59B51] uppercase tracking-widest font-mono font-bold",children:"Effective Date: July 17, 2026"}),T.jsxs("div",{className:"space-y-4 text-sm text-black leading-relaxed font-normal",children:[T.jsx("p",{children:"Welcome to Mr Joseph Premium Cars. These Terms of Service govern your use of our premium website and related consultative services."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"1. Acceptance of Terms"}),T.jsx("p",{children:"By accessing or using our website, you agree to be bound by these Terms of Service. If you do not agree to all terms, you must immediately cease accessing or using this site."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"2. Vehicle Inventory and Pricing"}),T.jsx("p",{children:"We strive to provide highly accurate information regarding our luxury vehicle inventory, technical specifications, and current valuations. However, all vehicles are subject to prior sale. Prices and availability are subject to change without notice. Please contact Mr Joseph directly for real-time validation."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"3. Finance and Valuation Estimations"}),T.jsx("p",{children:"Any calculation, estimation, or valuation provided by our on-site calculators is for illustrative, hypothetical, and private planning purposes only. It does not constitute a binding financial offer, direct loan commitment, or guaranteed trade-in value."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"4. Intellectual Property"}),T.jsx("p",{children:"All content on this website, including but not limited to logos, branding, typography, customized layouts, technical data, designs, and images, is the exclusive intellectual property of Mr Joseph or its partners and is protected by international copyright laws."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"5. Limitation of Liability"}),T.jsx("p",{children:"In no event shall Mr Joseph Premium Cars, its associates, or Vano-Techies be liable for any direct, indirect, incidental, special, or consequential damages arising out of the use or inability to use our digital web services."})]})]}),T.jsx("div",{className:"mt-8 pt-6 border-t border-gray-200 flex justify-end",children:T.jsx("button",{onClick:()=>t(null),className:"px-6 py-2 bg-black text-white text-xs uppercase tracking-widest font-bold hover:bg-[#C59B51] hover:text-black transition-colors cursor-pointer",children:"Close"})})]})})]});}function Ha(s){if(s===void 0)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return s}function xy(s,e){s.prototype=Object.create(e.prototype),s.prototype.constructor=s,s.__proto__=e}/*!
+ */const uw=[["path",{d:"M18 6 6 18",key:"1bl5f8"}],["path",{d:"m6 6 12 12",key:"d8bk6v"}]],Dg=Rn("x",uw);function cw({currentView:s,setView:e}){const[t,n]=Fe.useState(!1),[i,o]=Fe.useState(!1),[u,h]=Fe.useState("");const d=[{label:"Home",value:"home"},{label:"Our Cars",value:"our-cars"},{label:"New Arrivals",value:"new-arrivals"},{label:"Financing",value:"financing"},{label:"About Us",value:"about"},{label:"Contact",value:"contact"}];return T.jsxs("header",{className:"header-container",children:[T.jsx("div",{className:"header-inner",children:T.jsxs("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",width:"100%"},children:[T.jsxs("button",{onClick:()=>e("home"),className:"logo-lockup-wrap",style:{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",background:"none",border:"none",padding:0,cursor:"pointer",textDecoration:"none"},children:[T.jsx("img",{src:"/logo.png",alt:"Mr. Joseph",style:{height:52,width:"auto",objectFit:"contain",display:"block"}}),T.jsx("span",{style:{fontFamily:"'Inter', sans-serif",fontWeight:800,fontSize:11,letterSpacing:"0.32em",color:"#000000",textTransform:"uppercase",marginTop:5,lineHeight:1.2,display:"block"},children:"PREMIUM CARS"})]}),T.jsx("nav",{className:"nav-menu",children:d.map(m=>{const _=s===m.value||s==="home"&&m.value==="home";return T.jsx("button",{key:m.value,onClick:()=>{m.value==="about"?e("about"):m.value==="our-cars"?e("our-cars"):m.value==="new-arrivals"?e("new-arrivals"):e(m.value)},className:`nav-link ${_?"active":""}`,children:m.label})})}),T.jsxs("div",{className:"header-actions",children:[T.jsx("button",{onClick:()=>n(!t),className:"header-icon-btn","aria-label":"Search",children:T.jsx("svg",{style:{width:20,height:20},viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2.2,strokeLinecap:"round",strokeLinejoin:"round",children:[T.jsx("circle",{cx:11,cy:11,r:8}),T.jsx("line",{x1:21,y1:21,x2:16.65,y2:16.65})]})}),T.jsx("button",{onClick:()=>o(!i),className:"header-icon-btn","aria-label":"Toggle menu",children:i?T.jsx(Dg,{size:24,style:{color:"#111111"}}):T.jsx("svg",{style:{width:24,height:24},viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2.2,strokeLinecap:"round",strokeLinejoin:"round",children:[T.jsx("line",{x1:4,y1:6,x2:20,y2:6}),T.jsx("line",{x1:4,y1:12,x2:20,y2:12}),T.jsx("line",{x1:4,y1:18,x2:20,y2:18})]})})]})]})}),t&&T.jsx("div",{style:{borderTop:"1px solid #e5e7eb",backgroundColor:"#f9fafb",padding:"16px 24px"},children:T.jsxs("div",{style:{maxWidth:600,margin:"0 auto",display:"flex",gap:12},children:[T.jsx("input",{type:"text",value:u,onChange:m=>h(m.target.value),onKeyDown:m=>{m.key==="Enter"&&u.trim()&&(e("inventory"),n(!1))},placeholder:"Search vehicles...",style:{flex:1,padding:"10px 16px",backgroundColor:"#ffffff",border:"1px solid #d1d5db",borderRadius:6,fontSize:14,outline:"none"},autoFocus:!0}),T.jsx("button",{onClick:()=>{e("inventory"),n(!1)},style:{padding:"10px 20px",backgroundColor:"#C59B51",color:"#000000",fontWeight:700,fontSize:12,borderRadius:6,textTransform:"uppercase",letterSpacing:"0.1em",border:"none",cursor:"pointer"},children:"Search"})]})}),i&&T.jsxs("div",{style:{borderTop:"1px solid #e5e7eb",backgroundColor:"#ffffff",padding:24,display:"flex",flexDirection:"column",gap:16},children:[d.map(m=>T.jsx("button",{key:m.value,onClick:()=>{e(m.value),o(!1)},style:{textAlign:"left",fontSize:16,fontWeight:600,color:"#1f2937",background:"none",border:"none",cursor:"pointer"},children:m.label})),T.jsx("button",{onClick:()=>{e("contact"),o(!1)},style:{width:"100%",marginTop:16,padding:"12px 16px",backgroundColor:"#B88E44",color:"#ffffff",fontWeight:700,fontSize:12,textTransform:"uppercase",letterSpacing:"0.1em",borderRadius:6,border:"none",cursor:"pointer"},children:"Schedule Viewing"})]})]});}function hw({setView:s}){const[e,t]=Fe.useState(null);return T.jsxs("footer",{className:"luxury-footer pt-14 pb-12 px-6 mt-12 relative border-t-0",style:{borderTop:"none"},children:[T.jsxs("div",{className:"max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 pb-8",children:[T.jsxs("div",{className:"md:col-span-1 space-y-5",children:[T.jsx("div",{className:"flex flex-col items-start mb-2",children:T.jsx("img",{src:"/logo.png",alt:"Mr Joseph",className:"h-20 object-contain pb-1 pr-2 ml-[-8px]"})}),T.jsx("p",{className:"text-sm font-medium leading-relaxed max-w-sm text-gray-700",children:"Prestige vehicles. A highly curated selection of the world's most luxurious vehicles, tailored for the discerning few."})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2 mb-6",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Explore"]}),T.jsxs("ul",{className:"space-y-6 text-sm font-semibold",children:[T.jsx("li",{children:T.jsx("button",{onClick:()=>s("our-cars"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Our Cars Collection"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>s("financing"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Valuation & Finance"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>s("contact"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Private Concierge"})})]})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2 mb-6",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Contact"]}),T.jsxs("ul",{className:"space-y-4 text-sm font-semibold",children:[T.jsx("li",{children:T.jsxs("a",{href:"tel:0713583829",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsx(Ey,{className:"w-4 h-4",style:{color:"#C59B51"}}),"0713583829"]})}),T.jsx("li",{children:T.jsxs("a",{href:"https://wa.me/254713583829",target:"_blank",rel:"noopener noreferrer",className:"text-gray-800 hover:text-[#25D366] transition-colors flex items-center gap-2.5",children:[T.jsx("svg",{viewBox:"0 0 24 24",style:{width:18,height:18,fill:"#25D366"},children:T.jsx("path",{d:"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"})}),T.jsx("span",{style:{color:"#25D366"},children:"WhatsApp"})]})}),T.jsx("li",{children:T.jsxs("a",{href:"mailto:mrjoseph@afzet.co.ke",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsx(yy,{className:"w-4 h-4",style:{color:"#C59B51"}}),"mrjoseph@afzet.co.ke"]})}),T.jsx("li",{children:T.jsxs("a",{href:"https://maps.app.goo.gl/SpauXr9qh66Ws8v3A",target:"_blank",rel:"noopener noreferrer",className:"text-gray-800 hover:text-[#C59B51] transition-colors flex items-center gap-2.5",children:[T.jsxs("svg",{viewBox:"0 0 24 24",className:"w-4 h-4 shrink-0",style:{color:"#C59B51"},fill:"none",stroke:"currentColor",strokeWidth:2,children:[T.jsx("path",{d:"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"}),T.jsx("circle",{cx:12,cy:10,r:3})]}),"Kiambu Road Ridgeways"]})})]})]}),T.jsxs("div",{className:"space-y-5",children:[T.jsxs("h3",{className:"font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-2 mb-6",style:{color:"#DC2626"},children:[T.jsx("span",{className:"w-2 h-0.5 bg-[#DC2626]"}),"Legal"]}),T.jsxs("ul",{className:"space-y-6 text-sm font-semibold",children:[T.jsx("li",{children:T.jsx("button",{onClick:()=>t("privacy"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Privacy Policy"})}),T.jsx("li",{children:T.jsx("button",{onClick:()=>t("terms"),className:"text-gray-800 hover:text-[#C59B51] transition-colors text-left cursor-pointer",children:"Terms of Service"})})]})]})]}),T.jsxs("div",{className:"max-w-7xl mx-auto flex flex-col mt-4 pt-6 border-t border-[#C59B51]/30 text-xs font-mono gap-4",children:[T.jsxs("div",{className:"flex flex-col md:flex-row justify-between items-center w-full",children:[T.jsxs("p",{className:"text-center md:text-left font-semibold text-gray-700",children:["© ",new Date().getFullYear()," Mr Joseph all rights reserved"]}),T.jsxs("div",{className:"flex gap-4 mt-4 md:mt-0 items-center",children:[T.jsx("a",{href:"https://www.facebook.com/MrJosephPremiumCars/",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"Facebook","aria-label":"Facebook",children:T.jsx("svg",{viewBox:"0 0 24 24",className:"social-fb-svg",style:{fill:"#1877F2"},children:T.jsx("path",{d:"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"})})}),T.jsxs("a",{href:"https://www.instagram.com/mrjoseph_premiumcars/",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"Instagram","aria-label":"Instagram",children:[T.jsx("svg",{style:{width:0,height:0,position:"absolute"},children:T.jsx("defs",{children:T.jsxs("linearGradient",{id:"ig-gradient-fill",x1:"0%",y1:"100%",x2:"100%",y2:"0%",children:[T.jsx("stop",{offset:"0%",stopColor:"#FFD600"}),T.jsx("stop",{offset:"50%",stopColor:"#FF0069"}),T.jsx("stop",{offset:"100%",stopColor:"#7638FA"})]})})}),T.jsx("svg",{viewBox:"0 0 24 24",className:"social-ig-svg",children:T.jsx("path",{fill:"url(#ig-gradient-fill)",d:"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"})})]}),T.jsx("a",{href:"https://www.tiktok.com/tag/mrjosephpremiumcars",target:"_blank",rel:"noopener noreferrer",className:"social-icon-btn",title:"TikTok","aria-label":"TikTok",children:T.jsx("svg",{viewBox:"0 0 24 24",className:"social-tt-svg",children:T.jsx("path",{d:"M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 15.68a6.34 6.34 0 0 0 6.35 6.32 6.32 6.32 0 0 0 6.22-6.22v-5.6a8.27 8.27 0 0 0 4.74 1.53v-3.45a5.06 5.06 0 0 1-2.72-.57z"})})})]})]}),T.jsxs("p",{className:"w-full text-center mt-6 text-xs font-semibold text-gray-600 flex items-center justify-center gap-2",children:[T.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-[#C59B51]"}),T.jsx("span",{className:"italic",style:{fontStyle:"italic"},children:"site created by afzet agency"}),T.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-[#C59B51]"})]})]}),e&&T.jsx("div",{className:"fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm",children:T.jsxs("div",{className:"relative w-full max-w-2xl bg-white border border-gray-200 p-8 rounded-xl shadow-2xl max-h-[85vh] overflow-y-auto text-black",children:[T.jsx("button",{onClick:()=>t(null),className:"absolute top-6 right-6 text-black hover:opacity-70 transition-opacity cursor-pointer",children:T.jsx(Dg,{size:24})}),e==="privacy"?T.jsxs("div",{className:"space-y-6 text-black",children:[T.jsx("h2",{className:"font-serif italic text-3xl text-black mb-2",children:"Privacy Policy"}),T.jsx("p",{className:"text-xs text-[#C59B51] uppercase tracking-widest font-mono font-bold",children:"Effective Date: July 17, 2026"}),T.jsxs("div",{className:"space-y-4 text-sm text-black leading-relaxed font-normal",children:[T.jsx("p",{children:"At Mr Joseph Premium Cars, accessible from mrjoseph.co.ke, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Mr Joseph and how we use it."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"1. Information We Collect"}),T.jsx("p",{children:"We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about us or our products, such as your name, phone number, email address, and vehicle preferences."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"2. How We Use Your Information"}),T.jsx("p",{children:"We use the information we collect to:"}),T.jsxs("ul",{className:"list-disc list-inside space-y-2 pl-2",children:[T.jsx("li",{children:"Provide, operate, and maintain our premium auto services."}),T.jsx("li",{children:"Process vehicle valuation, finance estimations, and private inquiries."}),T.jsx("li",{children:"Communicate with you directly to schedule viewing appointments."}),T.jsx("li",{children:"Ensure optimal system integrity and prevent unauthorized activity."})]}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"3. Log Files"}),T.jsx("p",{children:"Mr Joseph Premium Cars follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"4. Cookies and Tracking"}),T.jsx("p",{children:"Like any other professional website, Mr Joseph uses 'cookies' to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"5. Personal Consent"}),T.jsx("p",{children:"By using our website, you hereby consent to our Privacy Policy and agree to all of its terms and conditions."})]})]}):T.jsxs("div",{className:"space-y-6 text-black",children:[T.jsx("h2",{className:"font-serif italic text-3xl text-black mb-2",children:"Terms of Service"}),T.jsx("p",{className:"text-xs text-[#C59B51] uppercase tracking-widest font-mono font-bold",children:"Effective Date: July 17, 2026"}),T.jsxs("div",{className:"space-y-4 text-sm text-black leading-relaxed font-normal",children:[T.jsx("p",{children:"Welcome to Mr Joseph Premium Cars. These Terms of Service govern your use of our premium website and related consultative services."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"1. Acceptance of Terms"}),T.jsx("p",{children:"By accessing or using our website, you agree to be bound by these Terms of Service. If you do not agree to all terms, you must immediately cease accessing or using this site."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"2. Vehicle Inventory and Pricing"}),T.jsx("p",{children:"We strive to provide highly accurate information regarding our luxury vehicle inventory, technical specifications, and current valuations. However, all vehicles are subject to prior sale. Prices and availability are subject to change without notice. Please contact Mr Joseph directly for real-time validation."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"3. Finance and Valuation Estimations"}),T.jsx("p",{children:"Any calculation, estimation, or valuation provided by our on-site calculators is for illustrative, hypothetical, and private planning purposes only. It does not constitute a binding financial offer, direct loan commitment, or guaranteed trade-in value."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"4. Intellectual Property"}),T.jsx("p",{children:"All content on this website, including but not limited to logos, branding, typography, customized layouts, technical data, designs, and images, is the exclusive intellectual property of Mr Joseph or its partners and is protected by international copyright laws."}),T.jsx("h3",{className:"text-base font-semibold text-black mt-4 font-sans",children:"5. Limitation of Liability"}),T.jsx("p",{children:"In no event shall Mr Joseph Premium Cars, its associates, or afzet agency be liable for any direct, indirect, incidental, special, or consequential damages arising out of the use or inability to use our digital web services."})]})]}),T.jsx("div",{className:"mt-8 pt-6 border-t border-gray-200 flex justify-end",children:T.jsx("button",{onClick:()=>t(null),className:"px-6 py-2 bg-black text-white text-xs uppercase tracking-widest font-bold hover:bg-[#C59B51] hover:text-black transition-colors cursor-pointer",children:"Close"})})]})})]});}function Ha(s){if(s===void 0)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return s}function xy(s,e){s.prototype=Object.create(e.prototype),s.prototype.constructor=s,s.__proto__=e}/*!
  * GSAP 3.15.0
  * https://gsap.com
  *
@@ -3804,6 +3804,15 @@ function useFeaturedCars() {
               location: f.location?.stringValue || "Kiambu Road, Ridgeways",
               status: f.status?.stringValue || "Available",
               description: f.description?.stringValue || "",
+              torque: f.torque?.stringValue || "600 nm",
+              acceleration: f.acceleration?.stringValue || "7.4s",
+              topSpeed: f.topSpeed?.stringValue || "199km/h",
+              designLabel: f.designLabel?.stringValue || "DESIGN",
+              designTitle: f.designTitle?.stringValue || "Design and Aerodynamics",
+              designDescription: f.designDescription?.stringValue || "",
+              performanceLabel: f.performanceLabel?.stringValue || "PERFORMANCE",
+              performanceTitle: f.performanceTitle?.stringValue || "More Powerful, Lighter, Faster",
+              performanceDescription: f.performanceDescription?.stringValue || "",
               image: f.image?.stringValue || "/images/hero_showroom.jpg",
               images: f.images?.arrayValue?.values?.map(v => v.stringValue) || [f.image?.stringValue || "/images/hero_showroom.jpg"],
               features: f.features?.arrayValue?.values?.map(v => v.stringValue) || [...DEFAULT_FEATURE_EQUIPMENT_LIST],
@@ -5176,6 +5185,15 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
             }
           },
           videoUrl: { stringValue: car.videoUrl },
+          torque: { stringValue: String(car.torque || "600 nm") },
+          acceleration: { stringValue: String(car.acceleration || "7.4s") },
+          topSpeed: { stringValue: String(car.topSpeed || "199km/h") },
+          designLabel: { stringValue: String(car.designLabel || "DESIGN") },
+          designTitle: { stringValue: String(car.designTitle || "Design and Aerodynamics") },
+          designDescription: { stringValue: String(car.designDescription || "") },
+          performanceLabel: { stringValue: String(car.performanceLabel || "PERFORMANCE") },
+          performanceTitle: { stringValue: String(car.performanceTitle || "More Powerful, Lighter, Faster") },
+          performanceDescription: { stringValue: String(car.performanceDescription || "") },
           order: { integerValue: String(idx) },
           archived: { booleanValue: car.archived },
           updatedAt: { stringValue: car.updatedAt }
@@ -5369,7 +5387,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
         const img = new Image();
         img.onload = () => {
           const canvas = document.createElement("canvas");
-          const maxDim = 850;
+          const maxDim = 1920;
           let w = img.width;
           let h = img.height;
           if (w > h) {
@@ -5387,8 +5405,10 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
           canvas.height = h;
           const ctx = canvas.getContext("2d");
           if (ctx) {
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = "high";
             ctx.drawImage(img, 0, 0, w, h);
-            const dataUrl = canvas.toDataURL("image/jpeg", 0.72);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.90);
             updateActiveCar(c => {
               const currentImgs = (c.images && c.images.length) ? [...c.images] : [];
               while (currentImgs.length < 6) {
@@ -6328,6 +6348,276 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
                 ]
               }),
 
+              /* CUSTOM FEATURED CAR SEGMENTS: HERO SPECS, DESIGN, AND PERFORMANCE */
+              T.jsxs("div", {
+                className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-6",
+                children: [
+                  /* Header & Inventory Quick Picker */
+                  T.jsxs("div", {
+                    className: "flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-white/10",
+                    children: [
+                      T.jsxs("div", {
+                        children: [
+                          T.jsx("h4", { className: "text-lg font-bold text-white flex items-center gap-2", children: [
+                            T.jsx("span", { className: "text-[#C59B51]", children: "★" }),
+                            "Featured Car Segments & Specifications"
+                          ] }),
+                          T.jsx("p", { className: "text-xs text-white/50", children: "Configure the Torque, 0-100 km/h, Max Speed, DESIGN, and PERFORMANCE sections for this featured vehicle." })
+                        ]
+                      }),
+
+                      /* Quick Pick from Dashboard Vehicles Dropdown */
+                      T.jsxs("div", {
+                        className: "flex items-center gap-2 bg-white/5 border border-white/15 px-3 py-2 rounded-xl",
+                        children: [
+                          T.jsx("span", { className: "text-xs font-mono uppercase text-[#C59B51] font-bold whitespace-nowrap", children: "Pick Car from Dash:" }),
+                          T.jsxs("select", {
+                            className: "bg-transparent text-white text-xs outline-none cursor-pointer font-medium max-w-[200px] truncate",
+                            value: activeCar.id || "",
+                            onChange: (e) => {
+                              const selId = e.target.value;
+                              if (!selId) return;
+                              // Check if already in customCars
+                              const found = customCars.find(c => c.id === selId);
+                              if (found) {
+                                setActiveCarId(selId);
+                              } else {
+                                // Find in inventoryCars
+                                const invCar = allInventoryList.find(c => c.id === selId);
+                                if (invCar) {
+                                  handleSelectFromInventory(invCar);
+                                }
+                              }
+                            },
+                            children: [
+                              T.jsx("option", { value: activeCar.id || "", disabled: true, className: "bg-[#162330] text-white", children: "— Currently Editing: " + (activeCar.make + " " + activeCar.model) + " —" }),
+                              allInventoryList.map(inv => T.jsx("option", {
+                                key: inv.id,
+                                value: inv.id,
+                                className: "bg-[#162330] text-white",
+                                children: (inv.year || "") + " " + inv.make + " " + inv.model + " (" + (inv.price ? "KSh " + Number(inv.price).toLocaleString() : "POA") + ")"
+                              }))
+                            ]
+                          })
+                        ]
+                      })
+                    ]
+                  }),
+
+                  /* SEGMENT 1: HERO PERFORMANCE SPECS (SCREENSHOT 536) */
+                  T.jsxs("div", {
+                    className: "bg-white/[0.02] border border-white/10 p-5 rounded-2xl space-y-3",
+                    children: [
+                      T.jsxs("div", {
+                        className: "flex items-center justify-between",
+                        children: [
+                          T.jsxs("div", {
+                            className: "flex items-center gap-2",
+                            children: [
+                              T.jsx("span", { className: "w-2.5 h-2.5 rounded-full bg-emerald-400" }),
+                              T.jsx("h5", { className: "text-sm font-bold text-white uppercase tracking-wider", children: "1. Hero Performance Specs (Screenshot 536)" })
+                            ]
+                          }),
+                          T.jsx("span", { className: "text-[11px] font-mono text-white/40", children: "Renders in Hero Podium Capsule" })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1",
+                        children: [
+                          /* 1. Torque */
+                          T.jsxs("div", {
+                            className: "space-y-1.5",
+                            children: [
+                              T.jsx("label", { className: "text-xs font-mono uppercase text-[#C59B51] font-bold block", children: "Torque" }),
+                              T.jsx("input", {
+                                type: "text",
+                                placeholder: "e.g. 600 nm or 520 nm",
+                                value: activeCar.torque || (activeCar.specifications && activeCar.specifications.torque) || "",
+                                onChange: (e) => updateActiveCar(c => ({
+                                  ...c,
+                                  torque: e.target.value,
+                                  specifications: { ...(c.specifications || {}), torque: e.target.value }
+                                })),
+                                className: "w-full bg-white/5 border border-white/15 rounded-xl px-3.5 py-2.5 text-white text-sm font-mono font-bold outline-none focus:border-[#C59B51]"
+                              }),
+                              T.jsx("span", { className: "text-[10px] text-white/40", children: "Displayed as first stat in hero" })
+                            ]
+                          }),
+
+                          /* 2. 0-100 km/h */
+                          T.jsxs("div", {
+                            className: "space-y-1.5",
+                            children: [
+                              T.jsx("label", { className: "text-xs font-mono uppercase text-[#C59B51] font-bold block", children: "0-100 km/h" }),
+                              T.jsx("input", {
+                                type: "text",
+                                placeholder: "e.g. 7.4s or 4.4s",
+                                value: activeCar.acceleration || (activeCar.specifications && activeCar.specifications.acceleration) || "",
+                                onChange: (e) => updateActiveCar(c => ({
+                                  ...c,
+                                  acceleration: e.target.value,
+                                  specifications: { ...(c.specifications || {}), acceleration: e.target.value }
+                                })),
+                                className: "w-full bg-white/5 border border-white/15 rounded-xl px-3.5 py-2.5 text-white text-sm font-mono font-bold outline-none focus:border-[#C59B51]"
+                              }),
+                              T.jsx("span", { className: "text-[10px] text-white/40", children: "Displayed as second stat in hero" })
+                            ]
+                          }),
+
+                          /* 3. Max Speed */
+                          T.jsxs("div", {
+                            className: "space-y-1.5",
+                            children: [
+                              T.jsx("label", { className: "text-xs font-mono uppercase text-[#C59B51] font-bold block", children: "Max Speed" }),
+                              T.jsx("input", {
+                                type: "text",
+                                placeholder: "e.g. 199km/h or 290km/h",
+                                value: activeCar.topSpeed || (activeCar.specifications && activeCar.specifications.topSpeed) || "",
+                                onChange: (e) => updateActiveCar(c => ({
+                                  ...c,
+                                  topSpeed: e.target.value,
+                                  specifications: { ...(c.specifications || {}), topSpeed: e.target.value }
+                                })),
+                                className: "w-full bg-white/5 border border-white/15 rounded-xl px-3.5 py-2.5 text-white text-sm font-mono font-bold outline-none focus:border-[#C59B51]"
+                              }),
+                              T.jsx("span", { className: "text-[10px] text-white/40", children: "Displayed as third stat in hero" })
+                            ]
+                          })
+                        ]
+                      })
+                    ]
+                  }),
+
+                  /* SEGMENT 2: DESIGN / DESIGN AND AERODYNAMICS (SECTION 2) */
+                  T.jsxs("div", {
+                    className: "bg-white/[0.02] border border-white/10 p-5 rounded-2xl space-y-4",
+                    children: [
+                      T.jsxs("div", {
+                        className: "flex items-center justify-between",
+                        children: [
+                          T.jsxs("div", {
+                            className: "flex items-center gap-2",
+                            children: [
+                              T.jsx("span", { className: "w-2.5 h-2.5 rounded-full bg-blue-400" }),
+                              T.jsx("h5", { className: "text-sm font-bold text-white uppercase tracking-wider", children: "2. DESIGN / Design and Aerodynamics (Section 2)" })
+                            ]
+                          }),
+                          T.jsx("span", { className: "text-[11px] font-mono text-white/40", children: "Alongside Slanted Exterior Shot" })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "grid grid-cols-1 sm:grid-cols-2 gap-4",
+                        children: [
+                          T.jsxs("div", {
+                            className: "space-y-1.5",
+                            children: [
+                              T.jsx("label", { className: "text-xs font-mono uppercase text-white/50 block", children: "Eyebrow Label" }),
+                              T.jsx("input", {
+                                type: "text",
+                                placeholder: "DESIGN",
+                                value: activeCar.designLabel || "DESIGN",
+                                onChange: (e) => updateActiveCar(c => ({ ...c, designLabel: e.target.value })),
+                                className: "w-full bg-white/5 border border-white/15 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
+                              })
+                            ]
+                          }),
+                          T.jsxs("div", {
+                            className: "space-y-1.5",
+                            children: [
+                              T.jsx("label", { className: "text-xs font-mono uppercase text-white/50 block", children: "Section Heading / Title" }),
+                              T.jsx("input", {
+                                type: "text",
+                                placeholder: "Design and Aerodynamics",
+                                value: activeCar.designTitle || "Design and Aerodynamics",
+                                onChange: (e) => updateActiveCar(c => ({ ...c, designTitle: e.target.value })),
+                                className: "w-full bg-white/5 border border-white/15 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
+                              })
+                            ]
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50 block", children: "Design Description Paragraph" }),
+                          T.jsx("textarea", {
+                            rows: 3,
+                            placeholder: "Describe the exterior craftsmanship, aerodynamic channels, body lines, and prestige presence of this car...",
+                            value: activeCar.designDescription || "",
+                            onChange: (e) => updateActiveCar(c => ({ ...c, designDescription: e.target.value })),
+                            className: "w-full bg-white/5 border border-white/15 rounded-xl p-3.5 text-white text-xs leading-relaxed outline-none focus:border-[#C59B51]"
+                          })
+                        ]
+                      })
+                    ]
+                  }),
+
+                  /* SEGMENT 3: PERFORMANCE / MORE POWERFUL, LIGHTER, FASTER (SECTION 3) */
+                  T.jsxs("div", {
+                    className: "bg-white/[0.02] border border-white/10 p-5 rounded-2xl space-y-4",
+                    children: [
+                      T.jsxs("div", {
+                        className: "flex items-center justify-between",
+                        children: [
+                          T.jsxs("div", {
+                            className: "flex items-center gap-2",
+                            children: [
+                              T.jsx("span", { className: "w-2.5 h-2.5 rounded-full bg-amber-400" }),
+                              T.jsx("h5", { className: "text-sm font-bold text-white uppercase tracking-wider", children: "3. PERFORMANCE / More Powerful, Lighter, Faster (Section 3)" })
+                            ]
+                          }),
+                          T.jsx("span", { className: "text-[11px] font-mono text-white/40", children: "Alongside Slanted Cockpit Shot" })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "grid grid-cols-1 sm:grid-cols-2 gap-4",
+                        children: [
+                          T.jsxs("div", {
+                            className: "space-y-1.5",
+                            children: [
+                              T.jsx("label", { className: "text-xs font-mono uppercase text-white/50 block", children: "Eyebrow Label" }),
+                              T.jsx("input", {
+                                type: "text",
+                                placeholder: "PERFORMANCE",
+                                value: activeCar.performanceLabel || "PERFORMANCE",
+                                onChange: (e) => updateActiveCar(c => ({ ...c, performanceLabel: e.target.value })),
+                                className: "w-full bg-white/5 border border-white/15 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
+                              })
+                            ]
+                          }),
+                          T.jsxs("div", {
+                            className: "space-y-1.5",
+                            children: [
+                              T.jsx("label", { className: "text-xs font-mono uppercase text-white/50 block", children: "Section Heading / Title" }),
+                              T.jsx("input", {
+                                type: "text",
+                                placeholder: "More Powerful, Lighter, Faster",
+                                value: activeCar.performanceTitle || "More Powerful, Lighter, Faster",
+                                onChange: (e) => updateActiveCar(c => ({ ...c, performanceTitle: e.target.value })),
+                                className: "w-full bg-white/5 border border-white/15 rounded-xl px-3.5 py-2 text-white text-xs outline-none focus:border-[#C59B51]"
+                              })
+                            ]
+                          })
+                        ]
+                      }),
+                      T.jsxs("div", {
+                        className: "space-y-1.5",
+                        children: [
+                          T.jsx("label", { className: "text-xs font-mono uppercase text-white/50 block", children: "Performance Description Paragraph" }),
+                          T.jsx("textarea", {
+                            rows: 3,
+                            placeholder: "Describe the engine output, acceleration dynamics, transmission response, and all-wheel-drive traction of this car...",
+                            value: activeCar.performanceDescription || "",
+                            onChange: (e) => updateActiveCar(c => ({ ...c, performanceDescription: e.target.value })),
+                            className: "w-full bg-white/5 border border-white/15 rounded-xl p-3.5 text-white text-xs leading-relaxed outline-none focus:border-[#C59B51]"
+                          })
+                        ]
+                      })
+                    ]
+                  })
+                ]
+              }),
+
               /* 4. HIGH-DEFINITION PHOTOS (SLOTS 1-6) */
               T.jsxs("div", {
                 className: "bg-black/40 border border-white/5 p-6 rounded-3xl space-y-5",
@@ -6613,7 +6903,7 @@ function FeaturedCarsAdminStudio({ onPreview, inventoryCars = [] }) {
     ]
   });
 }
-function ok({setView:pw,onBack:pb}={}){var X,le,ye;const[s,e]=Fe.useState(null),[t,n]=Fe.useState(""),[i,o]=Fe.useState(""),[u,h]=Fe.useState(!1),[d,m]=Fe.useState(""),[_,v]=Fe.useState("dashboard"),[x,A]=Fe.useState([]),[S,R]=Fe.useState(!1),[k,G]=Fe.useState(null),[Y,J]=Fe.useState(!1),[W,re]=Fe.useState(""),[te,C]=Fe.useState({make:"",model:"",year:new Date().getFullYear(),price:0,spec:"",features:[],location:"Our Cars",status:"Available",image:"",images:[],videoUrl:""}),{brand:matchedBrand,models:matchedModels}=getModelsAndBrand(te.make);Fe.useEffect(()=>{s&&I()},[s]);const I=async()=>{try{const ae=await jM(vg(wh,"cars"));A(ae.docs.map(B=>({id:B.id,...B.data()})))}catch(ae){console.error("Error fetching inventory",ae)}},O=async ae=>{ae.preventDefault(),h(!0),m(""),(t==="mrjoseph@afzet.co.ke"||t==="admin@mrjoseph.com")&&i==="JOSe1phkr@4#3"?e({email:"mrjoseph@afzet.co.ke",uid:"hardcoded-admin"}):m("Invalid credentials."),h(!1)},M=async()=>{e(null)},U=ae=>{const B=Array.from(ae.target.files||[]);if(B.length!==0){if(te.images.length+B.length>10){alert("You can only upload up to 10 images per car.");return}B.forEach(j=>{if(j.size>10*1024*1024){alert(`Image ${j.name} is too large. Please select images under 10MB.`);return}const oe=new FileReader;oe.onload=_e=>{var Se;const ge=new Image;ge.onload=()=>{const Ne=document.createElement("canvas"),De=600,ct=600;let Ye=ge.width,pn=ge.height;Ye>pn?Ye>De&&(pn*=De/Ye,Ye=De):pn>ct&&(Ye*=ct/pn,pn=ct),Ne.width=Ye,Ne.height=pn;const un=Ne.getContext("2d");if(un){un.drawImage(ge,0,0,Ye,pn);const mn=Ne.toDataURL("image/webp",.3);C(Je=>{const At=[...Je.images,mn].slice(0,10);return{...Je,images:At,image:At[0]||""}})}},(Se=_e.target)!=null&&Se.result&&(ge.src=_e.target.result)},oe.readAsDataURL(j)})}},L=ae=>{C(B=>{const j=B.images.filter((oe,_e)=>_e!==ae);return{...B,images:j,image:j[0]||""}})},
+function ok({setView:pw,onBack:pb}={}){var X,le,ye;const[s,e]=Fe.useState(null),[t,n]=Fe.useState(""),[i,o]=Fe.useState(""),[u,h]=Fe.useState(!1),[d,m]=Fe.useState(""),[_,v]=Fe.useState("dashboard"),[x,A]=Fe.useState([]),[S,R]=Fe.useState(!1),[k,G]=Fe.useState(null),[Y,J]=Fe.useState(!1),[W,re]=Fe.useState(""),[te,C]=Fe.useState({make:"",model:"",year:new Date().getFullYear(),price:0,spec:"",features:[],location:"Our Cars",status:"Available",image:"",images:[],videoUrl:""}),{brand:matchedBrand,models:matchedModels}=getModelsAndBrand(te.make);Fe.useEffect(()=>{s&&I()},[s]);const I=async()=>{try{const ae=await jM(vg(wh,"cars"));A(ae.docs.map(B=>({id:B.id,...B.data()})))}catch(ae){console.error("Error fetching inventory",ae)}},O=async ae=>{ae.preventDefault(),h(!0),m(""),(t==="mrjoseph@afzet.co.ke"||t==="admin@mrjoseph.com")&&i==="JOSe1phkr@4#3"?e({email:"mrjoseph@afzet.co.ke",uid:"hardcoded-admin"}):m("Invalid credentials."),h(!1)},M=async()=>{e(null)},U=ae=>{const B=Array.from(ae.target.files||[]);if(B.length!==0){if(te.images.length+B.length>10){alert("You can only upload up to 10 images per car.");return}B.forEach(j=>{if(j.size>10*1024*1024){alert(`Image ${j.name} is too large. Please select images under 10MB.`);return}const oe=new FileReader;oe.onload=_e=>{var Se;const ge=new Image;ge.onload=()=>{const Ne=document.createElement("canvas"),De=1920,ct=1920;let Ye=ge.width,pn=ge.height;Ye>pn?Ye>De&&(pn*=De/Ye,Ye=De):pn>ct&&(Ye*=ct/pn,pn=ct),Ne.width=Ye,Ne.height=pn;const un=Ne.getContext("2d");if(un){un.imageSmoothingEnabled=true;un.imageSmoothingQuality="high";un.drawImage(ge,0,0,Ye,pn);const mn=Ne.toDataURL("image/webp",.88);C(Je=>{const At=[...Je.images,mn].slice(0,10);return{...Je,images:At,image:At[0]||""}})}},(Se=_e.target)!=null&&Se.result&&(ge.src=_e.target.result)},oe.readAsDataURL(j)})}},L=ae=>{C(B=>{const j=B.images.filter((oe,_e)=>_e!==ae);return{...B,images:j,image:j[0]||""}})},
 makeCover=ae=>{C(B=>{const j=[...B.images];const[oe]=j.splice(ae,1);j.unshift(oe);return{...B,images:j,image:j[0]||""}})},
 swapImages=(ae,B)=>{if(B<0||B>=te.images.length)return;C(j=>{const oe=[...j.images];const _e=oe[ae];oe[ae]=oe[B];oe[B]=_e;return{...j,images:oe,image:oe[0]||""}})},
 reorderImage=(ae,B)=>{if(ae===B||ae<0||B<0||ae>=te.images.length||B>=te.images.length)return;C(j=>{const oe=[...j.images];const[_e]=oe.splice(ae,1);oe.splice(B,0,_e);return{...j,images:oe,image:oe[0]||""}})},V=ae=>{C({make:ae.make||"",model:ae.model||"",year:ae.year||new Date().getFullYear(),price:ae.price||0,spec:ae.spec||"",features:ae.features||[],location:(ae.location==="Cars in Kenya"?"Our Cars":ae.location==="Incoming Cars"?"New Arrivals":(ae.location||"Our Cars")),status:ae.status||"Available",image:ae.image||"",images:ae.images||[],videoUrl:ae.videoUrl||""}),re(ae.features?ae.features.join(`
@@ -6688,31 +6978,39 @@ function Yk({setView:s,setSelectedCar:e}){Fe.useEffect(()=>{window.scrollTo(0,0)
 function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.useState(!1),[u,h]=Fe.useState("home"),d=m=>{m!==s&&(o(!0),jn.to(".main-content-area",{opacity:0,y:10,duration:.3,ease:"power2.inOut",onComplete:()=>{e(m),h(m),m!=="vehicle"&&m!=="financing"&&n(null),jn.fromTo(".main-content-area",{opacity:0,y:-10},{opacity:1,y:0,duration:.4,ease:"power2.out"}),o(!1)}}))};return T.jsxs(T.Fragment,{children:[T.jsx(cw,{currentView:u,setView:d}),T.jsxs("main",{className:"main-content-area w-full",children:[s==="home"&&T.jsx(nk,{setView:d,setSelectedCar:n}),s==="our-cars"&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="new-arrivals"&&T.jsx(Yk,{setView:d,setSelectedCar:n}),s==="inventory-incoming"||s==="inventory-new"?T.jsx(Yk,{setView:d,setSelectedCar:n}):s.startsWith("inventory")&&T.jsx(rk,{setView:d,setSelectedCar:n,initialFilter:"Our Cars"}),s==="vehicle"&&t&&T.jsx(ik,{id:t,setView:d}),s==="about"&&T.jsx(zk,{setView:d}),s==="contact"&&T.jsx(sk,{}),s==="financing"&&T.jsx(ak,{setView:d,carId:t})]}),T.jsx(hw,{setView:d})]})}function FLPage({ carId: sId, onBack: backFn }) {
   const allCars = c7();
   const featuredList = useFeaturedCars();
-  const car = ((featuredList.find(c => c.id === sId) || resolveActiveFeaturedCars().find(c => c.id === sId) || DEFAULT_FEATURED_CARS.find(c => c.id === sId))) ||
-              allCars.find(c => c.id === sId) ||
-              (typeof DEFAULT_PREVIOUS_CARS !== "undefined" ? DEFAULT_PREVIOUS_CARS.find(c => c.id === sId) : null) ||
-              (typeof SIX_SCREENSHOT_CARS !== "undefined" ? SIX_SCREENSHOT_CARS[0] : null);
 
+  // Active featured car list
+  const activeList = Fe.useMemo(() => {
+    return (featuredList && featuredList.length > 0) ? featuredList : resolveActiveFeaturedCars();
+  }, [featuredList]);
+
+  // Track active car index within activeList
+  const initialIndex = Fe.useMemo(() => {
+    const foundIdx = activeList.findIndex(c => c.id === sId);
+    return foundIdx !== -1 ? foundIdx : 0;
+  }, [sId, activeList]);
+
+  const [activeCarIdx, setActiveCarIdx] = Fe.useState(initialIndex);
+  const [angleIdx, setAngleIdx] = Fe.useState(0);
+  const [is360Dragging, setIs360Dragging] = Fe.useState(false);
+  const [dragStartX, setDragStartX] = Fe.useState(0);
   const [lightboxImg, setLightboxImg] = Fe.useState(null);
-  const [heroSlide, setHeroSlide] = Fe.useState(0);
-  const [isHeroPaused, setIsHeroPaused] = Fe.useState(false);
 
+  // Sync index if sId changes from URL
   Fe.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [sId]);
-
-  Fe.useEffect(() => {
-    if (lightboxImg) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
+    const idx = activeList.findIndex(c => c.id === sId);
+    if (idx !== -1) {
+      setActiveCarIdx(idx);
     }
-    return () => { document.body.style.overflow = "unset"; };
-  }, [lightboxImg]);
+    setAngleIdx(0);
+    window.scrollTo(0, 0);
+  }, [sId, activeList]);
 
-  if (!car) {
+  const currentCar = activeList[activeCarIdx] || activeList[0] || null;
+
+  if (!currentCar) {
     return T.jsxs("div", {
-      className: "min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center p-6 text-center font-sans",
+      className: "min-h-screen bg-[#162330] text-white flex flex-col items-center justify-center p-6 text-center font-sans",
       children: [
         T.jsx("h2", { className: "text-2xl font-bold mb-4", children: "Featured Vehicle Not Found" }),
         T.jsx("button", {
@@ -6724,478 +7022,802 @@ function lk(){const[s,e]=Fe.useState("home"),[t,n]=Fe.useState(null),[i,o]=Fe.us
     });
   }
 
-  const rawImages = (car.images && car.images.length) ? car.images : (car.image ? [car.image] : ["/images/hero_showroom.jpg"]);
-  const fullName = ((car.year ? car.year + " " : "") + (car.make || "") + " " + (car.model || "")).trim();
-  const formattedPrice = car.price ? "KSh " + Number(car.price).toLocaleString() : "Price on Application";
-  const bodyType = car.type || "Prestige SUV";
+  const rawImages = (currentCar.images && currentCar.images.length)
+    ? currentCar.images
+    : (currentCar.image ? [currentCar.image] : ["/images/hero_showroom.jpg"]);
+
+  const fullName = ((currentCar.year ? currentCar.year + " " : "") + (currentCar.make || "") + " " + (currentCar.model || "")).trim();
+  const formattedPrice = currentCar.price ? "KSh " + Number(currentCar.price).toLocaleString() : "Price on Application";
+  const bodyType = currentCar.type || "Prestige Vehicle";
+
+  // Performance stats: prioritize admin dashboard custom segments, fallback to vehicle defaults
+  const carPerformanceStats = Fe.useMemo(() => {
+    if (currentCar) {
+      const t = currentCar.torque || (currentCar.specifications && currentCar.specifications.torque);
+      const a = currentCar.acceleration || (currentCar.specifications && currentCar.specifications.acceleration);
+      const s = currentCar.topSpeed || (currentCar.specifications && currentCar.specifications.topSpeed);
+      if (t || a || s) {
+        return {
+          torque: t || "600 nm",
+          accel: a || "7.4s",
+          speed: s || "199km/h"
+        };
+      }
+    }
+    const name = (((currentCar.make || "") + " " + (currentCar.model || "")).toLowerCase());
+    if (name.includes("g350") || name.includes("g-wagon") || name.includes("g 350") || name.includes("g350d")) {
+      return { torque: "600 nm", accel: "7.4s", speed: "199km/h" };
+    }
+    if (name.includes("cayenne") || name.includes("porsche")) {
+      return { torque: "450 nm", accel: "5.9s", speed: "245km/h" };
+    }
+    if (name.includes("prado") || name.includes("j250") || name.includes("land cruiser")) {
+      return { torque: "500 nm", accel: "8.2s", speed: "185km/h" };
+    }
+    if (name.includes("glc")) {
+      return { torque: "370 nm", accel: "6.2s", speed: "240km/h" };
+    }
+    if (name.includes("lx600") || name.includes("lx 600")) {
+      return { torque: "650 nm", accel: "6.9s", speed: "210km/h" };
+    }
+    if (name.includes("s 500") || name.includes("s500")) {
+      return { torque: "520 nm", accel: "4.9s", speed: "250km/h" };
+    }
+    if (name.includes("gle")) {
+      return { torque: "500 nm", accel: "5.7s", speed: "250km/h" };
+    }
+    if (name.includes("x6")) {
+      return { torque: "650 nm", accel: "5.8s", speed: "240km/h" };
+    }
+    return { torque: "520 nm", accel: "4.4s", speed: "290km/h" };
+  }, [currentCar]);
+
+  // Dynamic Design and Performance segment copy from Admin Dashboard
+  const designLabel = (currentCar && currentCar.designLabel) || "DESIGN";
+  const designTitle = (currentCar && currentCar.designTitle) || "Design and Aerodynamics";
+  const designDesc = (currentCar && currentCar.designDescription) || ("Every surface of the " + fullName + " has been sculpted to harmonize aesthetic grandeur with aerodynamic discipline. From its athletic stance and signature grille to the precision-engineered air channels, the design reduces drag while elevating road presence to its highest expression.");
+
+  const perfLabel = (currentCar && currentCar.performanceLabel) || "PERFORMANCE";
+  const perfTitle = (currentCar && currentCar.performanceTitle) || "More Powerful, Lighter, Faster";
+  const perfDesc = (currentCar && currentCar.performanceDescription) || ("Underneath its bespoke exterior lies an uncompromised performance powertrain. Responsive transmission calibration pairs with intelligent all-wheel-drive traction to unleash effortless power delivery, pinpoint cornering poise, and high-speed stability across Kenyan highways and rugged escapes.");
 
   const whatsappCarUrl = "https://wa.me/254713583829?text=" + encodeURIComponent(
     "Hello Mr. Joseph, I am inquiring about the featured " + fullName + " (" + formattedPrice + "). Please share availability, private viewing, and acquisition options."
   );
 
-  const ytSearchQuery = encodeURIComponent(car.year + " " + car.make + " " + car.model + " review walkaround");
-  const youtubeUrl = car.videoUrl || ("https://www.youtube.com/results?search_query=" + ytSearchQuery);
+  const ytSearchQuery = encodeURIComponent(currentCar.year + " " + currentCar.make + " " + currentCar.model + " review walkaround");
+  const youtubeUrl = currentCar.videoUrl || ("https://www.youtube.com/results?search_query=" + ytSearchQuery);
 
-  const heroImage = rawImages[0];
+  // Switch car helper
+  const handlePrevCar = () => {
+    const nextIdx = (activeCarIdx - 1 + activeList.length) % activeList.length;
+    setActiveCarIdx(nextIdx);
+    setAngleIdx(0);
+    const nextCar = activeList[nextIdx];
+    if (nextCar && nextCar.id) {
+      try { window.history.pushState({}, "", "/?featured=" + nextCar.id); } catch (_) {}
+    }
+  };
+
+  const handleNextCar = () => {
+    const nextIdx = (activeCarIdx + 1) % activeList.length;
+    setActiveCarIdx(nextIdx);
+    setAngleIdx(0);
+    const nextCar = activeList[nextIdx];
+    if (nextCar && nextCar.id) {
+      try { window.history.pushState({}, "", "/?featured=" + nextCar.id); } catch (_) {}
+    }
+  };
+
+  // 360 Drag Interaction
+  const handleMouseDown = (e) => {
+    setIs360Dragging(true);
+    setDragStartX(e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0));
+  };
+
+  const handleMouseMove = (e) => {
+    if (!is360Dragging) return;
+    const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+    const diff = clientX - dragStartX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        setAngleIdx(prev => (prev - 1 + rawImages.length) % rawImages.length);
+      } else {
+        setAngleIdx(prev => (prev + 1) % rawImages.length);
+      }
+      setDragStartX(clientX);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIs360Dragging(false);
+  };
+
+  const scrollToSection = (secId) => {
+    const el = document.getElementById(secId);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
 
   return T.jsxs("div", {
-    className: "bg-white text-gray-900 font-sans min-h-screen selection:bg-[#C59B51] selection:text-black pb-24",
-    style: { fontFamily: "'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif" },
+    className: "min-h-screen bg-white text-gray-900 font-sans selection:bg-[#C59B51] selection:text-black relative",
+    style: { fontFamily: "'Inter', system-ui, -apple-system, sans-serif" },
     children: [
-      /* TOP NAVIGATION BAR (WITH REMOVED CENTER LINKS) */
-      T.jsx("nav", {
-        className: "sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 px-4 sm:px-8 py-3.5 shadow-xs",
+      /* ========================================================================= */
+      /* 1. TOP NAVBAR (HIGH-VISIBILITY BACK TO SHOWROOM) */
+      /* ========================================================================= */
+      T.jsx("header", {
+        className: "w-full sticky top-0 z-50 text-white shadow-xl backdrop-blur-md",
+        style: {
+          backgroundColor: "#121c27",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.15)",
+          width: "100%",
+          position: "sticky",
+          top: 0,
+          zIndex: 999
+        },
         children: T.jsxs("div", {
-          className: "max-w-[1440px] mx-auto flex items-center justify-between",
+          className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between",
           children: [
-            /* Logo & Brand Name */
-            T.jsxs("div", {
-              className: "flex items-center gap-3 cursor-pointer",
+            /* Highly visible '← Back to Showroom' button */
+            T.jsxs("button", {
+              type: "button",
               onClick: backFn,
-              children: [
-                T.jsx("img", {
-                  src: "/logo.png",
-                  alt: "Mr Joseph",
-                  className: "h-10 sm:h-12 object-contain"
-                }),
-                T.jsxs("div", {
-                  children: [
-                    T.jsx("span", {
-                      className: "font-extrabold tracking-wider text-sm sm:text-base text-gray-900 uppercase block leading-none",
-                      children: "MR JOSEPH"
-                    }),
-                    T.jsx("span", {
-                      className: "text-[10px] font-mono tracking-widest text-[#C59B51] uppercase font-bold block mt-0.5",
-                      children: "FEATURED PRESTIGE CARS"
-                    })
-                  ]
-                })
-              ]
-            }),
-            /* Right Action Buttons */
-            T.jsxs("div", {
-              className: "flex items-center gap-2.5 sm:gap-3",
-              children: [
-                T.jsx("button", {
-                  onClick: backFn,
-                  className: "px-4 py-2 border border-gray-300 hover:border-black hover:text-black text-gray-700 text-xs font-bold uppercase tracking-wider rounded-full transition-colors cursor-pointer",
-                  children: "← Showroom"
-                }),
-                T.jsxs("a", {
-                  href: whatsappCarUrl,
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                  className: "px-4 sm:px-5 py-2 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider rounded-full transition-colors shadow-sm cursor-pointer flex items-center gap-2",
-                  children: [
-                    T.jsx("svg", {
-                      viewBox: "0 0 24 24",
-                      width: 15,
-                      height: 15,
-                      fill: "currentColor",
-                      children: T.jsx("path", { d: "M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.79 14.11c-.24.68-1.4 1.25-1.92 1.33-.49.07-1.12.1-3.23-.77-2.69-1.12-4.41-3.86-4.54-4.04-.13-.18-1.08-1.44-1.08-2.75 0-1.31.69-1.96.93-2.22.24-.26.53-.33.71-.33.18 0 .36 0 .51.01.16.01.38-.06.6.46.22.53.77 1.87.84 2.01.07.14.11.31.02.49-.09.18-.13.29-.27.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.16.27.69 1.14 1.48 1.84 1.02.9 1.88 1.18 2.14 1.31.27.13.42.11.58-.07.16-.18.67-.78.85-1.05.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.27.13.44.2.51.31.06.12.06.7-.18 1.38z" })
-                    }),
-                    T.jsx("span", { className: "hidden sm:inline", children: "WhatsApp Concierge" })
-                  ]
-                })
-              ]
-            })
-          ]
-        })
-      }),
-
-      /* SECTION 1: HERO SECTION - ANIMATED ALTERNATING UNZOOMED CAR DISPLAY */
-      T.jsxs("section", {
-        className: "featured-hero-container relative w-full overflow-hidden flex items-center justify-center bg-[#0A0A0F] select-none",
-        style: { height: "58vh", minHeight: "420px", maxHeight: "640px", width: "100%", backgroundColor: "#0A0A0F", position: "relative" },
-        onMouseEnter: () => setIsHeroPaused(true),
-        onMouseLeave: () => setIsHeroPaused(false),
-        children: [
-          /* Ambient blurred background glow from current slide */
-          rawImages.map((imgUrl, idx) => {
-            const isActive = idx === (heroSlide % rawImages.length);
-            return T.jsx("div", {
-              key: "glow-" + idx,
-              className: "absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-700",
+              className: "screenshot-back-btn",
               style: {
-                backgroundImage: "url(" + imgUrl + ")",
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                opacity: isActive ? 0.18 : 0,
-                filter: "blur(45px)",
-                transform: "none",
-                zIndex: 1
-              }
-            });
-          }),
-
-          /* Dark vignette gradient for luxury contrast */
-          T.jsx("div", {
-            className: "absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-transparent to-[#0A0A0F]/60 pointer-events-none",
-            style: { zIndex: 2 }
-          }),
-
-          /* Animated Alternating Unzoomed Foreground Car Slides */
-          rawImages.map((imgUrl, idx) => {
-            const isActive = idx === (heroSlide % rawImages.length);
-            return T.jsx("div", {
-              key: "slide-" + idx,
-              className: "absolute inset-0 w-full h-full flex items-center justify-center p-4 sm:p-8 cursor-pointer",
-              style: {
-                opacity: isActive ? 1 : 0,
-                pointerEvents: isActive ? "auto" : "none",
-                transition: "opacity 0.75s ease-in-out",
-                zIndex: 5
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                backgroundColor: "#FFFFFF",
+                color: "#111827",
+                border: "2px solid #FFFFFF",
+                padding: "10px 24px",
+                borderRadius: "9999px",
+                fontWeight: "800",
+                fontSize: "13px",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                boxShadow: "0 6px 20px rgba(0, 0, 0, 0.35)",
+                cursor: "pointer"
               },
-              onClick: () => { setHeroSlide(idx + 1); setLightboxImg(imgUrl); },
-              title: fullName + " - Angle " + (idx + 1) + " (Click to Enlarge)",
-              children: T.jsx("img", {
-                src: imgUrl,
-                alt: fullName + " Perspective " + (idx + 1),
-                className: "featured-hero-clean-img",
-                style: {
-                  maxHeight: "92%",
-                  maxWidth: "96%",
-                  width: "auto",
-                  height: "auto",
-                  objectFit: "contain",
-                  objectPosition: "center",
-                  transform: "none",
-                  filter: "drop-shadow(0 20px 45px rgba(0, 0, 0, 0.75))",
-                  display: "block"
-                }
-              })
-            });
-          }),
-
-          /* Top Left Perspective Badge */
-          T.jsxs("div", {
-            className: "absolute top-5 left-6 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white/90 font-mono text-[11px] font-bold tracking-wider",
-            children: [
-              T.jsx("span", { className: "w-2 h-2 rounded-full bg-[#C59B51] animate-ping shrink-0" }),
-              T.jsxs("span", {
-                children: [
-                  "VIEW ",
-                  String((heroSlide % rawImages.length) + 1).padStart(2, "0"),
-                  " / ",
-                  String(rawImages.length).padStart(2, "0")
-                ]
-              })
-            ]
-          }),
-
-          /* Top Right Click to Enlarge Badge */
-          T.jsxs("button", {
-            type: "button",
-            onClick: () => setLightboxImg(rawImages[heroSlide % rawImages.length]),
-            className: "absolute top-5 right-6 z-20 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/15 text-white text-[10px] font-mono uppercase font-bold tracking-widest cursor-pointer transition-all",
-            children: ["🔍 Enlarge View"]
-          }),
-
-          /* Navigation Controls: Previous / Next Buttons */
-          T.jsx("button", {
-            type: "button",
-            onClick: (e) => {
-              e.stopPropagation();
-              setHeroSlide(prev => (prev - 1 + rawImages.length) % rawImages.length);
-            },
-            className: "absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center text-xl font-bold cursor-pointer transition-all hover:scale-105",
-            "aria-label": "Previous angle",
-            children: "‹"
-          }),
-          T.jsx("button", {
-            type: "button",
-            onClick: (e) => {
-              e.stopPropagation();
-              setHeroSlide(prev => (prev + 1) % rawImages.length);
-            },
-            className: "absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center text-xl font-bold cursor-pointer transition-all hover:scale-105",
-            "aria-label": "Next angle",
-            children: "›"
-          }),
-
-          /* Bottom Interactive Perspective Dots / Indicators */
-          T.jsx("div", {
-            className: "absolute bottom-5 inset-x-0 z-20 flex items-center justify-center gap-2",
-            children: rawImages.map((_, dotIdx) => {
-              const isCur = dotIdx === (heroSlide % rawImages.length);
-              return T.jsx("button", {
-                key: "dot-" + dotIdx,
-                type: "button",
-                onClick: (e) => {
-                  e.stopPropagation();
-                  setHeroSlide(dotIdx);
-                },
-                className: "h-2 transition-all duration-300 rounded-full cursor-pointer " + (
-                  isCur ? "w-8 bg-[#C59B51]" : "w-2 bg-white/40 hover:bg-white/70"
-                ),
-                "aria-label": "View angle " + (dotIdx + 1)
-              });
-            })
-          })
-        ]
-      }),
-      /* Vehicle Title Bar */      T.jsx("div", {        className: "w-full py-8 sm:py-10 px-4 sm:px-6 lg:px-8 border-0 shadow-xs",        style: { backgroundColor: (car.styles && car.styles.titleBarBg) || "#000F1E", color: "#FFFFFF" },        children: T.jsx("div", {          className: "max-w-[1440px] mx-auto text-center border-0",          children: T.jsx("h1", {            className: "text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight uppercase text-center",            style: { color: "#FFFFFF" },            children: fullName          })        })      }),      /* SECTION 3: SPECIFICATIONS & VERIFIED PROVENANCE */      T.jsx("section", {        id: "specifications-dossier",        className: "bg-[#F8F9FA] py-14 sm:py-16 border-0",        children: T.jsx("div", {          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8",          children: T.jsxs("div", {            className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch",            children: [              /* Left Column: Another High-Resolution Image of the Car */              T.jsxs("div", {                onClick: () => setLightboxImg(rawImages[2] || rawImages[0]),                className: "lg:col-span-5 group relative rounded-3xl overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all cursor-pointer bg-gray-100 flex flex-col min-h-[380px] sm:min-h-[440px] lg:h-full",                children: [                  T.jsx("img", {                    src: rawImages[2] || rawImages[0],                    alt: fullName + " Technical Profile",                    className: "w-full h-full object-cover transition-transform duration-700 transition-opacity duration-300"                  }),                  T.jsx("div", {                    className: "absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5",                    children: T.jsxs("div", {                      className: "flex items-center justify-between w-full text-white text-xs font-bold",                      children: [                        T.jsx("span", { children: fullName + " Technical Profile" }),                        T.jsx("span", { className: "px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase font-mono", children: "Zoom" })                      ]                    })                  })                ]              }),              /* Right Column: Technical Dossier & Provenance Heading + Specifications */              T.jsxs("div", {                className: "lg:col-span-7 flex flex-col justify-start space-y-4",                children: [                  /* Header */                  T.jsxs("div", {                    className: "flex items-center gap-3",                    children: [                      T.jsx("div", { className: "w-1.5 h-6 bg-[#C59B51] rounded-xs" }),                      T.jsx("h2", {                        className: "text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight uppercase",                        children: "Technical Dossier & Provenance"                      })                    ]                  }),                  /* Specifications Grid */                  T.jsx("div", {                    className: "grid grid-cols-1 sm:grid-cols-2 gap-3.5",                    children: [                      { label: "Make & Model", val: fullName },                      { label: "Production Year", val: car.year || "2021" },                      { label: "Body Classification", val: bodyType },                      { label: "Fuel Type", val: car.fuel || "Diesel" },                      { label: "Transmission", val: car.transmission || "Automatic" },                      { label: "Drivetrain", val: (car.specifications && car.specifications.drivetrain) || "All-Wheel Drive (AWD / 4WD)" },                      { label: "Exterior Paint", val: (car.specifications && car.specifications.exteriorPaint) || "Metallic Factory Finish" },                      { label: "Interior Trim", val: (car.specifications && car.specifications.interiorTrim) || "Full Premium Nappa Leather" },                      { label: "Import Status", val: (car.specifications && car.specifications.importStatus) || "Duty & Clearance Settled" }                    ].map((item, idx) => T.jsxs("div", {                      key: idx,                      className: "bg-white p-4.5 rounded-2xl border-0 flex flex-col justify-between shadow-xs " + (idx === 8 ? "sm:col-span-2" : ""),                      children: [                        T.jsx("span", { className: "text-xs font-mono uppercase font-bold text-gray-400 mb-1", children: item.label }),                        T.jsx("span", { className: "text-sm sm:text-base font-extrabold text-gray-900 leading-snug", children: item.val })                      ]                    }))                  }),                  /* Extra Provenance Information Note if provided */                  ((car.specifications && car.specifications.extraInfo) || car.extraInfo || car.description) && T.jsxs("div", {                    className: "p-4.5 bg-white rounded-2xl border-0 shadow-xs space-y-1",                    children: [                      T.jsx("span", { className: "text-xs font-mono uppercase font-bold text-[#C59B51] block", children: "Executive Provenance & Special Highlights" }),                      T.jsx("p", { className: "text-xs sm:text-sm text-gray-700 font-medium leading-relaxed", children: (car.specifications && car.specifications.extraInfo) || car.extraInfo || car.description })                    ]                  })                ]              })            ]          })        })      }),      /* SECTION 4: FEATURES & EQUIPMENT (WITH RIGHT-SIDE CAR IMAGE & NAVY BLUE BACKGROUND) */
-      T.jsx("section", {
-        id: "features-equipment",
-        className: "py-14 sm:py-16 border-0",
-        style: { backgroundColor: (car.styles && car.styles.featuresBg) || "#000F1E", color: "#FFFFFF" },
-        children: T.jsx("div", {
-          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8",
-          children: T.jsxs("div", {
-            className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch",
-            children: [
-              /* Left Column: Heading + Features List (7 cols on lg) */
-              T.jsxs("div", {
-                className: "lg:col-span-7 flex flex-col justify-start space-y-4",
-                children: [
-                  /* Header */
-                  T.jsxs("div", {
-                    className: "flex items-center gap-3",
-                    children: [
-                      T.jsx("div", { className: "w-1.5 h-6 bg-[#C59B51] rounded-xs" }),
-                      T.jsx("h2", {
-                        className: "text-2xl sm:text-3xl font-extrabold tracking-tight uppercase",
-                        style: { color: "#FFFFFF" },
-                        children: "Features & Equipment"
-                      })
-                    ]
-                  }),
-                  /* 16 Features in 2 columns */
-                  T.jsx("div", {
-                    className: "grid grid-cols-1 sm:grid-cols-2 gap-3",
-                    children: ((car.features && car.features.length) ? car.features : [
-                      "Keyless Entry & Push-to-Start",
-                      "Executive Nappa Leather Seats",
-                      "360° Surround-View Camera",
-                      "Front & Rear Ultrasonic Sensors",
-                      "Adaptive Cruise Control",
-                      "Electric Heated Memory Seats",
-                      "Multi-Zone Climate Control",
-                      "Panoramic Glass Sunroof",
-                      "Intelligent LED Headlights",
-                      "Factory Diamond-Cut Alloys",
-                      "Touchscreen Navigation System",
-                      "Intelligent All-Wheel Drive (AWD)",
-                      "Blind Spot Monitoring System",
-                      "Burmester / Premium Hi-Fi Audio",
-                      "Power Operated Tailgate",
-                      "Apple CarPlay & Android Auto"
-                    ]).map((feat, idx) => T.jsxs("div", {
-                      key: idx,
-                      className: "flex items-center gap-3 p-3.5 rounded-xl transition-all shadow-2xs hover:bg-white/15",
-                      style: {
-                        backgroundColor: "rgba(255, 255, 255, 0.08)",
-                        border: "1px solid rgba(255, 255, 255, 0.12)"
-                      },
-                      children: [
-                        T.jsx("div", {
-                          className: "w-6 h-6 rounded-full flex items-center justify-center shrink-0",
-                          style: { backgroundColor: "rgba(37, 99, 235, 0.3)" },
-                          children: T.jsx("svg", {
-                            viewBox: "0 0 24 24",
-                            width: 13,
-                            height: 13,
-                            fill: "none",
-                            stroke: "#60A5FA",
-                            strokeWidth: 3.5,
-                            children: T.jsx("polyline", { points: "20 6 9 17 4 12" })
-                          })
-                        }),
-                        T.jsx("span", {
-                          className: "text-sm font-semibold tracking-wide",
-                          style: { color: "#FFFFFF" },
-                          children: feat
-                        })
-                      ]
-                    }))
-                  })
-                ]
-              }),
-              /* Right Column: Another High-Resolution Image of the Car (5 cols on lg) */
-              T.jsxs("div", {
-                onClick: () => setLightboxImg(rawImages[3] || rawImages[0]),
-                className: "lg:col-span-5 group relative rounded-3xl overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all cursor-pointer flex flex-col min-h-[380px] sm:min-h-[440px] lg:h-full",
-                style: { backgroundColor: "rgba(0, 0, 0, 0.4)" },
-                children: [
-                  T.jsx("img", {
-                    src: rawImages[3] || rawImages[0],
-                    alt: fullName + " Features & Craftsmanship",
-                    className: "w-full h-full object-cover transition-transform duration-700 transition-opacity duration-300"
-                  }),
-                  T.jsx("div", {
-                    className: "absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5",
-                    children: T.jsxs("div", {
-                      className: "flex items-center justify-between w-full text-white text-xs font-bold",
-                      children: [
-                        T.jsx("span", { style: { color: "#FFFFFF" }, children: fullName + " Craftsmanship" }),
-                        T.jsx("span", {
-                          className: "px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase font-mono",
-                          style: { color: "#FFFFFF" },
-                          children: "Zoom"
-                        })
-                      ]
-                    })
-                  })
-                ]
-              })
-            ]
-          })
-        })
-      }),
-      /* SECTION 4B: FIVE COMPACT PHOTOS GALLERY (MATCHING FEATURED VEHICLES EXACT CARD SIZE) */
-      T.jsx("section", {
-        id: "car-photos-gallery",
-        className: "bg-[#F8F9FA] py-12 sm:py-14 border-0",
-        children: T.jsxs("div", {
-          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-5",
-          children: [
-            T.jsxs("div", {
-              className: "flex flex-col sm:flex-row sm:items-center justify-between gap-2",
               children: [
-                T.jsxs("div", {
-                  className: "flex items-center gap-3",
-                  children: [
-                    T.jsx("div", { className: "w-1.5 h-6 bg-[#C59B51] rounded-xs" }),
-                    T.jsx("h2", {
-                      className: "text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight uppercase",
-                      children: fullName + " Perspectives"
-                    })
-                  ]
-                }),
-                T.jsx("span", {
-                  className: "text-xs font-mono uppercase tracking-widest text-gray-500 font-bold",
-                  children: "5 Studio Perspectives • Click to Enlarge"
-                })
+                T.jsx("span", { style: { fontSize: "16px", fontWeight: "900", lineHeight: 1 }, children: "←" }),
+                T.jsx("span", { children: "Back to Showroom" })
               ]
             }),
-            T.jsx("div", {
-              className: "six-cards-grid",
-              children: [
-                rawImages[1] || rawImages[0],
-                rawImages[2] || rawImages[0],
-                rawImages[3] || rawImages[0],
-                rawImages[4] || rawImages[0],
-                rawImages[5] || rawImages[0]
-              ].map((imgUrl, idx) => T.jsxs("div", {
-                key: idx,
-                onClick: () => setLightboxImg(imgUrl),
-                className: "compact-car-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-xs hover:shadow-lg transition-all border-0",
-                style: { margin: 0 },
-                children: [
-                  T.jsx("div", {
-                    className: "compact-card-image-wrap",
-                    children: T.jsx("img", {
-                      src: imgUrl,
-                      alt: fullName + " Angle " + (idx + 1),
-                      className: "compact-card-img transition-opacity duration-300 transition-transform duration-500",
-                      loading: "lazy"
-                    })
-                  }),
-                  T.jsx("div", {
-                    className: "absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none",
-                    children: T.jsx("span", {
-                      className: "px-2.5 py-1 bg-white/25 backdrop-blur-md text-white text-[10px] font-mono uppercase font-bold rounded-full",
-                      children: "Zoom"
-                    })
-                  })
-                ]
-              }))
-            })
-          ]
-        })
-      }),
-      /* SECTION 5: YOUTUBE VIDEO REVIEW BUTTON (CENTERED TITLE & AUTHENTIC YOUTUBE ICON) */
-      T.jsx("section", {
-        id: "video-review",
-        className: "bg-[#F8F9FA] py-14 sm:py-16 border-0",
-        children: T.jsxs("div", {
-          className: "max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center space-y-5",
-          children: [
-            /* Centered Title */
-            T.jsx("h2", {
-              className: "text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight uppercase text-center",
-              children: "Video Review & Walkaround"
-            }),
-            /* Highly Visible Authentic Red YouTube Badge with White Play Icon */
-            T.jsx("a", {
-              href: youtubeUrl,
+
+            /* Right WhatsApp Quick Inquiry */
+            T.jsxs("a", {
+              href: whatsappCarUrl,
               target: "_blank",
               rel: "noopener noreferrer",
               style: {
                 display: "inline-flex",
                 alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                transition: "transform 0.25s ease, filter 0.25s ease",
+                gap: "8px",
+                padding: "10px 24px",
+                borderRadius: "9999px",
+                backgroundColor: "#25D366",
+                color: "#FFFFFF",
+                fontSize: "13px",
+                fontWeight: "700",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                boxShadow: "0 4px 15px rgba(37, 211, 102, 0.4)",
                 textDecoration: "none"
               },
-              className: "hover:scale-110",
-              title: "Watch " + fullName + " Review on YouTube",
-              "aria-label": "Watch " + fullName + " Review on YouTube",
-              children: T.jsxs("svg", {
-                viewBox: "0 0 68 48",
-                width: 72,
-                height: 50,
-                style: { width: "72px", height: "50px", display: "block", filter: "drop-shadow(0 8px 16px rgba(255, 0, 0, 0.35))" },
-                children: [
-                  T.jsx("path", {
-                    d: "M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z",
-                    fill: "#FF0000"
-                  }),
-                  T.jsx("polygon", {
-                    points: "45,24 27,14 27,34",
-                    fill: "#FFFFFF"
-                  })
-                ]
-              })
+              children: [
+                T.jsx("span", { style: { fontSize: "16px" }, children: "💬" }),
+                T.jsx("span", { children: "Inquire on WhatsApp" })
+              ]
             })
           ]
         })
       }),
-      /* FULLSCREEN LIGHTBOX MODAL */
+
+      /* ========================================================================= */
+      /* 2. HERO SHOWCASE SECTION (SCREENSHOT 536 EXACT MATCH) */
+      /* ========================================================================= */
+      T.jsxs("section", {
+        className: "screenshot-hero-bg relative w-full overflow-hidden select-none",
+        style: {
+          backgroundColor: "#162330",
+          color: "#FFFFFF",
+          paddingTop: "48px",
+          paddingBottom: "80px",
+          width: "100%",
+          position: "relative"
+        },
+        children: [
+          /* Main Car Display Stage with Asymmetrical Left Podium Card matching Screenshot 536 */
+          T.jsx("div", {
+            className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative",
+            children: T.jsxs("div", {
+              className: "relative flex flex-col lg:flex-row items-center justify-between min-h-[380px] sm:min-h-[460px] pb-4",
+              children: [
+                /* Left Slate Capsule Card matching Screenshot 536 */
+                T.jsxs("div", {
+                  className: "screenshot-hero-podium w-full lg:w-[540px]",
+                  style: {
+                    backgroundColor: "rgba(51, 66, 83, 0.94)",
+                    backdropFilter: "blur(12px)",
+                    borderTopLeftRadius: "95px",
+                    borderBottomLeftRadius: "45px",
+                    borderTopRightRadius: "0px",
+                    borderBottomRightRadius: "0px",
+                    borderTop: "1px solid rgba(255, 255, 255, 0.22)",
+                    borderLeft: "1px solid rgba(255, 255, 255, 0.22)",
+                    boxShadow: "0 25px 50px rgba(0, 0, 0, 0.4)",
+                    padding: "36px 44px",
+                    position: "relative",
+                    zIndex: 10
+                  },
+                  children: [
+                    /* Car Model Title - clean, regular font matching Screenshot 536 */
+                    T.jsx("h2", {
+                      style: {
+                        fontSize: "26px",
+                        fontWeight: "400",
+                        color: "#FFFFFF",
+                        letterSpacing: "0.02em",
+                        marginBottom: "22px",
+                        fontFamily: "'Inter', system-ui, -apple-system, sans-serif"
+                      },
+                      children: fullName
+                    }),
+
+                    /* 3 Stats Row in Screenshot 536 style */
+                    T.jsxs("div", {
+                      style: {
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        gap: "6px"
+                      },
+                      children: [
+                        /* Stat 1: Torque */
+                        T.jsxs("div", {
+                          style: { paddingRight: "16px" },
+                          children: [
+                            T.jsx("div", {
+                              className: "screenshot-stat-num",
+                              style: {
+                                fontSize: "36px",
+                                fontWeight: "800",
+                                color: "#FFFFFF",
+                                letterSpacing: "-0.02em",
+                                lineHeight: 1
+                              },
+                              children: carPerformanceStats.torque
+                            }),
+                            T.jsx("div", {
+                              className: "screenshot-stat-label",
+                              style: {
+                                fontSize: "14px",
+                                fontWeight: "400",
+                                color: "rgba(255, 255, 255, 0.82)",
+                                marginTop: "6px"
+                              },
+                              children: "Torque"
+                            })
+                          ]
+                        }),
+
+                        /* Divider 1 */
+                        T.jsx("div", {
+                          className: "screenshot-stat-divider",
+                          style: {
+                            width: "1.5px",
+                            height: "52px",
+                            backgroundColor: "rgba(255, 255, 255, 0.35)",
+                            margin: "0 18px",
+                            flexShrink: 0
+                          }
+                        }),
+
+                        /* Stat 2: 0-100 km/h */
+                        T.jsxs("div", {
+                          style: { paddingLeft: "4px", paddingRight: "16px" },
+                          children: [
+                            T.jsx("div", {
+                              className: "screenshot-stat-num",
+                              style: {
+                                fontSize: "36px",
+                                fontWeight: "800",
+                                color: "#FFFFFF",
+                                letterSpacing: "-0.02em",
+                                lineHeight: 1
+                              },
+                              children: carPerformanceStats.accel
+                            }),
+                            T.jsx("div", {
+                              className: "screenshot-stat-label",
+                              style: {
+                                fontSize: "14px",
+                                fontWeight: "400",
+                                color: "rgba(255, 255, 255, 0.82)",
+                                marginTop: "6px",
+                                whiteSpace: "nowrap"
+                              },
+                              children: "0-100 km/h"
+                            })
+                          ]
+                        }),
+
+                        /* Divider 2 */
+                        T.jsx("div", {
+                          className: "screenshot-stat-divider",
+                          style: {
+                            width: "1.5px",
+                            height: "52px",
+                            backgroundColor: "rgba(255, 255, 255, 0.35)",
+                            margin: "0 18px",
+                            flexShrink: 0
+                          }
+                        }),
+
+                        /* Stat 3: Max Speed */
+                        T.jsxs("div", {
+                          style: { paddingLeft: "4px" },
+                          children: [
+                            T.jsx("div", {
+                              className: "screenshot-stat-num",
+                              style: {
+                                fontSize: "36px",
+                                fontWeight: "800",
+                                color: "#FFFFFF",
+                                letterSpacing: "-0.02em",
+                                lineHeight: 1
+                              },
+                              children: carPerformanceStats.speed
+                            }),
+                            T.jsx("div", {
+                              className: "screenshot-stat-label",
+                              style: {
+                                fontSize: "14px",
+                                fontWeight: "400",
+                                color: "rgba(255, 255, 255, 0.82)",
+                                marginTop: "6px",
+                                whiteSpace: "nowrap"
+                              },
+                              children: "Max Speed"
+                            })
+                          ]
+                        })
+                      ]
+                    })
+                  ]
+                }),
+
+                /* Car Foreground Image */
+                T.jsx("div", {
+                  className: "w-full lg:w-[680px] xl:w-[780px] flex items-center justify-center -mt-6 lg:-mt-0 lg:-ml-12 z-20 cursor-pointer",
+                  onClick: () => setLightboxImg(rawImages[0]),
+                  title: "Click to Enlarge " + fullName,
+                  children: T.jsx("img", {
+                    src: rawImages[0],
+                    alt: fullName,
+                    className: "max-h-[340px] sm:max-h-[440px] lg:max-h-[500px] w-auto object-contain filter drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)]",
+                    style: { transform: "none" }
+                  })
+                })
+              ]
+            })
+          }),
+
+          /* Left Semi-Circle Carousel Arrow */
+          T.jsx("button", {
+            type: "button",
+            onClick: handlePrevCar,
+            style: {
+              position: "absolute",
+              left: 0,
+              top: "60%",
+              transform: "translateY(-50%)",
+              width: "46px",
+              height: "92px",
+              borderTopRightRadius: "46px",
+              borderBottomRightRadius: "46px",
+              backgroundColor: "rgba(255, 255, 255, 0.22)",
+              backdropFilter: "blur(6px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#ffffff",
+              cursor: "pointer",
+              zIndex: 30,
+              border: "none"
+            },
+            className: "hover:bg-white/35 transition-colors text-2xl font-bold select-none",
+            "aria-label": "Previous featured car",
+            children: "‹"
+          }),
+
+          /* Right Semi-Circle Carousel Arrow */
+          T.jsx("button", {
+            type: "button",
+            onClick: handleNextCar,
+            style: {
+              position: "absolute",
+              right: 0,
+              top: "60%",
+              transform: "translateY(-50%)",
+              width: "46px",
+              height: "92px",
+              borderTopLeftRadius: "46px",
+              borderBottomLeftRadius: "46px",
+              backgroundColor: "rgba(255, 255, 255, 0.22)",
+              backdropFilter: "blur(6px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#ffffff",
+              cursor: "pointer",
+              zIndex: 30,
+              border: "none"
+            },
+            className: "hover:bg-white/35 transition-colors text-2xl font-bold select-none",
+            "aria-label": "Next featured car",
+            children: "›"
+          }),
+
+          /* Bottom Slider Progress Indicator Line */
+          T.jsx("div", {
+            className: "w-full flex items-center justify-center mt-8 gap-2",
+            children: activeList.map((_, dotIdx) => {
+              const isCur = dotIdx === activeCarIdx;
+              return T.jsx("button", {
+                key: dotIdx,
+                type: "button",
+                onClick: () => {
+                  setActiveCarIdx(dotIdx);
+                  const carItem = activeList[dotIdx];
+                  if (carItem && carItem.id) {
+                    try { window.history.pushState({}, "", "/?featured=" + carItem.id); } catch (_) {}
+                  }
+                },
+                className: "h-1.5 rounded-full transition-all duration-300 cursor-pointer " + (
+                  isCur ? "w-12 bg-white" : "w-6 bg-white/30 hover:bg-white/60"
+                ),
+                "aria-label": "Select car " + (dotIdx + 1)
+              });
+            })
+          })
+        ]
+      }),
+
+      /* ========================================================================= */
+      /* 3. SECTION 2: DESIGN AND AERODYNAMICS (SCREENSHOT 533) */
+      /* ========================================================================= */
+      T.jsx("section", {
+        id: "design-aerodynamics",
+        className: "py-20 sm:py-24 bg-white overflow-hidden",
+        children: T.jsx("div", {
+          className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+          children: T.jsxs("div", {
+            className: "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center",
+            children: [
+              /* Left Column: Slanted Exterior Car Image */
+              T.jsx("div", {
+                className: "lg:col-span-7 relative cursor-pointer group",
+                onClick: () => setLightboxImg(rawImages[1] || rawImages[0]),
+                children: T.jsx("div", {
+                  className: "overflow-hidden shadow-2xl relative",
+                  style: {
+                    clipPath: "polygon(0 0, 92% 0, 100% 100%, 0 100%)",
+                    minHeight: "360px",
+                    height: "420px"
+                  },
+                  children: T.jsx("img", {
+                    src: rawImages[1] || rawImages[0],
+                    alt: fullName + " Design",
+                    className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+                  })
+                })
+              }),
+
+              /* Right Column: Dynamic Design and Aerodynamics Copy */
+              T.jsxs("div", {
+                className: "lg:col-span-5 space-y-4",
+                children: [
+                  T.jsxs("div", {
+                    className: "space-y-1.5",
+                    children: [
+                      T.jsx("span", {
+                        className: "text-xs font-bold tracking-[0.2em] text-gray-800 uppercase block",
+                        children: designLabel
+                      }),
+                      T.jsx("div", { className: "w-9 h-[2.5px] bg-black" })
+                    ]
+                  }),
+                  T.jsx("h2", {
+                    className: "text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight",
+                    children: designTitle
+                  }),
+                  T.jsx("p", {
+                    className: "text-sm sm:text-base text-gray-600 leading-relaxed font-normal pt-2 whitespace-pre-line",
+                    children: designDesc
+                  })
+                ]
+              })
+            ]
+          })
+        })
+      }),
+
+      /* ========================================================================= */
+      /* 4. SECTION 3: PERFORMANCE (SCREENSHOT 534) */
+      /* ========================================================================= */
+      T.jsx("section", {
+        id: "performance-section",
+        className: "py-20 sm:py-24 bg-white overflow-hidden border-t border-gray-100",
+        children: T.jsx("div", {
+          className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+          children: T.jsxs("div", {
+            className: "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center",
+            children: [
+              /* Left Column: Dynamic Performance Copy */
+              T.jsxs("div", {
+                className: "lg:col-span-5 space-y-4 order-2 lg:order-1",
+                children: [
+                  T.jsxs("div", {
+                    className: "space-y-1.5",
+                    children: [
+                      T.jsx("span", {
+                        className: "text-xs font-bold tracking-[0.2em] text-gray-800 uppercase block",
+                        children: perfLabel
+                      }),
+                      T.jsx("div", { className: "w-9 h-[2.5px] bg-black" })
+                    ]
+                  }),
+                  T.jsx("h2", {
+                    className: "text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight",
+                    children: perfTitle
+                  }),
+                  T.jsx("p", {
+                    className: "text-sm sm:text-base text-gray-600 leading-relaxed font-normal pt-2 whitespace-pre-line",
+                    children: perfDesc
+                  })
+                ]
+              }),
+
+              /* Right Column: Slanted Interior / Cockpit Car Image */
+              T.jsx("div", {
+                className: "lg:col-span-7 relative cursor-pointer group order-1 lg:order-2",
+                onClick: () => setLightboxImg(rawImages[2] || rawImages[0]),
+                children: T.jsx("div", {
+                  className: "overflow-hidden shadow-2xl relative",
+                  style: {
+                    clipPath: "polygon(8% 0, 100% 0, 100% 100%, 0 100%)",
+                    minHeight: "360px",
+                    height: "420px"
+                  },
+                  children: T.jsx("img", {
+                    src: rawImages[2] || rawImages[0],
+                    alt: fullName + " Interior Cockpit",
+                    className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+                  })
+                })
+              })
+            ]
+          })
+        })
+      }),
+
+      /* ========================================================================= */
+      /* 5. SECTION 4: 360 DEGREE CAR VIEW (SCREENSHOT 535) */
+      /* ========================================================================= */
+      T.jsxs("section", {
+        id: "360-view-section",
+        className: "py-12 sm:py-16 bg-white border-t border-gray-100",
+        children: [
+          /* YouTube Video Review Button with Icon and 'view full review here' */
+          T.jsx("div", {
+            className: "max-w-4xl mx-auto px-4 mb-6 flex justify-center",
+            children: T.jsxs("a", {
+              href: youtubeUrl,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              className: "inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-[#FF0000] hover:bg-[#CC0000] text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group",
+              style: {
+                backgroundColor: "#FF0000",
+                color: "#FFFFFF",
+                boxShadow: "0 6px 22px rgba(255, 0, 0, 0.4)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "10px 22px",
+                borderRadius: "9999px",
+                textDecoration: "none"
+              },
+              children: [
+                T.jsx("svg", {
+                  viewBox: "0 0 24 24",
+                  width: 24,
+                  height: 24,
+                  fill: "currentColor",
+                  style: { flexShrink: 0, display: "block" },
+                  children: T.jsx("path", {
+                    d: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                  })
+                }),
+                T.jsx("span", {
+                  style: {
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    letterSpacing: "0.02em",
+                    textTransform: "none",
+                    whiteSpace: "nowrap"
+                  },
+                  children: "view full review here"
+                })
+              ]
+            })
+          }),
+
+          /* Viewing Arena with Image Chevron Controls & Thumbnail Scroll Buttons */
+          T.jsx("div", {
+            className: "max-w-5xl mx-auto px-4 sm:px-6",
+            children: T.jsxs("div", {
+              className: "bg-[#F7F8FA] rounded-3xl p-6 sm:p-10 relative border border-gray-200/80 shadow-inner flex flex-col items-center justify-center min-h-[440px] sm:min-h-[500px] select-none",
+              children: [
+                /* Left Scroll Button on Main Image */
+                T.jsx("button", {
+                  type: "button",
+                  onClick: () => setAngleIdx(prev => (prev - 1 + rawImages.length) % rawImages.length),
+                  className: "absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/95 hover:bg-white text-gray-900 shadow-xl flex items-center justify-center text-2xl sm:text-3xl font-bold cursor-pointer transition-all hover:scale-108 border border-gray-200 z-20",
+                  style: { boxShadow: "0 6px 20px rgba(0,0,0,0.15)" },
+                  "aria-label": "Previous image",
+                  children: "‹"
+                }),
+
+                /* Main Active Image */
+                T.jsx("div", {
+                  className: "w-full flex items-center justify-center cursor-pointer mb-6",
+                  onClick: () => setLightboxImg(rawImages[angleIdx % rawImages.length]),
+                  title: "Click to Enlarge " + fullName,
+                  children: T.jsx("img", {
+                    src: rawImages[angleIdx % rawImages.length],
+                    alt: fullName + " Angle " + ((angleIdx % rawImages.length) + 1),
+                    className: "max-h-[340px] sm:max-h-[400px] w-auto object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.2)] transition-opacity duration-200",
+                    style: { transform: "none" }
+                  })
+                }),
+
+                /* Right Scroll Button on Main Image */
+                T.jsx("button", {
+                  type: "button",
+                  onClick: () => setAngleIdx(prev => (prev + 1) % rawImages.length),
+                  className: "absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/95 hover:bg-white text-gray-900 shadow-xl flex items-center justify-center text-2xl sm:text-3xl font-bold cursor-pointer transition-all hover:scale-108 border border-gray-200 z-20",
+                  style: { boxShadow: "0 6px 20px rgba(0,0,0,0.15)" },
+                  "aria-label": "Next image",
+                  children: "›"
+                }),
+
+                /* Thumbnail Scroll Button Row */
+                T.jsxs("div", {
+                  className: "w-full max-w-2xl mx-auto mt-2 flex items-center justify-center gap-2 sm:gap-3 px-2 z-20",
+                  children: [
+                    /* Left thumbnail arrow */
+                    T.jsx("button", {
+                      type: "button",
+                      onClick: () => setAngleIdx(prev => (prev - 1 + rawImages.length) % rawImages.length),
+                      className: "w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-gray-100 text-gray-800 shadow-md flex items-center justify-center text-lg font-bold border border-gray-200 cursor-pointer shrink-0 transition-transform active:scale-95",
+                      "aria-label": "Previous thumbnail",
+                      children: "‹"
+                    }),
+
+                    /* Horizontal scrollable thumbnails */
+                    T.jsx("div", {
+                      className: "flex items-center gap-2.5 sm:gap-3 overflow-x-auto py-2 px-1",
+                      style: { scrollBehavior: "smooth" },
+                      children: rawImages.map((imgUrl, tIdx) => {
+                        const isActive = tIdx === (angleIdx % rawImages.length);
+                        return T.jsx("button", {
+                          key: tIdx,
+                          type: "button",
+                          onClick: () => setAngleIdx(tIdx),
+                          className: "relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer shrink-0 " + (
+                            isActive
+                              ? "ring-3 ring-[#C59B51] shadow-lg scale-105 opacity-100 border-2 border-white"
+                              : "opacity-60 hover:opacity-100 hover:scale-102 border border-gray-200"
+                          ),
+                          style: {
+                            width: "72px",
+                            height: "52px",
+                            backgroundColor: "#FFFFFF"
+                          },
+                          "aria-label": "View angle " + (tIdx + 1),
+                          children: T.jsx("img", {
+                            src: imgUrl,
+                            alt: fullName + " Thumb " + (tIdx + 1),
+                            className: "w-full h-full object-cover"
+                          })
+                        });
+                      })
+                    }),
+
+                    /* Right thumbnail arrow */
+                    T.jsx("button", {
+                      type: "button",
+                      onClick: () => setAngleIdx(prev => (prev + 1) % rawImages.length),
+                      className: "w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-gray-100 text-gray-800 shadow-md flex items-center justify-center text-lg font-bold border border-gray-200 cursor-pointer shrink-0 transition-transform active:scale-95",
+                      "aria-label": "Next thumbnail",
+                      children: "›"
+                    })
+                  ]
+                })
+              ]
+            })
+          })
+        ]
+      }),
+
+      /* ========================================================================= */
+      /* ========================================================================= */
+      /* 7. FLOATING SCROLL TO TOP BUTTON (BLUE SQUARE WITH DOUBLE CHEVRON) */
+      /* ========================================================================= */
+      T.jsx("button", {
+        type: "button",
+        onClick: () => window.scrollTo({ top: 0, behavior: "smooth" }),
+        style: {
+          position: "fixed",
+          bottom: "24px",
+          right: "24px",
+          width: "44px",
+          height: "44px",
+          backgroundColor: "#2563EB",
+          borderRadius: "8px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#ffffff",
+          zIndex: 90,
+          cursor: "pointer",
+          boxShadow: "0 6px 16px rgba(37, 99, 235, 0.45)",
+          border: "none"
+        },
+        className: "hover:bg-blue-700 transition-all hover:scale-105 select-none",
+        "aria-label": "Scroll to top",
+        children: T.jsx("svg", {
+          viewBox: "0 0 24 24",
+          width: 22,
+          height: 22,
+          fill: "none",
+          stroke: "currentColor",
+          strokeWidth: 2.5,
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          children: T.jsxs("g", {
+            children: [
+              T.jsx("polyline", { points: "18 15 12 9 6 15" }),
+              T.jsx("polyline", { points: "18 9 12 3 6 9" })
+            ]
+          })
+        })
+      }),
+
+      /* Lightbox Modal */
       lightboxImg && T.jsxs("div", {
-        className: "fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4",
+        className: "fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4",
         onClick: () => setLightboxImg(null),
         children: [
           T.jsx("button", {
             type: "button",
             onClick: () => setLightboxImg(null),
-            className: "absolute top-5 right-5 text-white text-3xl font-bold cursor-pointer hover:opacity-75 z-50",
+            className: "absolute top-6 right-6 text-white text-3xl font-light hover:text-gray-300 cursor-pointer z-10",
             children: "✕"
           }),
           T.jsx("img", {
             src: lightboxImg,
             alt: fullName,
-            className: "max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl",
-            onClick: (ev) => ev.stopPropagation()
-          }),
-          T.jsx("button", {
-            type: "button",
-            onClick: (ev) => {
-              ev.stopPropagation();
-              const curIdx = rawImages.indexOf(lightboxImg);
-              const nextIdx = (curIdx - 1 + rawImages.length) % rawImages.length;
-              setLightboxImg(rawImages[nextIdx]);
-            },
-            className: "absolute left-4 top-1/2 -translate-y-1/2 text-white bg-white/20 hover:bg-white/40 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer text-2xl font-bold",
-            children: "‹"
-          }),
-          T.jsx("button", {
-            type: "button",
-            onClick: (ev) => {
-              ev.stopPropagation();
-              const curIdx = rawImages.indexOf(lightboxImg);
-              const nextIdx = (curIdx + 1) % rawImages.length;
-              setLightboxImg(rawImages[nextIdx]);
-            },
-            className: "absolute right-4 top-1/2 -translate-y-1/2 text-white bg-white/20 hover:bg-white/40 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer text-2xl font-bold",
-            children: "›"
+            className: "max-h-[90vh] max-w-[95vw] object-contain select-none"
           })
         ]
       })
     ]
   });
-}function uk(){
+}
+function uk(){
   const s = "/jii2", e = window.location.pathname, t = window.location.hash, n = e === s || e === "/jii2/" || t === "#jii2" || t === "#/jii2";
   const [currSearch, setCurrSearch] = Fe.useState(window.location.search);
   const [currHash, setCurrHash] = Fe.useState(window.location.hash);

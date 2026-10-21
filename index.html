@@ -58,13 +58,13 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&family=Alex+Brush&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/assets/index-BIZlWqQ7.js?v=20261018-revert-section3-1792151000000"></script>
+    <script type="module" crossorigin src="/assets/index-BIZlWqQ7.js?v=20261021-yt-review-text-1792167000000"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-C8QovHjD.css">
   
     <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="preload" as="image" href="/logo.png" />
     <link rel="preload" href="/assets/index-C8QovHjD.css" as="style" />
-    <link rel="modulepreload" href="/assets/index-BIZlWqQ7.js?v=20261018-revert-section3-1792151000000" />
+    <link rel="modulepreload" href="/assets/index-BIZlWqQ7.js?v=20261021-yt-review-text-1792167000000" />
 <style id="exact-pixel-perfect-styles">
 /* STRICT REDUCTION OF GALLERY PERSPECTIVE IMAGES */
 #gallery-dossier img,
@@ -880,6 +880,15 @@ section#features-equipment {
   }
 }
 
+/* SLANTED POLYGON IMAGES MATCHING USER SCREENSHOTS */
+@media (max-width: 1023px) {
+  #design-aerodynamics [style*="clip-path"],
+  #performance-section [style*="clip-path"] {
+    clip-path: none !important;
+    border-radius: 1rem !important;
+  }
+}
+
 /* ZERO ZOOM ON HOVER ACROSS ALL CAR IMAGES */
 .compact-card-img,
 .compact-car-card:hover .compact-card-img,
@@ -895,6 +904,101 @@ button span.text-white,
 button[style*="#ffffff"] span,
 button:has(span:contains("Save All Changes")) span {
   color: #FFFFFF !important;
+}
+
+/* SCREENSHOT 536 HERO PODIUM & STATS STYLING */
+.screenshot-hero-bg {
+  background-color: #162330 !important;
+  color: #FFFFFF !important;
+}
+.screenshot-hero-podium {
+  background-color: rgba(51, 66, 83, 0.94) !important;
+  backdrop-filter: blur(12px) !important;
+  border-top-left-radius: 95px !important;
+  border-bottom-left-radius: 45px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4) !important;
+}
+@media (max-width: 768px) {
+  .screenshot-hero-podium {
+    border-radius: 24px !important;
+    padding: 24px 20px !important;
+    width: 100% !important;
+  }
+}
+.screenshot-stat-num {
+  font-size: 36px !important;
+  font-weight: 800 !important;
+  color: #FFFFFF !important;
+  line-height: 1 !important;
+  letter-spacing: -0.02em !important;
+}
+@media (max-width: 640px) {
+  .screenshot-stat-num {
+    font-size: 26px !important;
+  }
+}
+.screenshot-stat-label {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  margin-top: 6px !important;
+}
+.screenshot-stat-divider {
+  width: 1.5px !important;
+  height: 52px !important;
+  background-color: rgba(255, 255, 255, 0.35) !important;
+  flex-shrink: 0 !important;
+}
+@media (max-width: 640px) {
+  .screenshot-stat-divider {
+    height: 38px !important;
+    margin: 0 10px !important;
+  }
+}
+.screenshot-back-btn {
+  background-color: #FFFFFF !important;
+  color: #111827 !important;
+  border: 2px solid #FFFFFF !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 24px !important;
+  border-radius: 9999px !important;
+  transition: all 0.25s ease !important;
+}
+.screenshot-back-btn:hover {
+  background-color: #C59B51 !important;
+  border-color: #C59B51 !important;
+  color: #000000 !important;
+  transform: scale(1.03) !important;
+}
+
+/* ULTRA HIGH FIDELITY PHOTO QUALITY & RENDERING */
+img {
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: high-quality !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+}
+.screenshot-hero-bg img,
+#design-aerodynamics img,
+#performance-section img,
+#360-view-section img,
+.compact-card-img,
+.six-cards-grid img {
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: high-quality !important;
+  filter: contrast(1.02) saturate(1.03) !important;
 }
 </style>
 </head>
